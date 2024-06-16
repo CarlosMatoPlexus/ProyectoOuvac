@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Email_to_Case_Subject_Empty</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Origin, &quot;email&quot;),
+    ISBLANK(Subject)
+)</errorConditionFormula>
+    <errorMessage>Necesitas un subject para crear el caso</errorMessage>
+</ValidationRule>

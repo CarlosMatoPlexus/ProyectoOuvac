@@ -1,0 +1,18 @@
+<apex:page standardController="Case">
+<apex:form >
+<apex:pageBlock title="Crear nuevo Case">
+<apex:pageBlockButtons >
+<apex:commandButton action="{!save}" value="Guardad"/>
+<apex:commandButton action="{!cancel}" value="Cancelar"/>
+</apex:pageBlockButtons>
+<apex:pageBlockSection columns="2">
+<apex:inputField value="{!Case.ContactId}"/>
+<apex:inputField value="{!Case.Origin}" required="true"/>
+<apex:inputField value="{!Case.Subject}" required="true"/>
+<apex:inputField value="{!Case.Description}"/>
+<apex:inputField value="{!Case.Entidades__c}" required="true"/>
+<apex:inputField value="{!Case.Ambitos__c}" required="true"/>
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

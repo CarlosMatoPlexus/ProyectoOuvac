@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Ayuntamientos</fullName>
+        <default>false</default>
+        <label>Ayuntamientos</label>
+    </customValue>
+    <customValue>
+        <fullName>Deputación</fullName>
+        <default>false</default>
+        <label>Deputación</label>
+    </customValue>
+    <masterLabel>Entidades</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

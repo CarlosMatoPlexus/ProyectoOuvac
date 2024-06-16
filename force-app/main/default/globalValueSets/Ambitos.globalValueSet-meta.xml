@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Cultura y Deportes</fullName>
+        <default>false</default>
+        <label>Cultura y Deportes</label>
+    </customValue>
+    <customValue>
+        <fullName>Infraestructuras (Vías y Obras)</fullName>
+        <default>false</default>
+        <label>Infraestructuras (Vías y Obras)</label>
+    </customValue>
+    <customValue>
+        <fullName>Medio Ambiente</fullName>
+        <default>false</default>
+        <label>Medio Ambiente</label>
+    </customValue>
+    <customValue>
+        <fullName>Intervención y Recaudación</fullName>
+        <default>false</default>
+        <label>Intervención y Recaudación</label>
+    </customValue>
+    <customValue>
+        <fullName>Asuntos Sociales (Benestar)</fullName>
+        <default>false</default>
+        <label>Asuntos Sociales (Benestar)</label>
+    </customValue>
+    <customValue>
+        <fullName>Turismo</fullName>
+        <default>false</default>
+        <label>Turismo</label>
+    </customValue>
+    <customValue>
+        <fullName>RRHH (Ofertas de empleo)</fullName>
+        <default>false</default>
+        <label>RRHH (Ofertas de empleo)</label>
+    </customValue>
+    <customValue>
+        <fullName>Transparencia</fullName>
+        <default>false</default>
+        <label>Transparencia</label>
+    </customValue>
+    <customValue>
+        <fullName>Asesoría Jurídica (legal)</fullName>
+        <default>false</default>
+        <label>Asesoría Jurídica (legal)</label>
+    </customValue>
+    <customValue>
+        <fullName>Contratación</fullName>
+        <default>false</default>
+        <label>Contratación</label>
+    </customValue>
+    <customValue>
+        <fullName>Tramitación electrónica</fullName>
+        <default>false</default>
+        <label>Tramitación electrónica</label>
+    </customValue>
+    <customValue>
+        <fullName>Otras</fullName>
+        <default>false</default>
+        <label>Otras</label>
+    </customValue>
+    <masterLabel>Ámbitos</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

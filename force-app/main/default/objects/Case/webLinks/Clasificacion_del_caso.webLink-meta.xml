@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Clasificacion_del_caso</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Clasificación del caso</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/flow/Clasificacion_Caso_en_estados_En_Progreso_En_espera?caseId={!Case.Id}&amp;retURL=/{!Case.Id}</url>
+</WebLink>

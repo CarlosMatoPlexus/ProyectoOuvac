@@ -189,7 +189,7 @@
         <name>Actualizar_clasificacion_del_caso</name>
         <label>Actualizar clasificación del caso</label>
         <locationX>319</locationX>
-        <locationY>912</locationY>
+        <locationY>911</locationY>
         <connector>
             <targetReference>Ventana_caso_actualizado</targetReference>
         </connector>
@@ -352,6 +352,9 @@
             <name>AyuntamientoPicklist</name>
             <choiceReferences>Ayuntamientos</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Obtener_caso.Ayuntamientos__c</elementReference>
+            </defaultValue>
             <fieldText>Entidad 2</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

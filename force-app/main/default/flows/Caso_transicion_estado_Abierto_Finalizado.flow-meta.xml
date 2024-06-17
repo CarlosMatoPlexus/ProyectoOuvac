@@ -333,6 +333,9 @@
             <name>AyuntamientoPicklist</name>
             <choiceReferences>Ayuntamientos</choiceReferences>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Obtener_casos.Ayuntamientos__c</elementReference>
+            </defaultValue>
             <fieldText>Entidad 2</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

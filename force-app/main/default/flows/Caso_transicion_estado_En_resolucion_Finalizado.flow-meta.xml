@@ -57,6 +57,14 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>Ayuntamientos</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Ayuntamientos__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>Entidades</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -252,7 +260,7 @@
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
         <locationX>241</locationX>
-        <locationY>236</locationY>
+        <locationY>237</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -304,6 +312,25 @@
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>AyuntamientoPicklist</name>
+                    <choiceReferences>Ayuntamientos</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Entidad 2</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>EntidadPicklist</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Ayuntamientos</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>AmbitoPicklist</name>

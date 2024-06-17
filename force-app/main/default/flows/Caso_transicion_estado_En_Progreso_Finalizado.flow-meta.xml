@@ -58,6 +58,14 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>Ayuntamientos</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Ayuntamientos__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>Entidades</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -150,6 +158,24 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Ambitos__c</field>
+            <value>
+                <elementReference>AmbitoPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ayuntamientos__c</field>
+            <value>
+                <elementReference>AyuntamientoPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Entidades__c</field>
+            <value>
+                <elementReference>EntidadPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Estado_finalizado__c</field>
             <value>
                 <stringValue>No resuelto</stringValue>
@@ -198,6 +224,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Ayuntamientos__c</field>
+            <value>
+                <elementReference>AyuntamientoPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Entidades__c</field>
             <value>
                 <elementReference>EntidadPicklist</elementReference>
@@ -233,7 +265,7 @@
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
         <locationX>232</locationX>
-        <locationY>415</locationY>
+        <locationY>414</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -296,6 +328,25 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>AyuntamientoPicklist</name>
+            <choiceReferences>Ayuntamientos</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Entidad 2</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EntidadPicklist</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Ayuntamientos</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>AmbitoPicklist</name>

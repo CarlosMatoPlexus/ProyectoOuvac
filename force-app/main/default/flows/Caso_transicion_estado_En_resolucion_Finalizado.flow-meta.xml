@@ -151,8 +151,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_no_resuelto</name>
         <label>Actualizar estado caso finalizado no resuelto</label>
-        <locationX>339</locationX>
-        <locationY>519</locationY>
+        <locationX>338</locationX>
+        <locationY>516</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -168,6 +168,12 @@
             <field>Ambitos__c</field>
             <value>
                 <elementReference>AmbitoPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ayuntamientos__c</field>
+            <value>
+                <elementReference>AyuntamientoPicklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -205,8 +211,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_resuelto</name>
         <label>Actualizar estado caso finalizado resuelto</label>
-        <locationX>556</locationX>
-        <locationY>202</locationY>
+        <locationX>555</locationX>
+        <locationY>200</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -222,6 +228,12 @@
             <field>Ambitos__c</field>
             <value>
                 <elementReference>AmbitoPicklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ayuntamientos__c</field>
+            <value>
+                <elementReference>AyuntamientoPicklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -260,7 +272,7 @@
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
         <locationX>241</locationX>
-        <locationY>237</locationY>
+        <locationY>236</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

@@ -189,7 +189,7 @@
         <name>Actualizar_clasificacion_del_caso</name>
         <label>Actualizar clasificación del caso</label>
         <locationX>319</locationX>
-        <locationY>914</locationY>
+        <locationY>912</locationY>
         <connector>
             <targetReference>Ventana_caso_actualizado</targetReference>
         </connector>
@@ -210,7 +210,7 @@
         <inputAssignments>
             <field>Ayuntamientos__c</field>
             <value>
-                <elementReference>EntidadPicklist</elementReference>
+                <elementReference>AyuntamientoPicklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

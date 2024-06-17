@@ -304,7 +304,7 @@
             <defaultValue>
                 <elementReference>Obtener_casos.Entidades__c</elementReference>
             </defaultValue>
-            <fieldText>Entidades</fieldText>
+            <fieldText>Entidad 1</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>

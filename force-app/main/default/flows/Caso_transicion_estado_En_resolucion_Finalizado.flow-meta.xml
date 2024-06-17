@@ -252,7 +252,7 @@
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
         <locationX>241</locationX>
-        <locationY>237</locationY>
+        <locationY>236</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -300,7 +300,7 @@
                     <defaultValue>
                         <elementReference>Obtener_casos.Entidades__c</elementReference>
                     </defaultValue>
-                    <fieldText>Entidades</fieldText>
+                    <fieldText>Entidad 1</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
@@ -354,7 +354,7 @@
             <targetReference>Obtener_casos</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>caseId</name>
         <dataType>String</dataType>

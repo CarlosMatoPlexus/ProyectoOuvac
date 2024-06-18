@@ -60,6 +60,16 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>CustomButton.Case.Estado_En_espera_ciudadano</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>En progreso</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Case.Estado_EnResolucion_Finalizado</value>
                             <visibilityRule>
                                 <criteria>
@@ -359,6 +369,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Informacion_faltante__c</fieldItem>
                 <identifier>RecordInformacion_faltante_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Informacion_faltante_ciudadano__c</fieldItem>
+                <identifier>RecordInformacion_faltante_ciudadano__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-416e740a-e6ba-497e-901a-0bf1cf9c26b2</name>

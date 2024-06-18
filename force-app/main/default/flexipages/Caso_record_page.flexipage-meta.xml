@@ -52,20 +52,42 @@
                         <valueListItems>
                             <value>CustomButton.Case.Estado_EnProgreso_EnEspera</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR ( 2 AND 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>En progreso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>En espera</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Estado_En_espera__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ciudadano</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Case.Estado_En_espera_ciudadano</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>En progreso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>En espera</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Estado_En_espera__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Interno</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -357,10 +379,6 @@
                 <identifier>RecordEstado_En_espera_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8faad96a-e686-4ecf-b39e-ef22de0e4665</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -381,7 +399,7 @@
                 <identifier>RecordInformacion_faltante_ciudadano__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-416e740a-e6ba-497e-901a-0bf1cf9c26b2</name>
+        <name>Facet-8faad96a-e686-4ecf-b39e-ef22de0e4665</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -393,16 +411,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column5</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-416e740a-e6ba-497e-901a-0bf1cf9c26b2</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column6</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-b49c9d78-c968-4bc6-a29b-99a9c0f73ae0</name>

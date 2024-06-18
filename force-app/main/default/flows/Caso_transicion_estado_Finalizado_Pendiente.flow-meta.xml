@@ -52,7 +52,7 @@
     <formulas>
         <name>FechaHoraFormateada</name>
         <dataType>String</dataType>
-        <expression>TEXT({!FechaHoraAjustada})</expression>
+        <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 1)</expression>
     </formulas>
     <formulas>
         <name>MotivoReapertura</name>

@@ -16,14 +16,19 @@
         <label>Medio Ambiente</label>
     </customValue>
     <customValue>
-        <fullName>Intervención y Recaudación</fullName>
+        <fullName>Intervención</fullName>
         <default>false</default>
-        <label>Intervención y Recaudación</label>
+        <label>Intervención</label>
     </customValue>
     <customValue>
-        <fullName>Asuntos Sociales (Benestar)</fullName>
+        <fullName>Recaudación</fullName>
         <default>false</default>
-        <label>Asuntos Sociales (Benestar)</label>
+        <label>Recaudación</label>
+    </customValue>
+    <customValue>
+        <fullName>Benestar</fullName>
+        <default>false</default>
+        <label>Benestar</label>
     </customValue>
     <customValue>
         <fullName>Turismo</fullName>

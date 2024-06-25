@@ -2,7 +2,7 @@
 <apex:form >
 <apex:pageBlock title="Crear nuevo Case">
 <apex:pageBlockButtons >
-<apex:commandButton action="{!save}" value="Guardad"/>
+<apex:commandButton action="{!save}" value="Guardar"/>
 <apex:commandButton action="{!cancel}" value="Cancelar"/>
 </apex:pageBlockButtons>
 <apex:pageBlockSection columns="2">

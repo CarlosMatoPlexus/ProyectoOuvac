@@ -11,7 +11,6 @@
 <apex:inputField value="{!Case.Subject}" required="true"/>
 <apex:inputField value="{!Case.Description}"/>
 <apex:inputField value="{!Case.Entidades__c}" required="true"/>
-<apex:inputField value="{!Case.Ayuntamientos__c}"/>
 <apex:inputField value="{!Case.Ambitos__c}" required="true"/>
 </apex:pageBlockSection>
 </apex:pageBlock>

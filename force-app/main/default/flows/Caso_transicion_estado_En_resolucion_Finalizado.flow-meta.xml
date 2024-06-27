@@ -151,7 +151,7 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_no_resuelto</name>
         <label>Actualizar estado caso finalizado no resuelto</label>
-        <locationX>338</locationX>
+        <locationX>336</locationX>
         <locationY>516</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
@@ -168,12 +168,6 @@
             <field>Ambitos__c</field>
             <value>
                 <elementReference>AmbitoPicklist</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Ayuntamientos__c</field>
-            <value>
-                <elementReference>AyuntamientoPicklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -212,7 +206,7 @@
         <name>Actualizar_estado_caso_finalizado_resuelto</name>
         <label>Actualizar estado caso finalizado resuelto</label>
         <locationX>555</locationX>
-        <locationY>200</locationY>
+        <locationY>199</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -228,12 +222,6 @@
             <field>Ambitos__c</field>
             <value>
                 <elementReference>AmbitoPicklist</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Ayuntamientos__c</field>
-            <value>
-                <elementReference>AyuntamientoPicklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -271,8 +259,8 @@
     <screens>
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
-        <locationX>241</locationX>
-        <locationY>236</locationY>
+        <locationX>240</locationX>
+        <locationY>231</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -324,28 +312,6 @@
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
-                </fields>
-                <fields>
-                    <name>AyuntamientoPicklist</name>
-                    <choiceReferences>Ayuntamientos</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Obtener_casos.Ayuntamientos__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Entidad 2</fieldText>
-                    <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>EntidadPicklist</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <stringValue>Ayuntamientos</stringValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>AmbitoPicklist</name>

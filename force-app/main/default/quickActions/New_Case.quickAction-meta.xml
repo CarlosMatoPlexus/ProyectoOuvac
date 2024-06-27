@@ -33,6 +33,11 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>Ayuntamientos__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>Ambitos__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>

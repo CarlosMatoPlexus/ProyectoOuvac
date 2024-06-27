@@ -1,6 +1,6 @@
 <apex:page standardController="Case">
 <apex:form >
-<apex:pageBlock title="Crear nuevo Case">
+<apex:pageBlock title="Crear nuevo Caso">
 <apex:pageBlockButtons >
 <apex:commandButton action="{!save}" value="Guardar"/>
 <apex:commandButton action="{!cancel}" value="Cancelar"/>
@@ -14,5 +14,6 @@
 <apex:inputField value="{!Case.Ambitos__c}" required="true"/>
 </apex:pageBlockSection>
 </apex:pageBlock>
+
 </apex:form>
 </apex:page>

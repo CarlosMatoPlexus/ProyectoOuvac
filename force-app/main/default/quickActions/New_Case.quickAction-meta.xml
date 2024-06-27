@@ -40,5 +40,6 @@
     </quickActionLayout>
     <standardLabel>New</standardLabel>
     <targetObject>Case</targetObject>
+    <targetRecordType>Case.Casos</targetRecordType>
     <type>Create</type>
-</QuickAction>
+</QuickAction> 

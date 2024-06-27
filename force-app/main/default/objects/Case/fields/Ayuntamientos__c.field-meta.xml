@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ayuntamientos__c</fullName>
+    <label>Entidad 2</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Entidades__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Ayuntamientos</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32001 Allariz</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32002 Amoeiro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32003 Arnoia A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32004 Avión</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32005 Baltar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32006 Bande</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32007 Baños de Molgas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32008 Barbadás</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32009 Barco de Valdeorras O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32010 Beade</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32011 Beariz</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32012 Blancos Os</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32013 Boborás</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32014 Bola A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32015 Bolo O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32016 Calvos de Randín</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32018 Carballeda de Avia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32017 Carballeda de Valdeorras</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32019 Carballiño O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32020 Cartelle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32022 Castrelo de Miño</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32021 Castrelo do Val</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32023 Castro Caldelas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32024 Celanova</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32025 Cenlle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32029 Chandrexa de Queixa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32026 Coles</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32027 Cortegada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32028 Cualedro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32030 Entrimo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32031 Esgos</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32033 Gomesende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32034 Gudiña A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32035 Irixo O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32038 Larouco</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32039 Laza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32040 Leiro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32041 Lobeira</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32042 Lobios</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32043 Maceda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32044 Manzaneda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32045 Maside</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32046 Melón</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32047 Merca A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32048 Mezquita A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32049 Montederramo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32050 Monterrei</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32051 Muíños</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32052 Nogueira de Ramuín</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32053 Oímbra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32054 Ourense</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32055 Paderne de Allariz</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32056 Padrenda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32057 Parada de Sil</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32058 Pereiro de Aguiar O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32059 Peroxa A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32060 Petín</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32061 Piñor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32063 Pobra de Trives A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32064 Pontedeva</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32062 Porqueira</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32065 Punxín</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32066 Quintela de Leirado</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32067 Rairiz de Veiga</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32068 Ramirás</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32069 Ribadavia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32071 Riós</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32072 Rúa A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32073 Rubiá</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32074 San Amaro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32075 San Cibrao das Viñas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32076 San Cristovo de Cea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32070 San Xoán de Río</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32077 Sandiás</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32078 Sarreaus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32079 Taboadela</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32080 Teixeira A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32081 Toén</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32082 Trasmiras</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32083 Veiga A</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32084 Verea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32085 Verín</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32086 Viana do Bolo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32087 Vilamarín</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32088 Vilamartín de Valdeorras</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32089 Vilar de Barrio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32090 Vilar de Santos</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32091 Vilardevós</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32092 Vilariño de Conso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32032 Xinzo de Limia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32036 Xunqueira de Ambía</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ayuntamientos</controllingFieldValue>
+            <valueName>32037 Xunqueira de Espadanedo</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -238,23 +238,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Ayuntamientos__c</fieldItem>
-                <identifier>RecordAyuntamientos_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Entidades__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Ayuntamientos</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Ambitos__c</fieldItem>
                 <identifier>RecordAmbitos_cField</identifier>
             </fieldInstance>

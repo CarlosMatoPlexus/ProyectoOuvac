@@ -27,13 +27,6 @@
                     <elementReference>EntidadPicklist</elementReference>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Obtener_caso.Ayuntamientos__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>AyuntamientoPicklist</elementReference>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Actualizar_clasificacion_del_caso</targetReference>
             </connector>
@@ -53,21 +46,6 @@
                 <targetReference>Actualizar_clasificacion_del_caso</targetReference>
             </connector>
             <label>Si cambió Entidad 1</label>
-        </rules>
-        <rules>
-            <name>Si_cambio_Entidad_2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Obtener_caso.Ayuntamientos__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>AyuntamientoPicklist</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Actualizar_clasificacion_del_caso</targetReference>
-            </connector>
-            <label>Si cambió Entidad 2</label>
         </rules>
         <rules>
             <name>Si_cambio_Ambito</name>
@@ -127,14 +105,6 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>Ayuntamientos</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Ayuntamientos__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>Entidades</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -188,7 +158,7 @@
     <recordUpdates>
         <name>Actualizar_clasificacion_del_caso</name>
         <label>Actualizar clasificación del caso</label>
-        <locationX>319</locationX>
+        <locationX>318</locationX>
         <locationY>911</locationY>
         <connector>
             <targetReference>Ventana_caso_actualizado</targetReference>
@@ -205,12 +175,6 @@
             <field>Ambitos__c</field>
             <value>
                 <elementReference>AmbitoPicklist</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Ayuntamientos__c</field>
-            <value>
-                <elementReference>AyuntamientoPicklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -323,8 +287,8 @@
     <screens>
         <name>Ventana_clasificacion</name>
         <label>Ventana clasificación</label>
-        <locationX>464</locationX>
-        <locationY>587</locationY>
+        <locationX>462</locationX>
+        <locationY>586</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -347,28 +311,6 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>AyuntamientoPicklist</name>
-            <choiceReferences>Ayuntamientos</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Obtener_caso.Ayuntamientos__c</elementReference>
-            </defaultValue>
-            <fieldText>Entidad 2</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>EntidadPicklist</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Ayuntamientos</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>AmbitoPicklist</name>

@@ -53,10 +53,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Ayuntamientos__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Ambitos__c</field>
             </layoutItems>
             <layoutItems>

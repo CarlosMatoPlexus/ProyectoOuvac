@@ -164,12 +164,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Ayuntamientos__c</field>
-            <value>
-                <elementReference>AyuntamientoPicklist</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Entidades__c</field>
             <value>
                 <elementReference>EntidadPicklist</elementReference>
@@ -224,12 +218,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Ayuntamientos__c</field>
-            <value>
-                <elementReference>AyuntamientoPicklist</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Entidades__c</field>
             <value>
                 <elementReference>EntidadPicklist</elementReference>
@@ -264,7 +252,7 @@
     <screens>
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
-        <locationX>241</locationX>
+        <locationX>240</locationX>
         <locationY>291</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -328,28 +316,6 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>AyuntamientoPicklist</name>
-            <choiceReferences>Ayuntamientos</choiceReferences>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Obtener_casos.Ayuntamientos__c</elementReference>
-            </defaultValue>
-            <fieldText>Entidad 2</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>EntidadPicklist</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Ayuntamientos</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>AmbitoPicklist</name>

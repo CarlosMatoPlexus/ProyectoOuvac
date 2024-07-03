@@ -101,8 +101,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>510</locationX>
-        <locationY>3</locationY>
+        <locationX>511</locationX>
+        <locationY>2</locationY>
         <connector>
             <targetReference>Hay_casos_en_espera_interna_para_recordar</targetReference>
         </connector>
@@ -132,7 +132,7 @@
         <schedule>
             <frequency>Daily</frequency>
             <startDate>2024-07-03</startDate>
-            <startTime>08:17:00.000Z</startTime>
+            <startTime>13:26:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
@@ -140,6 +140,6 @@
     <textTemplates>
         <name>CuerpoMail</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Hola {!$Record.Owner:User.Name}!&lt;/p&gt;&lt;p&gt;El caso {!$Record.CaseNumber} continua en estado &lt;strong&gt;En espera&lt;/strong&gt;. Por favor de haber obtenido la información faltante actualizar el estado del mismo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Si desea ver el caso &lt;a href=&quot;https://ouvacdepourense--sandcarlos.sandbox.lightning.force.com/lightning/r/Case/{!$Record.Id}/view&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Click aquí&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Muchas gracias!&lt;/p&gt;</text>
+        <text>&lt;p&gt;Hola {!$Record.Owner:User.Name}!&lt;/p&gt;&lt;p&gt;El caso {!$Record.CaseNumber} continua en &lt;strong&gt;En espera, &lt;/strong&gt;a la espera de:&lt;/p&gt;&lt;p&gt;&lt;strong&gt;{!$Record.Ultima_informacion_faltante_interna__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Por favor de haber obtenido la información faltante actualizar el estado del mismo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Si desea ver el caso &lt;a href=&quot;https://ouvacdepourense--sandcarlos.sandbox.lightning.force.com/lightning/r/Case/{!$Record.Id}/view&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Click aquí&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Muchas gracias!&lt;/p&gt;</text>
     </textTemplates>
 </Flow>

@@ -167,7 +167,7 @@
                             <apex:inputField value="{!newContact.LastName}" required="true" />
                             <apex:inputField value="{!newContact.Email}" />
                             <apex:inputField value="{!newContact.Phone}" />
-                            <apex:inputField value="{!newContact.MobilePhone}" />
+                            <!-- <apex:inputField value="{!newContact.MobilePhone}" /> -->
                         </apex:pageBlockSection>
                         <apex:pageBlockButtons location="bottom">
                             <apex:commandButton value="Guardar Contacto" action="{!saveNewContact}"

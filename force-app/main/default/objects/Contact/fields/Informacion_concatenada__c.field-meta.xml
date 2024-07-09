@@ -4,11 +4,8 @@
     <externalId>false</externalId>
     <formula>TRIM(
    BLANKVALUE(Email, &apos;&apos;) &amp;
-   IF(AND(NOT(ISBLANK(Email)), NOT(ISBLANK(MobilePhone))), &apos; - &apos; &amp; MobilePhone, BLANKVALUE(MobilePhone, &apos;&apos;)) &amp;
-   IF(AND(
-       OR(NOT(ISBLANK(Email)), NOT(ISBLANK(MobilePhone))),
-       NOT(ISBLANK(Phone))
-   ), &apos; - &apos; &amp; Phone, BLANKVALUE(Phone, &apos;&apos;))
+   IF(AND(NOT(ISBLANK(Email)), NOT(ISBLANK(Phone))), &apos; - &apos;, &apos;&apos;) &amp;
+   BLANKVALUE(Phone, &apos;&apos;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Informacion concatenada</label>

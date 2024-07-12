@@ -10,7 +10,7 @@ public class RouteCasesBasedOnSkillsTest {
         }
 
         // Ensure Skills exist
-        List<String> skillNames = new List<String>{'General', 'Benestar', 'Asesoría Jurídica', 'Contratación', 'Cultura y Deportes', 'Infraestructuras (Vías y Obras)', 
+        List<String> skillNames = new List<String>{'Otras', 'Benestar', 'Asesoría Jurídica', 'Contratación', 'Cultura y Deportes', 'Infraestructuras (Vías y Obras)', 
                                                     'Intervención', 'Medio Ambiente', 'RRHH', 'Recaudación', 'Tramitación electrónica', 'Transparencia', 'Turismo'};
         List<Skill> skills = [SELECT Id, MasterLabel FROM Skill WHERE MasterLabel IN :skillNames];
         Set<String> existingSkillNames = new Set<String>();
@@ -112,4 +112,3 @@ public class RouteCasesBasedOnSkillsTest {
         System.assertEquals(testUser.Id, updatedCase.OwnerId, 'Owner should not change if they have the required skill.');
     }
 }
-

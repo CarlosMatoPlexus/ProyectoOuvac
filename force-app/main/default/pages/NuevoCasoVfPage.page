@@ -1,40 +1,121 @@
 <apex:page standardController="Case" extensions="CreateCaseController" lightningStylesheets="true">
     <style>
-        .large-table {
-            width: 120% !important;
-            font-size: 16px;
-            table-layout: auto;
-        }
-
-        .large-table th,
-        .large-table td {
-            padding: 10px;
-            text-align: left;
-            word-break: break-all;
-        }
-
         .large-table th {
             background-color: #f4f6f9;
         }
-
         .large-table td {
             background-color: #ffffff;
         }
-
         .conField {
             text-align: center;
             margin-left: 47px;
-            /* display: flex;
-            align-items: center; */
+        }
+        .slds-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 0.25rem;
+            padding: 1rem;
+        }
+        .slds-modal__container {
+            position: relative;
+            max-width: 800px !important;
+            margin: 0 auto;
+        }
+        .slds-modal__container.new-contact-modal {
+            max-width: 800px !important;
+            min-width: 400px;
+        }
+        .slds-modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #d8dde6;
+            padding-bottom: 1rem;
+        }
+        .slds-modal__content {
+            padding: 1rem 0;
+            max-height: 600px !important;
+            overflow-y: auto;
+        }
+        .flex-container {
+            display: flex;
+        }
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+        }
+        .close-button:after {
+            content: "x";
+        }
+        .modal-background {
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+           backdrop-filter: blur(5px); /* Efecto de desenfoque */
+           z-index: 999; /* Z-index inferior al de los modales */
+           display: none; /* Ocultar inicialmente */
+        }
+       .slds-text-color_error{
+            color: red;
+        }
+        .slds-button.slds-button_brand.custom-button {
+            background-color: #ffffff; /* Color de fondo */
+            border: 1px solid #dddbda; /* Borde */
+            color: #275e98; /* Color del texto */
+            padding: 0.75rem 1rem; /* Espaciado interno */
+            font-size: 0.875rem; /* Tamaño de la fuente */
+            font-weight: 400; /* Grosor de la fuente */
+            border-radius: 0.25rem; /* Bordes redondeados */
+            cursor: pointer; /* Cursor de puntero */
+        }
+        .slds-button.slds-button_brand.custom-button:hover {
+            background-color: #f4f4f4; /* Color de fondo al hacer hover */
+            border-color: #c6c6c6; /* Color del borde al hacer hover */
+        }
+        .slds-button.slds-button_brand.custom-button:focus {
+            outline: none; /* Quitar el outline al enfocar */
+            box-shadow: 0 0 3px 2px rgba(0, 112, 210, 0.5); /* Sombra al enfocar */
         }
 
-        /* .conField {
-    display: flex;
-    align-items: center;
-   }
-   .conField input {
-    flex-grow: 1;
-   } */
+    .button-container {
+       display: flex;
+       justify-content: space-between; /* Para espaciar los botones */
+       width: 85%; /* Asegura que los botones ocupen todo el ancho posible */
+    }
+    .custom-button, .slds-button.slds-button_brand {
+        background-color: #ffffff; /* Color de fondo */
+        border: 1px solid #dddbda; /* Borde */
+        color: #275e98; /* Color del texto */
+        padding: 0.5rem 0.75rem; /* Espaciado interno */
+        font-size: 0.75rem; /* Tamaño de la fuente */
+        font-weight: 400; /* Grosor de la fuente */
+        border-radius: 0.25rem; /* Bordes redondeados */
+        cursor: pointer; /* Cursor de puntero */
+        flex: 1; /* Asegura que ambos botones tengan el mismo tamaño */
+        margin: 0 0.25rem; /* Espacio entre los botones */
+        flex-direction: row;
+        /* text-align: center; Asegura que el texto esté centrado */
+    }
+    .custom-button:hover, .slds-button_brand:hover {
+        background-color: #f4f4f4; /* Color de fondo al hacer hover */
+        border-color: #c6c6c6; /* Color del borde al hacer hover */
+    }
+    .custom-button:focus, .slds-button.slds-button_brand:focus {
+        outline: none; /* Quitar el outline al enfocar */
+        box-shadow: 0 0 3px 2px rgba(0, 112, 210, 0.5); /* Sombra al enfocar */
+    }
+    
     </style>
     <script>
         function searchContacts() {
@@ -46,14 +127,13 @@
                     if (event.status) {
                         var contactList = document.getElementById('contactListContent');
                         if (contactList) {
-                            var tableHTML = '<table>' +
-                                '<thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Móvil</th><th>Acción</th></thead><tbody>';
+                            var tableHTML = '<table class="large-table">' +
+                                '<thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Acción</th></thead><tbody>';
                             result.forEach(function (contact) {
                                 tableHTML += '<tr>' +
                                     '<td><a href="/' + contact.Id + '" target="_blank">' + (contact.Name ? contact.Name : '-') + '</a></td>' +
                                     '<td>' + (contact.Email ? contact.Email : '-') + '</td>' +
                                     '<td>' + (contact.Phone ? contact.Phone : '-') + '</td>' +
-                                    '<td>' + (contact.MobilePhone ? contact.MobilePhone : '-') + '</td>' +
                                     '<td><button type="button" class="slds-button slds-button_neutral" onclick="selectContact(\'' + contact.Id + '\', \'' + contact.Name + '\')">Seleccionar</button></td>' +
                                     '</tr>';
                             });
@@ -66,8 +146,7 @@
             );
         }
         function selectContact(contactId, contactName) {
-            debugger;
-            var contactField = document.getElementById('j_id0:caseForm:j_id28:j_id29:contactIdField');
+            var contactField = document.getElementById('j_id0:caseForm:j_id3:j_id5:contactIdField');
             if (contactField) {
                 contactField.value = contactId;
             } else {
@@ -77,105 +156,198 @@
             if (contactFieldDisplay) {
                 contactFieldDisplay.value = contactName;
             }
+            var hiddenContactFieldDisplay = document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay');
+            if (hiddenContactFieldDisplay) {
+                hiddenContactFieldDisplay.value = contactName;
+            }
             closeContactSearch();
         }
         function openContactSearch() {
-            document.getElementById('divContactModal').style.display = 'block';
+           document.getElementById('divContactModal').style.display = 'block';
+           document.getElementById('modalBackground').style.display = 'block'; // Mostrar el fondo
         }
         function closeContactSearch() {
             document.getElementById('divContactModal').style.display = 'none';
+            document.getElementById('modalBackground').style.display = 'none'; // Ocultar el fondo
         }
         function openNewContact() {
             document.getElementById('divNewContactModal').style.display = 'block';
-            closeContactSearch();
+            document.getElementById('modalBackground').style.display = 'block'; // Mostrar el fondo
+            closeContactSearchModal(); // Cerrar el modal de búsqueda si está abierto
+        }
+        function closeContactSearchModal() {
+            document.getElementById('divContactModal').style.display = 'none';
         }
         function closeNewContact() {
             document.getElementById('divNewContactModal').style.display = 'none';
+            document.getElementById('modalBackground').style.display = 'none'; // Ocultar el fondo
+        }
+        function saveNewContactJS() {
+            var firstName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactFirstName').value;
+            var lastName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactLastName');
+            var email = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactEmail').value;
+            var phone = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactPhone').value;
+            if(!lastName.value){
+                lastName.setCustomValidity('El campo apellido es obligatorio.');
+                lastName.reportValidity();
+                return;
+            }else{
+                lastName.setCustomValidity('');
+            }
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.CreateCaseController.saveNewContact}',
+                    firstName, lastName.value, email, phone,
+                    function(result, event) {
+                        if (event.status){  
+                            if (result.status === 'success'){
+                                closeNewContact();
+                                document.getElementById('contactFieldDisplay').value = result.contactName;
+                                document.getElementById('j_id0:caseForm:j_id3:j_id5:contactIdField').value = result.contactId;
+                                document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay').value = result.contactName;
+                                showSuccessMessage('Contacto creado y asignado con éxito.');
+                                document.getElementById('j_id0:newContactForm').reset();
+                            }else{
+                                showErrorMessage(result.message);
+                            }
+                        }else{
+                            showErrorMessage('Error de comunicación con el servidor.');
+                        }
+                    },
+                { escape: true }
+            );
+        }
+
+        function restoreContactFieldDisplay() {
+            var contactFieldDisplay = document.getElementById('contactFieldDisplay');
+            var hiddenContactFieldDisplay = document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay');
+            if (hiddenContactFieldDisplay && contactFieldDisplay) {
+                contactFieldDisplay.value = hiddenContactFieldDisplay.value;
+            }
+        }
+        // Llamar a la función restoreContactFieldDisplay cuando la página se carga o el formulario se restablezca
+        document.addEventListener('DOMContentLoaded', restoreContactFieldDisplay);
+
+        function validateCaseForm() {
+            // Obtener todos los elementos de entrada en el formulario
+            var inputs = document.querySelectorAll('#caseForm input[required], #caseForm select[required], #caseForm textarea[required]');
+            var isValid = true;
+            // Validar cada campo requerido
+            inputs.forEach(function(input) {
+                if (!input.value) {
+                    input.setCustomValidity('Este campo es obligatorio');
+                    input.reportValidity();
+                    isValid = false;
+                } else {
+                    input.setCustomValidity(''); // Se resetea el mensaje.
+                }
+            });
+            return isValid; // Si todos los campos son válidos, se envía el formulario
+        }
+
+        function showErrorMessage(message) {
+            var errorMessageContainer = document.getElementById('errorMessageContainer');
+            var errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerHTML = message;
+            errorMessageContainer.style.display = 'block';
+            setTimeout(function() {
+                errorMessageContainer.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccessMessage(message) {
+            var errorMessageContainer = document.getElementById('successMessageContainer');
+            var errorMessage = document.getElementById('successMessage');
+            errorMessage.innerHTML = message;
+            errorMessageContainer.style.display = 'block';
+            setTimeout(function() {
+                errorMessageContainer.style.display = 'none';
+            }, 5000);
         }
     </script>
-    <apex:form id="caseForm">
-        <apex:pageMessages />
+    <div id="modalBackground" class="modal-background"></div>
+    <apex:form id="caseForm" onsubmit="return validateCaseForm()">
+    <apex:inputHidden id="hiddenContactFieldDisplay" value="{!contName}" />
+ 
+        <div id="alert-container" style="display:none;"></div>
         <apex:pageBlock title="Crear Nuevo Caso">
+            <div id="successMessageContainer" style="display: none; background-color: #4BB543; color: #FFFFFF; border: 1px solid #f5c6cb; padding: 1rem; margin-bottom: 1rem; border-radius: 0.25rem;">
+                <span id="successMessage"></span>
+            </div>
             <apex:pageBlockSection columns="2">
-                <!-- <apex:outputPanel layout="block"> -->
                 <div class="conField">
                     <label for="contactFieldDisplay">Contacto</label>
-                    <input type="text" id="contactFieldDisplay" readonly="readonly" placeholder="Seleccione un Contacto"
-                        value="{!contName}" />
+                    <input type="text" id="contactFieldDisplay" readonly="readonly" placeholder="Seleccione un Contacto" value="{!contName}" />
                     <button type="button" class="slds-button slds-button_icon" onclick="openContactSearch()">🔍</button>
                 </div>
-                <!-- </apex:outputPanel> -->
                 <apex:inputField value="{!newCase.Origin}" required="true" />
                 <apex:inputField value="{!newCase.Subject}" required="true" />
                 <apex:inputField value="{!newCase.Description}" />
-
-
                 <apex:inputField value="{!newCase.Entidades__c}" required="true" />
                 <apex:inputField value="{!newCase.Ambitos__c}" required="true" />
                 <apex:inputHidden value="{!newCase.ContactId}" id="contactIdField" />
-
             </apex:pageBlockSection>
             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton value="Guardar" action="{!saveCase}" />
-                <apex:commandButton value="Cancelar" action="{!cancel}" />
+                <apex:commandButton value="Guardar" action="{!saveCase}" styleClass="slds-button slds-button_brand" />
+                <apex:commandButton value="Cancelar" action="{!cancel}" styleClass="slds-button slds-button_neutral"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>
         <!-- Modal para buscar contactos -->
         <div id="divContactModal" style="display:none;" class="slds-modal">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <button type="button"
-                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Cerrar"
-                        onclick="closeContactSearch()">
-                        <span class="slds-assistive-text">Cerrar</span>
-                    </button>
-                    <h2 class="slds-text-heading_medium">Buscar Contacto</h2>
+                    <h2 class="slds-text-heading_medium">Buscar contacto</h2>
+                    <button type="button" class="close-button" title="Cerrar" onclick="closeContactSearch()"></button>
                 </header>
                 <div class="slds-modal__content">
-                    <apex:pageBlock >
-                        <apex:pageBlockSection columns="1">
+                    <apex:pageBlock>
+                        <apex:pageBlockSection columns="2">
                             <input type="text" id="contactSearchTerm" placeholder="Buscar Contacto" />
-                            <button type="button" class="slds-button slds-button_neutral"
-                                onclick="searchContacts()">Buscar</button>
-                            <button type="button" class="slds-button slds-button_neutral"
-                                onclick="openNewContact()">Nuevo Contacto</button>
+                            <apex:commandButton value="Buscar" onclick="searchContacts();return false;" styleClass="slds-button slds-button_neutral" />
+                            <apex:commandButton value="Nuevo Contacto" onclick="openNewContact();return false;" styleClass="slds-button slds-button_neutral" />
                         </apex:pageBlockSection>
-                        <apex:pageBlockSection >
+                        <apex:pageBlockSection>
                             <div id="contactListContent"></div>
                         </apex:pageBlockSection>
                     </apex:pageBlock>
                 </div>
+                
             </div>
         </div>
     </apex:form>
-    <!-- Modal para crear nuevo contacto -->
     <apex:form id="newContactForm">
+        
         <div id="divNewContactModal" style="display:none;" class="slds-modal">
-            <div class="slds-modal__container">
+            <div class="slds-modal__container new-contact-modal">
                 <header class="slds-modal__header">
-                    <button type="button"
-                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Cerrar"
-                        onclick="closeNewContact()">
-                        <span class="slds-assistive-text">Cerrar</span>
-                    </button>
-                    <h2 class="slds-text-heading_medium">Nuevo Contacto</h2>
+                    <h2 class="slds-text-heading_medium">Nuevo contacto</h2>
+                    <button type="button" class="close-button" title="Cerrar" onclick="closeNewContact()"></button>
                 </header>
-                <div class="slds-modal__content">
-                    <apex:pageBlock >
-                        <apex:pageBlockSection columns="1" title="Nuevo Contacto">
-                            <apex:inputField value="{!newContact.FirstName}" />
-                            <apex:inputField value="{!newContact.LastName}" required="true" />
-                            <apex:inputField value="{!newContact.Email}" />
-                            <apex:inputField value="{!newContact.Phone}" />
-                            <!-- <apex:inputField value="{!newContact.MobilePhone}" /> -->
-                        </apex:pageBlockSection>
-                        <apex:pageBlockButtons location="bottom">
-                            <apex:commandButton value="Guardar Contacto" action="{!saveNewContact}"
-                                reRender="caseForm,newContactForm" oncomplete="closeNewContact();" />
-                        </apex:pageBlockButtons>
-                    </apex:pageBlock>
+                <div id="errorMessageContainer" style="display: none; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 1rem; margin-bottom: 1rem; border-radius: 0.25rem;">
+                    <span id="errorMessage"></span>
                 </div>
+                <div class="slds-modal__content">
+                    <apex:pageBlock>
+                        <apex:pageBlockSection columns="1">
+                            <apex:inputField value="{!newContact.FirstName}" id="newContactFirstName" />
+                            <apex:inputField value="{!newContact.LastName}" id="newContactLastName" required="true"/>
+                            <apex:inputField value="{!newContact.Email}" id="newContactEmail" />
+                            <apex:inputField value="{!newContact.Phone}" id="newContactPhone" />
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <div class="button-container">
+                    <apex:commandButton value="Cancelar" onclick="closeNewContact(); return false;" styleClass="custom-button" />
+                    <button type="button" onclick="saveNewContactJS()" class="custom-button">Guardar contacto</button>
+                    </div>
+                </footer>
             </div>
         </div>
     </apex:form>
 </apex:page>
+
+
+
+

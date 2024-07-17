@@ -88,33 +88,33 @@
             box-shadow: 0 0 3px 2px rgba(0, 112, 210, 0.5); /* Sombra al enfocar */
         }
 
-    .button-container {
-       display: flex;
-       justify-content: space-between; /* Para espaciar los botones */
-       width: 85%; /* Asegura que los botones ocupen todo el ancho posible */
-    }
-    .custom-button, .slds-button.slds-button_brand {
-        background-color: #ffffff; /* Color de fondo */
-        border: 1px solid #dddbda; /* Borde */
-        color: #275e98; /* Color del texto */
-        padding: 0.5rem 0.75rem; /* Espaciado interno */
-        font-size: 0.75rem; /* Tamaño de la fuente */
-        font-weight: 400; /* Grosor de la fuente */
-        border-radius: 0.25rem; /* Bordes redondeados */
-        cursor: pointer; /* Cursor de puntero */
-        flex: 1; /* Asegura que ambos botones tengan el mismo tamaño */
-        margin: 0 0.25rem; /* Espacio entre los botones */
-        flex-direction: row;
-        /* text-align: center; Asegura que el texto esté centrado */
-    }
-    .custom-button:hover, .slds-button_brand:hover {
-        background-color: #f4f4f4; /* Color de fondo al hacer hover */
-        border-color: #c6c6c6; /* Color del borde al hacer hover */
-    }
-    .custom-button:focus, .slds-button.slds-button_brand:focus {
-        outline: none; /* Quitar el outline al enfocar */
-        box-shadow: 0 0 3px 2px rgba(0, 112, 210, 0.5); /* Sombra al enfocar */
-    }
+        .button-container {
+        display: flex;
+        justify-content: space-between; /* Para espaciar los botones */
+        width: 85%; /* Asegura que los botones ocupen todo el ancho posible */
+        }
+        .custom-button, .slds-button.slds-button_brand {
+            background-color: #ffffff; /* Color de fondo */
+            border: 1px solid #dddbda; /* Borde */
+            color: #275e98; /* Color del texto */
+            padding: 0.5rem 0.75rem; /* Espaciado interno */
+            font-size: 0.75rem; /* Tamaño de la fuente */
+            font-weight: 400; /* Grosor de la fuente */
+            border-radius: 0.25rem; /* Bordes redondeados */
+            cursor: pointer; /* Cursor de puntero */
+            flex: 1; /* Asegura que ambos botones tengan el mismo tamaño */
+            margin: 0 0.25rem; /* Espacio entre los botones */
+            flex-direction: row;
+            /* text-align: center; Asegura que el texto esté centrado */
+        }
+        .custom-button:hover, .slds-button_brand:hover {
+            background-color: #f4f4f4; /* Color de fondo al hacer hover */
+            border-color: #c6c6c6; /* Color del borde al hacer hover */
+        }
+        .custom-button:focus, .slds-button.slds-button_brand:focus {
+            outline: none; /* Quitar el outline al enfocar */
+            box-shadow: 0 0 3px 2px rgba(0, 112, 210, 0.5); /* Sombra al enfocar */
+        }
     
     </style>
     <script>
@@ -185,19 +185,40 @@
         function saveNewContactJS() {
             var firstName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactFirstName').value;
             var lastName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactLastName');
-            var email = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactEmail').value;
-            var phone = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactPhone').value;
+            var email = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactEmail');
+            var phone = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactPhone');
+            //Validacion de campo Apellido no vacio
             if(!lastName.value){
-                lastName.setCustomValidity('El campo apellido es obligatorio.');
-                lastName.reportValidity();
+                showErrorMessage('El campo apellido es obligatorio.');
                 return;
             }else{
                 lastName.setCustomValidity('');
             }
-
+            // Validacion de Email
+           
+            if(email.value){
+                //var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                var emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                if (!emailPattern.test(email.value)) {
+                    showErrorMessage('El campo email no es válido.');
+                    return;
+                }else{
+                    email.setCustomValidity('');
+                }
+            }
+            // Validación del campo Phone
+            // if(phone.value){
+            //     var phonePattern = /^\+?[0-9]{9,11}$/;
+            //     if (!phonePattern.test(phone.value)) {
+            //         showErrorMessage('El numero telefónico debe contener entre 9 y 11 dígitos.');
+            //         return;
+            //     }else{
+            //         phone.setCustomValidity('');
+            //     }
+            // }
             Visualforce.remoting.Manager.invokeAction(
                 '{!$RemoteAction.CreateCaseController.saveNewContact}',
-                    firstName, lastName.value, email, phone,
+                    firstName, lastName.value, email.value, phone.value,
                     function(result, event) {
                         if (event.status){  
                             if (result.status === 'success'){
@@ -208,6 +229,7 @@
                                 showSuccessMessage('Contacto creado y asignado con éxito.');
                                 document.getElementById('j_id0:newContactForm').reset();
                             }else{
+                                debugger;
                                 showErrorMessage(result.message);
                             }
                         }else{
@@ -333,6 +355,7 @@
                             <apex:inputField value="{!newContact.LastName}" id="newContactLastName" required="true"/>
                             <apex:inputField value="{!newContact.Email}" id="newContactEmail" />
                             <apex:inputField value="{!newContact.Phone}" id="newContactPhone" />
+                            
                         </apex:pageBlockSection>
                     </apex:pageBlock>
                     

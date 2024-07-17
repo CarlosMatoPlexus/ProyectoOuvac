@@ -104,7 +104,7 @@ private class CreateCaseControllerTest {
        Test.stopTest();
        // Verificación
        System.assertEquals('error', response.get('status'));
-       System.assertEquals('El contacto con este email y teléfono ya existe.', response.get('message'));
+       System.assertEquals('El contacto con este correo electrónico y teléfono ya existe.', response.get('message'));
    }
    @isTest
    static void testSaveNewContact_noEmailNoPhone() {
@@ -185,4 +185,22 @@ private class CreateCaseControllerTest {
        System.assertEquals('SoloPhone', response.get('contactName'));
        System.assertNotEquals(null, response.get('contactId'));
    }
+
+   @isTest
+    static void testSaveNewContact_fieldCustomValidationException() {
+        // Preparación
+        String firstName = 'Test';
+        String lastName = 'validacion phone';
+        String email = 'validacionPhone@test.com';
+        String phone = '12345678'; // Un teléfono que seguramente fallará la validación
+        // Ejecución
+        Test.startTest();
+        Map<String, Object> response = CreateCaseController.saveNewContact(firstName, lastName, email, phone);
+        Test.stopTest();
+        // Verificación
+        System.assertEquals('error', response.get('status'));
+        String errorMessage = (String) response.get('message');
+        System.assert(errorMessage != null, 'El mensaje de error no debe ser nulo');
+        System.assert(errorMessage.contains('El numero telefónico debe contener entre 9 y 11 dígitos.'), 'El mensaje de error debería contener El numero telefónico debe contener entre 9 y 11 dígitos.');
+    }
 }

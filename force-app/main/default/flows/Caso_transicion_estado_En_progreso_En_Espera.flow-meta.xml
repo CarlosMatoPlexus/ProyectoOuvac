@@ -249,6 +249,11 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
+        <name>FechaFormateada</name>
+        <dataType>String</dataType>
+        <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 9)</expression>
+    </formulas>
+    <formulas>
         <name>FechaHoraActual</name>
         <dataType>DateTime</dataType>
         <expression>{!$Flow.CurrentDateTime}</expression>
@@ -264,16 +269,15 @@
         <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 1)</expression>
     </formulas>
     <formulas>
-        <name>InformacionFaltanteCiudadano</name>
-        <dataType>String</dataType>
-        <expression>&apos;Información faltante ciudadano &apos;&amp; {!FechaHoraFormateada}&amp;&apos;: &apos;&amp; {!Informacion_faltante}
-&amp;&apos; - &apos;&amp; {!Obtener_Casos.Informacion_faltante_ciudadano__c}</expression>
-    </formulas>
-    <formulas>
         <name>InformacionFaltanteInterna</name>
         <dataType>String</dataType>
         <expression>&apos;Información faltante interna &apos;&amp; {!FechaHoraFormateada}&amp;&apos;: &apos;&amp; {!Informacion_faltante}
 &amp;&apos; - &apos;&amp; {!Obtener_Casos.Informacion_faltante__c}</expression>
+    </formulas>
+    <formulas>
+        <name>UltimaInformacionFaltanteInterna</name>
+        <dataType>String</dataType>
+        <expression>&apos;Información faltante interna: &apos; &amp;&apos; &apos; &amp; {!Informacion_faltante} &amp;&apos; del día &apos;&amp; &apos; &apos; &amp;{!FechaFormateada}</expression>
     </formulas>
     <interviewLabel>Caso transición estado En progreso_En Espera {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Caso transición estado En progreso_En Espera Interna</label>
@@ -398,6 +402,12 @@
                 <stringValue>En espera</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Ultima_informacion_faltante_interna__c</field>
+            <value>
+                <elementReference>UltimaInformacionFaltanteInterna</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -444,6 +454,12 @@
             <field>Status</field>
             <value>
                 <stringValue>En espera</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ultima_informacion_faltante_interna__c</field>
+            <value>
+                <elementReference>UltimaInformacionFaltanteInterna</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Informacion_faltante__c</fullName>
-    <label>Información faltante interna</label>
+    <fullName>Ultima_informacion_faltante_interna__c</fullName>
+    <label>Última información faltante interna</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
-    <visibleLines>5</visibleLines>
+    <visibleLines>3</visibleLines>
 </CustomField>

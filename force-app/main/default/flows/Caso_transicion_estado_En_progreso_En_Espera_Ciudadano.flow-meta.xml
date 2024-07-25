@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>60.0</apiVersion>
     <assignments>
-        <name>Asignar_Email_a_Apellido</name>
+        <name>Asignar_Email_a_Apellido </name>
         <label>Asignar Email a Apellido</label>
-        <locationX>866</locationX>
-        <locationY>881</locationY>
+        <locationX>1267</locationX>
+        <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>NombreCompleto.lastName</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Asignar_Telefono_a_Apellido</name>
         <label>Asignar Telefono a Apellido</label>
-        <locationX>1281</locationX>
-        <locationY>987</locationY>
+        <locationX>1369</locationX>
+        <locationY>981</locationY>
         <assignmentItems>
             <assignToReference>NombreCompleto.lastName</assignToReference>
             <operator>Add</operator>
@@ -36,9 +36,24 @@
     <decisions>
         <name>Apellido_vacio</name>
         <label>Apellido vacio</label>
-        <locationX>811</locationX>
-        <locationY>721</locationY>
+        <locationX>1200</locationX>
+        <locationY>598</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Tiene_contact_asociado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Obtener_Casos.ContactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actualizar_estado_En_Espera_con_contact_asociado</targetReference>
+            </connector>
+            <label>Tiene contact asociado</label>
+        </rules>
         <rules>
             <name>Si_Apellido_Vacio</name>
             <conditionLogic>and</conditionLogic>
@@ -73,10 +88,10 @@
     <decisions>
         <name>Buscar_ciudadano</name>
         <label>Buscar ciudadano</label>
-        <locationX>897</locationX>
-        <locationY>353</locationY>
+        <locationX>750</locationX>
+        <locationY>652</locationY>
         <defaultConnector>
-            <targetReference>Ingreso_Datos_ciudadano</targetReference>
+            <targetReference>Apellido_vacio</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -105,8 +120,8 @@
     <decisions>
         <name>Campo_a_rellenar_en_Apellido</name>
         <label>Campo a rellenar en Apellido</label>
-        <locationX>1101</locationX>
-        <locationY>816</locationY>
+        <locationX>1389</locationX>
+        <locationY>667</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Rellenar_con_Email</name>
@@ -143,9 +158,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Email.value</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue></stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -164,8 +179,8 @@
     <decisions>
         <name>Ciudadano_identificado</name>
         <label>Ciudadano identificado</label>
-        <locationX>573</locationX>
-        <locationY>349</locationY>
+        <locationX>576</locationX>
+        <locationY>383</locationY>
         <defaultConnector>
             <targetReference>Verifque_la_informacion</targetReference>
         </defaultConnector>
@@ -174,35 +189,35 @@
             <name>Si</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Obtener_Caso.ContactId</leftValueReference>
+                <leftValueReference>Obtener_Casos.ContactId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Obtener_Caso.ContactEmail</leftValueReference>
+                <leftValueReference>Obtener_Casos.ContactEmail</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Obtener_Caso.ContactMobile</leftValueReference>
+                <leftValueReference>Obtener_Casos.ContactMobile</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Obtener_Caso.ContactPhone</leftValueReference>
+                <leftValueReference>Obtener_Casos.ContactPhone</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Actualizar_estado_caso_Pendiente_con_contact_asociado</targetReference>
+                <targetReference>Ventana_Informacion_faltante</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -210,10 +225,10 @@
     <decisions>
         <name>Existe_ciudadano</name>
         <label>Existe ciudadano</label>
-        <locationX>510</locationX>
-        <locationY>588</locationY>
+        <locationX>571</locationX>
+        <locationY>800</locationY>
         <defaultConnector>
-            <targetReference>Ingreso_Datos_ciudadano</targetReference>
+            <targetReference>Apellido_vacio</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Existe ciudadano</defaultConnectorLabel>
         <rules>
@@ -227,7 +242,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Actualizar_estado_caso_Pendiente</targetReference>
+                <targetReference>Actualizar_estado_En_Espera</targetReference>
             </connector>
             <label>Si Existe ciudadano</label>
         </rules>
@@ -235,8 +250,8 @@
     <decisions>
         <name>Ingreso_Datos_ciudadano</name>
         <label>Ingreso Datos ciudadano?</label>
-        <locationX>939</locationX>
-        <locationY>601</locationY>
+        <locationX>1109</locationX>
+        <locationY>360</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si_Datos</name>
@@ -256,7 +271,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Apellido_vacio</targetReference>
+                <targetReference>Ventana_Informacion_faltante</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -280,10 +295,45 @@
             <label>No</label>
         </rules>
     </decisions>
-    <description>Flujo de transición de estado del caso de Abierta a Pendiente. Validando que el caso tenga al menos 1 dato de contacto.</description>
+    <dynamicChoiceSets>
+        <name>PicklistEstadoEnEspera</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Estado_En_espera__c</picklistField>
+        <picklistObject>Case</picklistObject>
+        <sortOrder>Asc</sortOrder>
+    </dynamicChoiceSets>
     <environments>Default</environments>
-    <interviewLabel>Caso transición estado Abierto_Pendiente {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Caso transición estado Abierto_Pendiente</label>
+    <formulas>
+        <name>FechaHoraActual</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime}</expression>
+    </formulas>
+    <formulas>
+        <name>FechaHoraAjustada</name>
+        <dataType>DateTime</dataType>
+        <expression>DATETIMEVALUE(TEXT({!$Flow.CurrentDateTime} + (2/24)))</expression>
+    </formulas>
+    <formulas>
+        <name>FechaHoraFormateada</name>
+        <dataType>String</dataType>
+        <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 1)</expression>
+    </formulas>
+    <formulas>
+        <name>InformacionFaltanteCiudadano</name>
+        <dataType>String</dataType>
+        <expression>&apos;Información faltante ciudadano &apos;&amp; {!FechaHoraFormateada}&amp;&apos;: &apos;&amp; {!Informacion_faltante}
+&amp;&apos; - &apos;&amp; {!Obtener_Casos.Informacion_faltante_ciudadano__c}</expression>
+    </formulas>
+    <formulas>
+        <name>InformacionFaltanteInterna</name>
+        <dataType>String</dataType>
+        <expression>&apos;Información faltante interna &apos;&amp; {!FechaHoraFormateada}&amp;&apos;: &apos;&amp; {!Informacion_faltante}
+&amp;&apos; - &apos;&amp; {!Obtener_Casos.Informacion_faltante__c}</expression>
+    </formulas>
+    <interviewLabel>Caso transición estado En progreso_En Espera Ciudadano {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Caso transición estado En progreso_En Espera Ciudadano</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -306,11 +356,11 @@
     <recordCreates>
         <name>Crear_contacto_ciudadano</name>
         <label>Crear contacto ciudadano</label>
-        <locationX>484</locationX>
-        <locationY>1007</locationY>
+        <locationX>562</locationX>
+        <locationY>1002</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
-            <targetReference>Actualizar_estado_caso_Pendiente</targetReference>
+            <targetReference>Actualizar_estado_En_Espera</targetReference>
         </connector>
         <inputAssignments>
             <field>Email</field>
@@ -341,8 +391,8 @@
     <recordLookups>
         <name>get_Ciudadano</name>
         <label>get Ciudadano</label>
-        <locationX>805</locationX>
-        <locationY>505</locationY>
+        <locationX>579</locationX>
+        <locationY>659</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Existe_ciudadano</targetReference>
@@ -369,10 +419,10 @@
         </outputAssignments>
     </recordLookups>
     <recordLookups>
-        <name>Obtener_Caso</name>
-        <label>Obtener Caso</label>
+        <name>Obtener_Casos</name>
+        <label>Obtener Casos</label>
         <locationX>584</locationX>
-        <locationY>211</locationY>
+        <locationY>212</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ciudadano_identificado</targetReference>
@@ -390,10 +440,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Actualizar_estado_caso_Pendiente</name>
-        <label>Actualizar estado caso Pendiente</label>
-        <locationX>158</locationX>
-        <locationY>624</locationY>
+        <name>Actualizar_estado_En_Espera</name>
+        <label>Actualizar estado En Espera</label>
+        <locationX>340</locationX>
+        <locationY>1009</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -412,24 +462,36 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Estado_En_espera__c</field>
+            <value>
+                <stringValue>Ciudadano</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Fecha_hora_cambio_de_estado__c</field>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Informacion_faltante_ciudadano__c</field>
+            <value>
+                <elementReference>InformacionFaltanteCiudadano</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Pendiente</stringValue>
+                <stringValue>En espera</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Actualizar_estado_caso_Pendiente_con_contact_asociado</name>
-        <label>Actualizar estado caso Pendiente con contact asociado</label>
-        <locationX>385</locationX>
-        <locationY>333</locationY>
+        <name>Actualizar_estado_En_Espera_con_contact_asociado</name>
+        <label>Actualizar estado En Espera con contact asociado</label>
+        <locationX>380</locationX>
+        <locationY>552</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -444,7 +506,13 @@
         <inputAssignments>
             <field>ContactId</field>
             <value>
-                <elementReference>Obtener_Caso.ContactId</elementReference>
+                <elementReference>Obtener_Casos.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Estado_En_espera__c</field>
+            <value>
+                <stringValue>Ciudadano</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -454,9 +522,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Informacion_faltante_ciudadano__c</field>
+            <value>
+                <elementReference>InformacionFaltanteCiudadano</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Pendiente</stringValue>
+                <stringValue>En espera</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -464,8 +538,8 @@
     <screens>
         <name>Ventana_estado_actualizado</name>
         <label>Ventana estado actualizado</label>
-        <locationX>156</locationX>
-        <locationY>412</locationY>
+        <locationX>257</locationX>
+        <locationY>697</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -478,15 +552,42 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Verifque_la_informacion</name>
-        <label>Verifque la informacion</label>
-        <locationX>745</locationX>
-        <locationY>333</locationY>
+        <name>Ventana_Informacion_faltante</name>
+        <label>Ventana Información faltante</label>
+        <locationX>794</locationX>
+        <locationY>488</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>Buscar_ciudadano</targetReference>
+        </connector>
+        <fields>
+            <name>Msj</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Seleccione el motivo por el cual el caso pasará a en espera ciudadano:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Informacion_faltante</name>
+            <dataType>String</dataType>
+            <fieldText>Información faltante</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Verifque_la_informacion</name>
+        <label>Verifque la informacion</label>
+        <locationX>924</locationX>
+        <locationY>320</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Ingreso_Datos_ciudadano</targetReference>
         </connector>
         <fields>
             <name>MsjError</name>
@@ -529,6 +630,11 @@
             <fields>
                 <name>Verifque_la_informacion_Section2_Column1</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>LblMsjContacto</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;*El ciudadano debe estar identificado con al menos un correo electrónico o un número de contacto&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -539,28 +645,6 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <fields>
-            <name>LblMsjContacto</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;*El ciudadano debe estar identificado con al menos un correo electrónico o un número de contacto&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>Email.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Telefono.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Telefono</name>
@@ -623,7 +707,7 @@
         <locationX>458</locationX>
         <locationY>48</locationY>
         <connector>
-            <targetReference>Obtener_Caso</targetReference>
+            <targetReference>Obtener_Casos</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -638,7 +722,7 @@
         <name>contactId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

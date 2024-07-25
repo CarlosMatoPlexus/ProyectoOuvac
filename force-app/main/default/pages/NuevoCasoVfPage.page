@@ -119,174 +119,189 @@
     </style>
     <script>
         function searchContacts() {
-            var searchTerm = document.getElementById('contactSearchTerm').value;
-            Visualforce.remoting.Manager.invokeAction(
-                '{!$RemoteAction.CreateCaseController.getFilteredContacts}',
-                searchTerm,
-                function (result, event) {
-                    if (event.status) {
-                        var contactList = document.getElementById('contactListContent');
-                        if (contactList) {
-                            var tableHTML = '<table class="large-table">' +
-                                '<thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Acción</th></thead><tbody>';
-                            result.forEach(function (contact) {
-                                tableHTML += '<tr>' +
-                                    '<td><a href="/' + contact.Id + '" target="_blank">' + (contact.Name ? contact.Name : '-') + '</a></td>' +
-                                    '<td>' + (contact.Email ? contact.Email : '-') + '</td>' +
-                                    '<td>' + (contact.Phone ? contact.Phone : '-') + '</td>' +
-                                    '<td><button type="button" class="slds-button slds-button_neutral" onclick="selectContact(\'' + contact.Id + '\', \'' + contact.Name + '\')">Seleccionar</button></td>' +
-                                    '</tr>';
-                            });
-                            tableHTML += '</tbody></table>';
-                            contactList.innerHTML = tableHTML;
-                        }
-                    }
-                },
-                { escape: true }
-            );
-        }
-        function selectContact(contactId, contactName) {
-            var contactField = document.getElementById('j_id0:caseForm:j_id3:j_id5:contactIdField');
-            if (contactField) {
-                contactField.value = contactId;
-            } else {
-                console.error('No se encontró el elemento caseForm:contactIdField');
-            }
-            var contactFieldDisplay = document.getElementById('contactFieldDisplay');
-            if (contactFieldDisplay) {
-                contactFieldDisplay.value = contactName;
-            }
-            var hiddenContactFieldDisplay = document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay');
-            if (hiddenContactFieldDisplay) {
-                hiddenContactFieldDisplay.value = contactName;
-            }
-            closeContactSearch();
-        }
-        function openContactSearch() {
+           var searchTerm = document.getElementById('contactSearchTerm').value;
+           Visualforce.remoting.Manager.invokeAction(
+               '{!$RemoteAction.CreateCaseController.getFilteredContacts}',
+               searchTerm,
+               function (result, event) {
+                   if (event.status) {
+                       var contactList = document.getElementById('contactListContent');
+                       if (contactList) {
+                           var tableHTML = '<table class="large-table">' +
+                               '<thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Acción</th></thead><tbody>';
+                           result.forEach(function (contact) {
+                               tableHTML += '<tr>' +
+                                   '<td><a href="/' + contact.Id + '" target="_blank">' + (contact.Name ? contact.Name : '-') + '</a></td>' +
+                                   '<td>' + (contact.Email ? contact.Email : '-') + '</td>' +
+                                   '<td>' + (contact.Phone ? contact.Phone : '-') + '</td>' +
+                                   '<td><button type="button" class="slds-button slds-button_neutral" onclick="selectContact(\'' + contact.Id + '\', \'' + contact.Name + '\')">Seleccionar</button></td>' +
+                                   '</tr>';
+                           });
+                           tableHTML += '</tbody></table>';
+                           contactList.innerHTML = tableHTML;
+                       }
+                   }
+               },
+               { escape: true }
+           );
+       }
+       function selectContact(contactId, contactName) {
+           var contactField = document.getElementById('j_id0:caseForm:j_id3:j_id5:contactIdField');
+           if (contactField) {
+               contactField.value = contactId;
+           } else {
+               console.error('No se encontró el elemento caseForm:contactIdField');
+           }
+           var contactFieldDisplay = document.getElementById('contactFieldDisplay');
+           if (contactFieldDisplay) {
+               contactFieldDisplay.value = contactName;
+           }
+           var hiddenContactFieldDisplay = document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay');
+           if (hiddenContactFieldDisplay) {
+               hiddenContactFieldDisplay.value = contactName;
+           }
+           closeContactSearch();
+       }
+       function openContactSearch() {
            document.getElementById('divContactModal').style.display = 'block';
            document.getElementById('modalBackground').style.display = 'block'; // Mostrar el fondo
-        }
-        function closeContactSearch() {
-            document.getElementById('divContactModal').style.display = 'none';
-            document.getElementById('modalBackground').style.display = 'none'; // Ocultar el fondo
-        }
-        function openNewContact() {
-            document.getElementById('divNewContactModal').style.display = 'block';
-            document.getElementById('modalBackground').style.display = 'block'; // Mostrar el fondo
-            closeContactSearchModal(); // Cerrar el modal de búsqueda si está abierto
-        }
-        function closeContactSearchModal() {
-            document.getElementById('divContactModal').style.display = 'none';
-        }
-        function closeNewContact() {
-            document.getElementById('divNewContactModal').style.display = 'none';
-            document.getElementById('modalBackground').style.display = 'none'; // Ocultar el fondo
-        }
-        function saveNewContactJS() {
-            var firstName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactFirstName').value;
-            var lastName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactLastName');
-            var email = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactEmail');
-            var phone = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactPhone');
-            //Validacion de campo Apellido no vacio
-            if(!lastName.value){
-                showErrorMessage('El campo apellido es obligatorio.');
-                return;
-            }else{
-                lastName.setCustomValidity('');
-            }
-            // Validacion de Email
-           
-            if(email.value){
-                //var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                var emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-                if (!emailPattern.test(email.value)) {
-                    showErrorMessage('El campo email no es válido.');
-                    return;
-                }else{
-                    email.setCustomValidity('');
-                }
-            }
-            // Validación del campo Phone
-            // if(phone.value){
-            //     var phonePattern = /^\+?[0-9]{9,11}$/;
-            //     if (!phonePattern.test(phone.value)) {
-            //         showErrorMessage('El numero telefónico debe contener entre 9 y 11 dígitos.');
-            //         return;
-            //     }else{
-            //         phone.setCustomValidity('');
-            //     }
-            // }
-            Visualforce.remoting.Manager.invokeAction(
-                '{!$RemoteAction.CreateCaseController.saveNewContact}',
-                    firstName, lastName.value, email.value, phone.value,
-                    function(result, event) {
-                        if (event.status){  
-                            if (result.status === 'success'){
-                                closeNewContact();
-                                document.getElementById('contactFieldDisplay').value = result.contactName;
-                                document.getElementById('j_id0:caseForm:j_id3:j_id5:contactIdField').value = result.contactId;
-                                document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay').value = result.contactName;
-                                showSuccessMessage('Contacto creado y asignado con éxito.');
-                                document.getElementById('j_id0:newContactForm').reset();
-                            }else{
-                                debugger;
-                                showErrorMessage(result.message);
-                            }
-                        }else{
-                            showErrorMessage('Error de comunicación con el servidor.');
-                        }
-                    },
-                { escape: true }
-            );
-        }
-
-        function restoreContactFieldDisplay() {
-            var contactFieldDisplay = document.getElementById('contactFieldDisplay');
-            var hiddenContactFieldDisplay = document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay');
-            if (hiddenContactFieldDisplay && contactFieldDisplay) {
-                contactFieldDisplay.value = hiddenContactFieldDisplay.value;
-            }
-        }
-        // Llamar a la función restoreContactFieldDisplay cuando la página se carga o el formulario se restablezca
-        document.addEventListener('DOMContentLoaded', restoreContactFieldDisplay);
-
-        function validateCaseForm() {
-            // Obtener todos los elementos de entrada en el formulario
-            var inputs = document.querySelectorAll('#caseForm input[required], #caseForm select[required], #caseForm textarea[required]');
-            var isValid = true;
-            // Validar cada campo requerido
-            inputs.forEach(function(input) {
-                if (!input.value) {
-                    input.setCustomValidity('Este campo es obligatorio');
-                    input.reportValidity();
-                    isValid = false;
-                } else {
-                    input.setCustomValidity(''); // Se resetea el mensaje.
-                }
-            });
-            return isValid; // Si todos los campos son válidos, se envía el formulario
-        }
-
-        function showErrorMessage(message) {
-            var errorMessageContainer = document.getElementById('errorMessageContainer');
-            var errorMessage = document.getElementById('errorMessage');
-            errorMessage.innerHTML = message;
-            errorMessageContainer.style.display = 'block';
-            setTimeout(function() {
-                errorMessageContainer.style.display = 'none';
-            }, 5000);
-        }
-
-        function showSuccessMessage(message) {
-            var errorMessageContainer = document.getElementById('successMessageContainer');
-            var errorMessage = document.getElementById('successMessage');
-            errorMessage.innerHTML = message;
-            errorMessageContainer.style.display = 'block';
-            setTimeout(function() {
-                errorMessageContainer.style.display = 'none';
-            }, 5000);
-        }
-    </script>
+           // Agregar eventos de teclado
+           document.getElementById('contactSearchTerm').addEventListener('keydown', function(event) {
+               if (event.key === 'Enter') {
+                   searchContacts();
+                   event.preventDefault();
+               } else if (event.key === 'Escape') {
+                   closeContactSearch();
+                   event.preventDefault();
+               }
+           });
+       }
+       function closeContactSearch() {
+           document.getElementById('divContactModal').style.display = 'none';
+           document.getElementById('modalBackground').style.display = 'none'; // Ocultar el fondo
+       }
+       function openNewContact() {
+           document.getElementById('divNewContactModal').style.display = 'block';
+           document.getElementById('modalBackground').style.display = 'block'; // Mostrar el fondo
+           closeContactSearchModal(); // Cerrar el modal de búsqueda si está abierto
+           // Agregar eventos de teclado
+           document.getElementById('divNewContactModal').addEventListener('keydown', function(event) {
+               if (event.key === 'Enter') {
+                   saveNewContactJS();
+                   event.preventDefault();
+               } else if (event.key === 'Escape') {
+                   closeNewContact();
+                   event.preventDefault();
+               }
+           });
+       }
+       function closeContactSearchModal() {
+           document.getElementById('divContactModal').style.display = 'none';
+       }
+       function closeNewContact() {
+           document.getElementById('divNewContactModal').style.display = 'none';
+           document.getElementById('modalBackground').style.display = 'none'; // Ocultar el fondo
+       }
+       function saveNewContactJS() {
+           var firstName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactFirstName').value;
+           var lastName = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactLastName');
+           var email = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactEmail');
+           var phone = document.getElementById('j_id0:newContactForm:j_id25:j_id26:newContactPhone');
+           //Validacion de campo Apellido no vacio
+           if(!lastName.value){
+               showErrorMessage('El campo apellido es obligatorio.');
+               return;
+           }else{
+               lastName.setCustomValidity('');
+           }
+           // Validacion de Email
+           if(email.value){
+               //var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+               var emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+               if (!emailPattern.test(email.value)) {
+                   showErrorMessage('El campo email no es válido.');
+                   return;
+               }else{
+                   email.setCustomValidity('');
+               }
+           }
+           // Validación del campo Phone
+           // if(phone.value){
+           //     var phonePattern = /^\+?[0-9]{9,11}$/;
+           //     if (!phonePattern.test(phone.value)) {
+           //         showErrorMessage('El numero telefónico debe contener entre 9 y 11 dígitos.');
+           //         return;
+           //     }else{
+           //         phone.setCustomValidity('');
+           //     }
+           // }
+           Visualforce.remoting.Manager.invokeAction(
+               '{!$RemoteAction.CreateCaseController.saveNewContact}',
+                   firstName, lastName.value, email.value, phone.value,
+                   function(result, event) {
+                       if (event.status){  
+                           if (result.status === 'success'){
+                               closeNewContact();
+                               document.getElementById('contactFieldDisplay').value = result.contactName;
+                               document.getElementById('j_id0:caseForm:j_id3:j_id5:contactIdField').value = result.contactId;
+                               document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay').value = result.contactName;
+                               showSuccessMessage('Contacto creado y asignado con éxito.');
+                               document.getElementById('j_id0:newContactForm').reset();
+                           }else{
+                               debugger;
+                               showErrorMessage(result.message);
+                           }
+                       }else{
+                           showErrorMessage('Error de comunicación con el servidor.');
+                       }
+                   },
+               { escape: true }
+           );
+       }
+       function restoreContactFieldDisplay() {
+           var contactFieldDisplay = document.getElementById('contactFieldDisplay');
+           var hiddenContactFieldDisplay = document.getElementById('j_id0:caseForm:hiddenContactFieldDisplay');
+           if (hiddenContactFieldDisplay && contactFieldDisplay) {
+               contactFieldDisplay.value = hiddenContactFieldDisplay.value;
+           }
+       }
+       // Llamar a la función restoreContactFieldDisplay cuando la página se carga o el formulario se restablezca
+       document.addEventListener('DOMContentLoaded', restoreContactFieldDisplay);
+       function validateCaseForm() {
+           // Obtener todos los elementos de entrada en el formulario
+           var inputs = document.querySelectorAll('#caseForm input[required], #caseForm select[required], #caseForm textarea[required]');
+           var isValid = true;
+           // Validar cada campo requerido
+           inputs.forEach(function(input) {
+               if (!input.value) {
+                   input.setCustomValidity('Este campo es obligatorio');
+                   input.reportValidity();
+                   isValid = false;
+               } else {
+                   input.setCustomValidity(''); // Se resetea el mensaje.
+               }
+           });
+           return isValid; // Si todos los campos son válidos, se envía el formulario
+       }
+       function showErrorMessage(message) {
+           var errorMessageContainer = document.getElementById('errorMessageContainer');
+           var errorMessage = document.getElementById('errorMessage');
+           errorMessage.innerHTML = message;
+           errorMessageContainer.style.display = 'block';
+           setTimeout(function() {
+               errorMessageContainer.style.display = 'none';
+           }, 5000);
+       }
+       function showSuccessMessage(message) {
+           var errorMessageContainer = document.getElementById('successMessageContainer');
+           var errorMessage = document.getElementById('successMessage');
+           errorMessage.innerHTML = message;
+           errorMessageContainer.style.display = 'block';
+           setTimeout(function() {
+               errorMessageContainer.style.display = 'none';
+           }, 5000);
+       }
+</script>
     <div id="modalBackground" class="modal-background"></div>
     <apex:form id="caseForm" onsubmit="return validateCaseForm()">
     <apex:inputHidden id="hiddenContactFieldDisplay" value="{!contName}" />
@@ -322,13 +337,13 @@
                     <button type="button" class="close-button" title="Cerrar" onclick="closeContactSearch()"></button>
                 </header>
                 <div class="slds-modal__content">
-                    <apex:pageBlock>
+                    <apex:pageBlock >
                         <apex:pageBlockSection columns="2">
                             <input type="text" id="contactSearchTerm" placeholder="Buscar Contacto" />
                             <apex:commandButton value="Buscar" onclick="searchContacts();return false;" styleClass="slds-button slds-button_neutral" />
                             <apex:commandButton value="Nuevo Contacto" onclick="openNewContact();return false;" styleClass="slds-button slds-button_neutral" />
                         </apex:pageBlockSection>
-                        <apex:pageBlockSection>
+                        <apex:pageBlockSection >
                             <div id="contactListContent"></div>
                         </apex:pageBlockSection>
                     </apex:pageBlock>
@@ -349,7 +364,7 @@
                     <span id="errorMessage"></span>
                 </div>
                 <div class="slds-modal__content">
-                    <apex:pageBlock>
+                    <apex:pageBlock >
                         <apex:pageBlockSection columns="1">
                             <apex:inputField value="{!newContact.FirstName}" id="newContactFirstName" />
                             <apex:inputField value="{!newContact.LastName}" id="newContactLastName" required="true"/>
@@ -370,7 +385,3 @@
         </div>
     </apex:form>
 </apex:page>
-
-
-
-

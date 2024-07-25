@@ -91,6 +91,8 @@ public class MediatecaApiService {
                     System.debug('No items found in the response.');
                 }
                 // Actualizar last sync date en custom metadata
+                //Mediateca_Last_Sync__mdt instancia = Mediateca_Last_Sync__mdt.GetInstance('LastSyncDate').LastSyncDate__c;
+                //if (lastSyncDate == null) {
                 // ApiSyncMetadata instance = ApiSyncMetadata.getInstance();
                 // instance.LastSyncDate__c = today;
                 // update instance;

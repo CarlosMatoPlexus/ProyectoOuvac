@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>60.0</apiVersion>
     <assignments>
-        <name>Asignar_Email_a_Apellido</name>
+        <name>Asignar_Email_a_Apellido </name>
         <label>Asignar Email a Apellido</label>
         <locationX>1267</locationX>
         <locationY>839</locationY>

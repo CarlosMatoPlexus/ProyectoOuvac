@@ -1,4 +1,4 @@
-public with sharing class RouteCasesBasedOnSkills {
+public with sharing class RouteCasesBasedOnSkills  {
     public static void RouteCasesBasedOnSkills(List<Case> casesObj) {
 
         List<ServiceChannel> servChannelList = [SELECT Id, DeveloperName FROM ServiceChannel WHERE DeveloperName = 'caseChannel'];

@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Casos</fullName>
+    <active>true</active>
+    <businessProcess>Caso</businessProcess>
+    <label>Casos</label>
+    <picklistValues>
+        <picklist>Ambitos__c</picklist>
+        <values>
+            <fullName>Asesoría Jurídica %28legal%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Benestar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cultura y Deportes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Infraestructuras %28Vías y Obras%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intervención</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medio Ambiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Otras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RRHH %28Ofertas de empleo%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recaudación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tramitación electrónica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transparencia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turismo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ayuntamientos__c</picklist>
+        <values>
+            <fullName>32001 Allariz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32002 Amoeiro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32003 Arnoia A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32004 Avión</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32005 Baltar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32006 Bande</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32007 Baños de Molgas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32008 Barbadás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32009 Barco de Valdeorras O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32010 Beade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32011 Beariz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32012 Blancos Os</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32013 Boborás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32014 Bola A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32015 Bolo O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32016 Calvos de Randín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32017 Carballeda de Valdeorras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32018 Carballeda de Avia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32019 Carballiño O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32020 Cartelle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32021 Castrelo do Val</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32022 Castrelo de Miño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32023 Castro Caldelas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32024 Celanova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32025 Cenlle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32026 Coles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32027 Cortegada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32028 Cualedro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32029 Chandrexa de Queixa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32030 Entrimo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32031 Esgos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32032 Xinzo de Limia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32033 Gomesende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32034 Gudiña A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32035 Irixo O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32036 Xunqueira de Ambía</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32037 Xunqueira de Espadanedo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32038 Larouco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32039 Laza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32040 Leiro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32041 Lobeira</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32042 Lobios</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32043 Maceda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32044 Manzaneda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32045 Maside</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32046 Melón</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32047 Merca A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32048 Mezquita A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32049 Montederramo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32050 Monterrei</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32051 Muíños</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32052 Nogueira de Ramuín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32053 Oímbra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32054 Ourense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32055 Paderne de Allariz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32056 Padrenda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32057 Parada de Sil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32058 Pereiro de Aguiar O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32059 Peroxa A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32060 Petín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32061 Piñor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32062 Porqueira</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32063 Pobra de Trives A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32064 Pontedeva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32065 Punxín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32066 Quintela de Leirado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32067 Rairiz de Veiga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32068 Ramirás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32069 Ribadavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32070 San Xoán de Río</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32071 Riós</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32072 Rúa A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32073 Rubiá</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32074 San Amaro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32075 San Cibrao das Viñas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32076 San Cristovo de Cea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32077 Sandiás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32078 Sarreaus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32079 Taboadela</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32080 Teixeira A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32081 Toén</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32082 Trasmiras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32083 Veiga A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32084 Verea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32085 Verín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32086 Viana do Bolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32087 Vilamarín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32088 Vilamartín de Valdeorras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32089 Vilar de Barrio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32090 Vilar de Santos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32091 Vilardevós</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32092 Vilariño de Conso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Entidades__c</picklist>
+        <values>
+            <fullName>Allariz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amoeiro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arnoia A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avión</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baltar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bande</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Barbadás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Barco de Valdeorras O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baños de Molgas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beariz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blancos Os</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boborás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bola A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolo O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calvos de Randín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carballeda de Avia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carballeda de Valdeorras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carballiño O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cartelle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Castrelo de Miño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Castrelo do Val</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Castro Caldelas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Celanova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cenlle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chandrexa de Queixa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cortegada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cualedro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deputación</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Entrimo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esgos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gomesende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gudiña A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irixo O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Larouco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leiro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lobeira</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lobios</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maceda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manzaneda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maside</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Melón</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merca A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mezquita A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Montederramo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monterrei</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Muíños</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nogueira de Ramuín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ourense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oímbra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paderne de Allariz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Padrenda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parada de Sil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pereiro de Aguiar O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peroxa A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Petín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piñor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pobra de Trives A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pontedeva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Porqueira</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Punxín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quintela de Leirado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rairiz de Veiga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ramirás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ribadavia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riós</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rubiá</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rúa A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Amaro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Cibrao das Viñas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Cristovo de Cea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Xoán de Río</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sandiás</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sarreaus</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Taboadela</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teixeira A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Toén</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trasmiras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Veiga A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Viana do Bolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vilamartín de Valdeorras</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vilamarín</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vilar de Barrio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vilar de Santos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vilardevós</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vilariño de Conso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Xinzo de Limia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Xunqueira de Ambía</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Xunqueira de Espadanedo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Estado_En_espera__c</picklist>
+        <values>
+            <fullName>Ciudadano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interno</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Estado_finalizado__c</picklist>
+        <values>
+            <fullName>No resuelto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resuelto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Asistente virtual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presencial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>Critical</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Complex functionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instructions not clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User didn%27t attend training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

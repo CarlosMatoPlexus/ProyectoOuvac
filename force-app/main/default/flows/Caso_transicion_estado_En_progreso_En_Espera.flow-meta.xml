@@ -249,34 +249,12 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
-        <name>FechaHoraActual</name>
-        <dataType>DateTime</dataType>
-        <expression>{!$Flow.CurrentDateTime}</expression>
-    </formulas>
-    <formulas>
-        <name>FechaHoraAjustada</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Flow.CurrentDateTime} + (2/24)))</expression>
-    </formulas>
-    <formulas>
-        <name>FechaHoraFormateada</name>
+        <name>InternalComments</name>
         <dataType>String</dataType>
-        <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 1)</expression>
-    </formulas>
-    <formulas>
-        <name>InformacionFaltanteCiudadano</name>
-        <dataType>String</dataType>
-        <expression>&apos;Información faltante ciudadano &apos;&amp; {!FechaHoraFormateada}&amp;&apos;: &apos;&amp; {!Informacion_faltante}
-&amp;&apos; - &apos;&amp; {!Obtener_Casos.Informacion_faltante_ciudadano__c}</expression>
-    </formulas>
-    <formulas>
-        <name>InformacionFaltanteInterna</name>
-        <dataType>String</dataType>
-        <expression>&apos;Información faltante interna &apos;&amp; {!FechaHoraFormateada}&amp;&apos;: &apos;&amp; {!Informacion_faltante}
-&amp;&apos; - &apos;&amp; {!Obtener_Casos.Informacion_faltante__c}</expression>
+        <expression>{!Obtener_Casos.Informacion_faltante__c} &amp;&apos; - &apos;&amp; {!Informacion_faltante}</expression>
     </formulas>
     <interviewLabel>Caso transición estado En progreso_En Espera {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Caso transición estado En progreso_En Espera Interna</label>
+    <label>Caso transición estado En progreso_En Espera</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -299,8 +277,8 @@
     <recordCreates>
         <name>Crear_contacto_ciudadano</name>
         <label>Crear contacto ciudadano</label>
-        <locationX>562</locationX>
-        <locationY>1002</locationY>
+        <locationX>969</locationX>
+        <locationY>897</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
             <targetReference>Actualizar_estado_En_Espera</targetReference>
@@ -355,8 +333,8 @@
     <recordUpdates>
         <name>Actualizar_estado_En_Espera</name>
         <label>Actualizar estado En Espera</label>
-        <locationX>340</locationX>
-        <locationY>1009</locationY>
+        <locationX>808</locationX>
+        <locationY>842</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -377,7 +355,7 @@
         <inputAssignments>
             <field>Estado_En_espera__c</field>
             <value>
-                <stringValue>Interno</stringValue>
+                <elementReference>En_espera</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -389,7 +367,7 @@
         <inputAssignments>
             <field>Informacion_faltante__c</field>
             <value>
-                <elementReference>InformacionFaltanteInterna</elementReference>
+                <elementReference>InternalComments</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -403,8 +381,8 @@
     <recordUpdates>
         <name>Actualizar_estado_En_Espera_con_contact_asociado</name>
         <label>Actualizar estado En Espera con contact asociado</label>
-        <locationX>380</locationX>
-        <locationY>553</locationY>
+        <locationX>607</locationX>
+        <locationY>744</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -425,7 +403,7 @@
         <inputAssignments>
             <field>Estado_En_espera__c</field>
             <value>
-                <stringValue>Interno</stringValue>
+                <elementReference>En_espera</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -437,7 +415,7 @@
         <inputAssignments>
             <field>Informacion_faltante__c</field>
             <value>
-                <elementReference>InformacionFaltanteInterna</elementReference>
+                <elementReference>InternalComments</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -451,8 +429,8 @@
     <screens>
         <name>Ventana_estado_actualizado</name>
         <label>Ventana estado actualizado</label>
-        <locationX>257</locationX>
-        <locationY>697</locationY>
+        <locationX>639</locationX>
+        <locationY>924</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -467,8 +445,8 @@
     <screens>
         <name>Ventana_Informacion_faltante</name>
         <label>Ventana Información faltante</label>
-        <locationX>794</locationX>
-        <locationY>489</locationY>
+        <locationX>814</locationX>
+        <locationY>568</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -477,8 +455,17 @@
         </connector>
         <fields>
             <name>Msj</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Seleccione el motivo por el cual el caso pasará a en espera interna:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Seleccione el motivo por el cual el caso pasará a En espera:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>En_espera</name>
+            <choiceReferences>PicklistEstadoEnEspera</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>En espera:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Informacion_faltante</name>
@@ -495,7 +482,7 @@
         <name>Verifque_la_informacion</name>
         <label>Verifque la informacion</label>
         <locationX>924</locationX>
-        <locationY>320</locationY>
+        <locationY>321</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

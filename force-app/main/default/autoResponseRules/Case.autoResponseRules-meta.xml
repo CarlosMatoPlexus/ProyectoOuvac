@@ -12,8 +12,8 @@
             <notifyCcRecipients>true</notifyCcRecipients>
             <replyToEmail>melani.pardoroman@plexus.es</replyToEmail>
             <senderEmail>melani.pardoroman@plexus.es</senderEmail>
-            <senderName>OUVAC</senderName>
-            <template>unfiled$public/EmailToCaseReponse</template>
+            <senderName>ouvac@depourense.es</senderName>
+            <template>unfiled$public/Case_Creation_Email_Response_2</template>
         </ruleEntry>
     </autoResponseRule>
 </AutoResponseRules>

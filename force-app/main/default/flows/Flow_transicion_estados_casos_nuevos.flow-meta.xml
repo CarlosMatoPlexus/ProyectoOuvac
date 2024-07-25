@@ -539,7 +539,7 @@
         <name>que_info_tengo_0</name>
         <label>qué info tengo</label>
         <locationX>704</locationX>
-        <locationY>562</locationY>
+        <locationY>564</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>tiene_mail_y_name</name>
@@ -623,7 +623,7 @@
     <recordCreates>
         <name>create_new_contact_0</name>
         <label>create new contact</label>
-        <locationX>149</locationX>
+        <locationX>148</locationX>
         <locationY>773</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
@@ -671,7 +671,7 @@
             <field>MobilePhone</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.SuppliedPhone</elementReference>
+                <elementReference>$Record.SuppliedEmail</elementReference>
             </value>
         </filters>
         <object>Contact</object>
@@ -748,8 +748,8 @@
     <recordUpdates>
         <name>Actualizar_caso_estado_Pendiente</name>
         <label>Actualizar caso estado Pendiente</label>
-        <locationX>51</locationX>
-        <locationY>564</locationY>
+        <locationX>50</locationX>
+        <locationY>563</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status</field>
@@ -758,12 +758,6 @@
                 <stringValue>Pendiente</stringValue>
             </value>
         </filters>
-        <inputAssignments>
-            <field>Ambitos__c</field>
-            <value>
-                <elementReference>ambito</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -816,16 +810,6 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <variables>
-        <name>ambito</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>Otras</stringValue>
-        </value>
-    </variables>
     <variables>
         <name>contactId</name>
         <dataType>String</dataType>

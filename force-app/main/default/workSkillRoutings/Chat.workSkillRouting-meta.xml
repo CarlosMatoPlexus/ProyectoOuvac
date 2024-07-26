@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkSkillRouting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isActive>true</isActive>
+    <masterLabel>Chat</masterLabel>
+    <relatedEntity>MessagingSession</relatedEntity>
+    <workSkillRoutingAttributes>
+        <field>MessagingSession.ChannelType</field>
+        <isAdditionalSkill>false</isAdditionalSkill>
+        <skill>Otras</skill>
+        <skillLevel>5</skillLevel>
+        <value>WhatsApp</value>
+    </workSkillRoutingAttributes>
+    <workSkillRoutingAttributes>
+        <field>MessagingSession.ChannelType</field>
+        <isAdditionalSkill>false</isAdditionalSkill>
+        <skill>Otras</skill>
+        <skillLevel>5</skillLevel>
+        <value>Facebook</value>
+    </workSkillRoutingAttributes>
+</WorkSkillRouting>

@@ -19,10 +19,91 @@
         <profile>admin</profile>
     </omniSupervisorConfigProfile>
     <omniSupervisorConfigQueue>
-        <queue>Benestar_Cases</queue>
+        <queue>Asesoria_Juridica</queue>
     </omniSupervisorConfigQueue>
     <omniSupervisorConfigQueue>
-        <queue>Q1</queue>
+        <queue>Benestar</queue>
     </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Chat</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Contratacion</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Cultura_y_Deportes</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>General</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Infraestructuras</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Intervencion</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Medio_Ambiente</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Otras</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>RRHH</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Recaudacion</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Tramitacion_Electronica</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Transparencia</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Turismo</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigQueue>
+        <queue>Whatsapp</queue>
+    </omniSupervisorConfigQueue>
+    <omniSupervisorConfigSkill>
+        <skill>Asesoria_Juridica</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Benestar</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Contratacion</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Cultura_y_Deportes</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Infraestructuras</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Intervencion</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Medio_Ambiente</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Otras</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>RRHH</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Recaudacion</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Tramitacion_electronica</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Transparencia</skill>
+    </omniSupervisorConfigSkill>
+    <omniSupervisorConfigSkill>
+        <skill>Turismo</skill>
+    </omniSupervisorConfigSkill>
     <skillVisibility>AllSkills</skillVisibility>
 </OmniSupervisorConfig>

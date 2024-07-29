@@ -71,42 +71,10 @@
                             <value>CustomButton.Case.Estado_En_espera_ciudadano</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR (2 AND 3)</booleanFilter>
-                                <booleanFilter>1 OR ( 2 AND 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>En progreso</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>En espera</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Estado_En_espera__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Ciudadano</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.Estado_En_espera_ciudadano</value>
-                            <visibilityRule>
-                                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>En progreso</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>En espera</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Estado_En_espera__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Interno</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
@@ -825,8 +793,6 @@
             <componentInstance>
                 <componentName>force:recordDetailPanelMobile</componentName>
                 <identifier>force_recordDetailPanelMobile</identifier>
-                <componentName>force:recordDetailPanelMobile</componentName>
-                <identifier>force_recordDetailPanelMobile</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ac0a4dc4-27cc-43f9-bfb1-06b22688873a</name>
@@ -957,10 +923,6 @@
     <sobjectType>Case</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
-        <properties>
-            <name>saveOptions</name>
-            <value>[{&quot;name&quot;:&quot;UseDefaultAssignmentRule&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;},{&quot;name&quot;:&quot;triggerOtherEmail&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;}]</value>
-        </properties>
         <properties>
             <name>saveOptions</name>
             <value>[{&quot;name&quot;:&quot;UseDefaultAssignmentRule&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;},{&quot;name&quot;:&quot;triggerOtherEmail&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;}]</value>

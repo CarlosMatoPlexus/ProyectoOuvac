@@ -7,9 +7,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CustomButton.Case.Estado_Abierto_Finalizado</value>
                             <visibilityRule>
                                 <criteria>
@@ -74,10 +71,42 @@
                             <value>CustomButton.Case.Estado_En_espera_ciudadano</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR (2 AND 3)</booleanFilter>
+                                <booleanFilter>1 OR ( 2 AND 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>En progreso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>En espera</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Estado_En_espera__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Ciudadano</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Case.Estado_En_espera_ciudadano</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR (2 AND 3)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>En progreso</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>En espera</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Estado_En_espera__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Interno</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
@@ -208,12 +237,6 @@
                 <identifier>RecordSubjectField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.bodyLength__c</fieldItem>
-                <identifier>RecordbodyLength__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-a4e54ac6-bb6e-4457-a214-13e03afc652c</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -318,16 +341,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ContactPhone</fieldItem>
                 <identifier>RecordContactPhoneField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ContactMobile</fieldItem>
-                <identifier>RecordContactMobileField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ce611764-d2f8-45f8-8d3b-28eb016fd6ca</name>
@@ -812,6 +825,8 @@
             <componentInstance>
                 <componentName>force:recordDetailPanelMobile</componentName>
                 <identifier>force_recordDetailPanelMobile</identifier>
+                <componentName>force:recordDetailPanelMobile</componentName>
+                <identifier>force_recordDetailPanelMobile</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ac0a4dc4-27cc-43f9-bfb1-06b22688873a</name>
@@ -942,6 +957,10 @@
     <sobjectType>Case</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
+        <properties>
+            <name>saveOptions</name>
+            <value>[{&quot;name&quot;:&quot;UseDefaultAssignmentRule&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;},{&quot;name&quot;:&quot;triggerOtherEmail&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;}]</value>
+        </properties>
         <properties>
             <name>saveOptions</name>
             <value>[{&quot;name&quot;:&quot;UseDefaultAssignmentRule&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;},{&quot;name&quot;:&quot;triggerOtherEmail&quot;,&quot;value&quot;:&quot;SHOW_CHECKBOX_WITH_DEFAULT_OFF&quot;}]</value>

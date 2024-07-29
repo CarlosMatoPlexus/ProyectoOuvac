@@ -38,6 +38,9 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Subject</field>
             </layoutItems>
@@ -104,6 +107,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Informacion_faltante__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Informacion_faltante_ciudadano__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -297,6 +304,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
+        <masterLabel>00h5t000003A7w9</masterLabel>
         <masterLabel>00h5t000003In2h</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>

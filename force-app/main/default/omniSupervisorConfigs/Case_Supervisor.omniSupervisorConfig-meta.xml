@@ -3,14 +3,14 @@
     <isTimelineHidden>false</isTimelineHidden>
     <masterLabel>Case Supervisor</masterLabel>
     <omniSupervisorConfigAction>
-        <actionName>ChangeQueues</actionName>
-        <actionTab>AllAgents</actionTab>
-        <displayOrder>0</displayOrder>
-    </omniSupervisorConfigAction>
-    <omniSupervisorConfigAction>
         <actionName>ChangeSkills</actionName>
         <actionTab>AllAgents</actionTab>
         <displayOrder>1</displayOrder>
+    </omniSupervisorConfigAction>
+    <omniSupervisorConfigAction>
+        <actionName>ChangeQueues</actionName>
+        <actionTab>AllAgents</actionTab>
+        <displayOrder>0</displayOrder>
     </omniSupervisorConfigAction>
     <omniSupervisorConfigProfile>
         <profile>supervisor</profile>
@@ -62,9 +62,6 @@
     </omniSupervisorConfigQueue>
     <omniSupervisorConfigQueue>
         <queue>Turismo</queue>
-    </omniSupervisorConfigQueue>
-    <omniSupervisorConfigQueue>
-        <queue>Whatsapp</queue>
     </omniSupervisorConfigQueue>
     <omniSupervisorConfigSkill>
         <skill>Asesoria_Juridica</skill>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Case creation email response 2</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Case Creation Email Response 2</name>
+    <style>none</style>
+    <subject>Hemos recibido tu solicitud de Información - Caso {!Case.CaseNumber}</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

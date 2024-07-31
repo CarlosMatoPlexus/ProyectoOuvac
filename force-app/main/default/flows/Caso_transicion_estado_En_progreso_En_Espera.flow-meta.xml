@@ -311,6 +311,11 @@
         <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 9)</expression>
     </formulas>
     <formulas>
+        <name>FechaFormateada</name>
+        <dataType>String</dataType>
+        <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 9)</expression>
+    </formulas>
+    <formulas>
         <name>FechaHoraActual</name>
         <dataType>DateTime</dataType>
         <expression>{!$Flow.CurrentDateTime}</expression>
@@ -495,6 +500,12 @@
                 <elementReference>UltimaInformacionFaltanteInterna</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Ultima_informacion_faltante_interna__c</field>
+            <value>
+                <elementReference>UltimaInformacionFaltanteInterna</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -541,6 +552,12 @@
             <field>Status</field>
             <value>
                 <stringValue>En espera</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Ultima_informacion_faltante_interna__c</field>
+            <value>
+                <elementReference>UltimaInformacionFaltanteInterna</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

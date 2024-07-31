@@ -37,7 +37,7 @@
 <apex:inputField value="{!Contact.FirstName}" label="Nombre"/>
 <apex:inputField value="{!Contact.LastName}" label="Apellido"/>
 <apex:inputField value="{!Contact.Email}" label="Email"/>
-<apex:inputField value="{!Contact.MobilePhone}" label="Móvil"/>
+<!-- <apex:inputField value="{!Contact.MobilePhone}" label="Móvil"/> -->
 <apex:inputField value="{!Contact.Phone}" label="Teléfono"/>
 
 

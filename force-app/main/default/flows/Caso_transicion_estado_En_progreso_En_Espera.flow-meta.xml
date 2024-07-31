@@ -36,8 +36,8 @@
     <decisions>
         <name>Apellido_vacio</name>
         <label>Apellido vacio</label>
-        <locationX>1200</locationX>
-        <locationY>598</locationY>
+        <locationX>1109</locationX>
+        <locationY>718</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Tiene_contact_asociado</name>
@@ -83,6 +83,38 @@
                 <targetReference>Crear_contacto_ciudadano</targetReference>
             </connector>
             <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Buscar_ciudadano</name>
+        <label>Buscar ciudadano</label>
+        <locationX>1065</locationX>
+        <locationY>517</locationY>
+        <defaultConnector>
+            <targetReference>Apellido_vacio</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Email_y_phone</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Email.value</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Telefono.value</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_Ciudadano</targetReference>
+            </connector>
+            <label>Email y phone</label>
         </rules>
     </decisions>
     <decisions>
@@ -191,10 +223,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Existe_ciudadano</name>
+        <label>Existe ciudadano</label>
+        <locationX>672</locationX>
+        <locationY>817</locationY>
+        <defaultConnector>
+            <targetReference>Apellido_vacio</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Existe ciudadano</defaultConnectorLabel>
+        <rules>
+            <name>Si_Existe_ciudadano</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>contactId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actualizar_estado_En_Espera</targetReference>
+            </connector>
+            <label>Si Existe ciudadano</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Ingreso_Datos_ciudadano</name>
         <label>Ingreso Datos ciudadano?</label>
-        <locationX>1100</locationX>
-        <locationY>446</locationY>
+        <locationX>1177</locationX>
+        <locationY>290</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si_Datos</name>
@@ -254,6 +311,11 @@
         <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 9)</expression>
     </formulas>
     <formulas>
+        <name>FechaFormateada</name>
+        <dataType>String</dataType>
+        <expression>LEFT(TEXT({!FechaHoraAjustada}), LEN(TEXT({!FechaHoraAjustada})) - 9)</expression>
+    </formulas>
+    <formulas>
         <name>FechaHoraActual</name>
         <dataType>DateTime</dataType>
         <expression>{!$Flow.CurrentDateTime}</expression>
@@ -277,7 +339,7 @@
     <formulas>
         <name>UltimaInformacionFaltanteInterna</name>
         <dataType>String</dataType>
-        <expression>&apos;Información faltante interna: &apos; &amp; {!Informacion_faltante} &amp;&apos; del día &apos;&amp; {!FechaFormateada}</expression>
+        <expression>&apos;Información faltante interna: &apos; &amp;&apos; &apos; &amp; {!Informacion_faltante} &amp;&apos; del día &apos;&amp; &apos; &apos; &amp;{!FechaFormateada}</expression>
     </formulas>
     <interviewLabel>Caso transición estado En progreso_En Espera {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Caso transición estado En progreso_En Espera Interna</label>
@@ -303,8 +365,8 @@
     <recordCreates>
         <name>Crear_contacto_ciudadano</name>
         <label>Crear contacto ciudadano</label>
-        <locationX>562</locationX>
-        <locationY>1002</locationY>
+        <locationX>564</locationX>
+        <locationY>1019</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
             <targetReference>Actualizar_estado_En_Espera</targetReference>
@@ -335,6 +397,36 @@
         </inputAssignments>
         <object>Contact</object>
     </recordCreates>
+    <recordLookups>
+        <name>get_Ciudadano</name>
+        <label>get Ciudadano</label>
+        <locationX>680</locationX>
+        <locationY>693</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Existe_ciudadano</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Phone</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Telefono.value</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Email.value</elementReference>
+            </value>
+        </filters>
+        <object>Contact</object>
+        <outputAssignments>
+            <assignToReference>contactId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <recordLookups>
         <name>Obtener_Casos</name>
         <label>Obtener Casos</label>
@@ -408,6 +500,12 @@
                 <elementReference>UltimaInformacionFaltanteInterna</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Ultima_informacion_faltante_interna__c</field>
+            <value>
+                <elementReference>UltimaInformacionFaltanteInterna</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
@@ -462,6 +560,12 @@
                 <elementReference>UltimaInformacionFaltanteInterna</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Ultima_informacion_faltante_interna__c</field>
+            <value>
+                <elementReference>UltimaInformacionFaltanteInterna</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <screens>
@@ -489,7 +593,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Apellido_vacio</targetReference>
+            <targetReference>Buscar_ciudadano</targetReference>
         </connector>
         <fields>
             <name>Msj</name>
@@ -510,8 +614,8 @@
     <screens>
         <name>Verifque_la_informacion</name>
         <label>Verifque la informacion</label>
-        <locationX>924</locationX>
-        <locationY>320</locationY>
+        <locationX>880</locationX>
+        <locationY>299</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

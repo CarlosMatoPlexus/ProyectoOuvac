@@ -134,62 +134,92 @@ public class CaseTriggerHandler {
         if (caseIds == null || caseIds.isEmpty()) {
             return;
         }
-
+    
         try {
             List<EmailMessage> emailMessages = [
-                SELECT Id 
+                SELECT Id, ParentId 
                 FROM EmailMessage 
                 WHERE ParentId IN :caseIds
             ];
-
+    
             if (emailMessages.isEmpty()) {
                 return;
             }
-
+    
             Set<Id> emailMessageIds = new Set<Id>();
+            Map<Id, Id> emailMessageToCaseMap = new Map<Id, Id>();
             for (EmailMessage em : emailMessages) {
                 emailMessageIds.add(em.Id);
+                emailMessageToCaseMap.put(em.Id, em.ParentId);
             }
-
+    
             List<ContentDocumentLink> contentDocumentLinks = [
-                SELECT ContentDocumentId 
+                SELECT ContentDocumentId, LinkedEntityId 
                 FROM ContentDocumentLink 
                 WHERE LinkedEntityId IN :emailMessageIds
             ];
-
+    
             if (contentDocumentLinks.isEmpty()) {
                 return;
             }
-
+    
             Set<Id> contentDocumentIds = new Set<Id>();
             for (ContentDocumentLink cdl : contentDocumentLinks) {
                 contentDocumentIds.add(cdl.ContentDocumentId);
             }
-
+    
             List<ContentVersion> contentVersions = [
-                SELECT ContentDocumentId 
+                SELECT ContentDocumentId, ContentSize 
                 FROM ContentVersion 
                 WHERE ContentDocumentId IN :contentDocumentIds 
                 AND ContentSize > 1048576
             ];
-
+    
             Set<Id> contentDocumentIdsToDelete = new Set<Id>();
+            Map<Id, Long> contentDocumentSizeMap = new Map<Id, Long>();
             for (ContentVersion cv : contentVersions) {
                 contentDocumentIdsToDelete.add(cv.ContentDocumentId);
+                contentDocumentSizeMap.put(cv.ContentDocumentId, cv.ContentSize);
             }
-
+    
             if (contentDocumentIdsToDelete.isEmpty()) {
                 return;
             }
-
             List<ContentDocument> contentDocumentsToDelete = [
                 SELECT Id 
                 FROM ContentDocument 
                 WHERE Id IN :contentDocumentIdsToDelete
             ];
-
+    
             if (!contentDocumentsToDelete.isEmpty()) {
                 delete contentDocumentsToDelete;
+    
+                List<CaseComment> caseCommentsToInsert = new List<CaseComment>();
+                for (ContentDocument cd : contentDocumentsToDelete) {
+                    Long contentSize = contentDocumentSizeMap.get(cd.Id);
+                    
+                    Id emailMessageId = null;
+                    for (ContentDocumentLink cdl : contentDocumentLinks) {
+                        if (cdl.ContentDocumentId == cd.Id) {
+                            emailMessageId = cdl.LinkedEntityId;
+                            break;
+                        }
+                    }
+                    
+                    Id caseId = emailMessageToCaseMap.get(emailMessageId);
+                    
+                    if (caseId != null && contentSize != null) {
+                        CaseComment cc = new CaseComment();
+                        cc.ParentId = caseId;
+                        cc.CommentBody = 'El adjunto no cumple con los requisitos para poder adjuntarlo porque su tamaño es: ' + contentSize + ' bytes.';
+                        cc.IsPublished = true;
+                        caseCommentsToInsert.add(cc);
+                    }
+                }
+
+                if (!caseCommentsToInsert.isEmpty()) {
+                    insert caseCommentsToInsert;
+                }
             }
         } catch (Exception e) {
             System.debug('Error al eliminar grandes adjuntos: ' + e.getMessage());

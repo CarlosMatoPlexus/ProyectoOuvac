@@ -106,4 +106,79 @@ public class CaseTriggerHandlerTest {
         List<AsyncApexJob> jobs = [SELECT Id, JobType, Status FROM AsyncApexJob WHERE JobType = 'Future'];
         System.assertNotEquals(1, jobs.size(), 'un future job debería estar encolado');
     }
+
+    @isTest
+    static void testHandleEmailToCaseWithoutSubject_MissingTemplate() {
+        Case testCase = new Case(Subject = '', Origin = 'Email', SuppliedEmail = 'missingtemplate@example.com');
+        List<Case> testCases = new List<Case>{testCase};
+
+        Test.startTest();
+        CaseTriggerHandler.handleEmailToCaseWithoutSubject(testCases);
+        Test.stopTest();
+
+        List<Contact> contacts = [SELECT Id FROM Contact WHERE Email = 'missingtemplate@example.com'];
+        System.assertEquals(1, contacts.size(), 'No se debe insertar ningún contacto');
+
+        List<AsyncApexJob> jobs = [SELECT Id, JobType FROM AsyncApexJob WHERE JobType = 'Queueable'];
+        System.assertEquals(1, jobs.size(), 'No se debe encolar ningún job');
+    }
+
+    @isTest
+    static void testDeleteLargeAttachments_NoAttachments() {
+        Case testCase = new Case(Subject = 'Test Case No Attachments', Origin = 'Email');
+        insert testCase;
+
+        Test.startTest();
+        CaseTriggerHandler.getLargeAttachments(new List<Case>{testCase});
+        Test.stopTest();
+
+        List<ContentDocument> deletedDocuments = [SELECT Id FROM ContentDocument];
+        System.assertEquals(0, deletedDocuments.size(), 'No debe haberse borrado ningún ContentDocument');
+
+        List<CaseComment> caseComments = [SELECT Id, CommentBody FROM CaseComment WHERE ParentId = :testCase.Id];
+        System.assertEquals(0, caseComments.size(), 'No se deben haber añadido comentarios al caso');
+    }
+
+    @isTest
+    static void testGetLargeAttachments_WithCaseComment() {
+        
+        Case testCase = new Case(Subject = 'Test Case Large Attachment', Origin = 'Email');
+        insert testCase;
+
+        EmailMessage testEmailMessage = new EmailMessage(
+            ParentId = testCase.Id,
+            Subject = 'Test Email with Large Attachment',
+            Status = '3'
+        );
+        insert testEmailMessage;
+
+        Blob largeBlob = Blob.valueOf('0'.repeat(1048577));
+        ContentVersion testContentVersion = new ContentVersion(
+            Title = 'Large Document',
+            PathOnClient = 'LargeDocument.txt',
+            VersionData = largeBlob
+        );
+        insert testContentVersion;
+
+        testContentVersion = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :testContentVersion.Id];
+
+        ContentDocumentLink testContentDocumentLink = new ContentDocumentLink(
+            LinkedEntityId = testEmailMessage.Id,
+            ContentDocumentId = testContentVersion.ContentDocumentId,
+            ShareType = 'V'
+        );
+        insert testContentDocumentLink;
+
+        Test.startTest();
+        CaseTriggerHandler.getLargeAttachments(new List<Case>{testCase});
+        Test.stopTest();
+
+
+        List<ContentDocument> deletedDocuments = [SELECT Id FROM ContentDocument WHERE Id = :testContentVersion.ContentDocumentId];
+        System.assertEquals(0, deletedDocuments.size(), 'El ContentDocument debería haberse borrado');
+
+        List<CaseComment> caseComments = [SELECT Id, CommentBody FROM CaseComment WHERE ParentId = :testCase.Id];
+        System.assertEquals(1, caseComments.size(), 'Debería haberse creado un comentario en el caso');
+        System.assert(caseComments[0].CommentBody.contains('El adjunto no cumple con los requisitos para poder adjuntarlo'), 'El comentario debería indicar que el adjunto es demasiado grande');
+    }
 }

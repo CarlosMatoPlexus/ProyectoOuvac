@@ -1,5 +1,6 @@
 public class MediatecaApiService {
-    //private static final String API_ENDPOINT = 'https://depourense.seneca.tv/api/items';
+    @testVisible
+    private static Mediateca_Last_Sync__mdt lastSyncMetadata;
     private static final String Mediateca_Api_EndPoint = Mediateca_Endpoint__mdt.GetInstance('Mediateca_Url').Url__c;
     
     // Wrapper class para parsear JSON
@@ -47,18 +48,26 @@ public class MediatecaApiService {
         public String category;
         public String emblem;
     }
+    
     // Metodo para obtener el json de la Api
     public static void syncKnowledgeData() {
-        // Obtener el custom metadata de la fecha de ultima llamada a la Api
-        Date lastSyncDate = Mediateca_Last_Sync__mdt.GetInstance('LastSyncDate').LastSyncDate__c;
-        if (lastSyncDate == null) {
-            lastSyncDate = Date.today().addDays(-1); // Default to yesterday if not set
+        if (lastSyncMetadata == null) {
+            lastSyncMetadata = [SELECT LastSyncDate__c FROM Mediateca_Last_Sync__mdt WHERE DeveloperName = 'LastSyncDate' LIMIT 1];
         }
-        Date today = Date.today();
-        // Construir la Url de la Api con los parametros fecha 
-        String url = Mediateca_Api_EndPoint + '?date_from=' + lastSyncDate.format() + '&date_to=' + today.format();
-        //String url = Mediateca_Api_EndPoint;
-        System.debug('Url: '+ url);
+        DateTime lastSyncDate = lastSyncMetadata.LastSyncDate__c;
+        // Obtener el custom metadata de la fecha de ultima llamada a la Api
+        // Datetime lastSyncDate = Mediateca_Last_Sync__mdt.GetInstance('LastSyncDate').LastSyncDate__c;
+        // if (lastSyncDate == null) {
+        //     lastSyncDate = Date.today().addDays(-1); // Default to yesterday if not set
+        // }
+        //Datetime lastSyncDate = Date.today().addDays(-1);
+        Datetime today = Date.today();
+        
+        // Formatear las fechas según el formato requerido por la API
+        String lastSyncDateFormatted = formatDateTimeForApi(lastSyncDate);
+        String todayFormatted = formatDateTimeForApi(today);
+        // Construir la URL de la API con los parámetros de fecha
+        String url = Mediateca_Api_EndPoint + '?date_from=' + lastSyncDateFormatted + '&date_to=' + todayFormatted;
         HttpRequest req = new HttpRequest();
         req.setEndpoint(url);
         req.setMethod('GET');
@@ -78,24 +87,21 @@ public class MediatecaApiService {
                         apiResponse.data.itemList = (ItemList) JSON.deserialize(listJson, ItemList.class);
                     }
                 }
-                // Procesar items
                 
+                // Procesar items
                 if (apiResponse.data != null && apiResponse.data.itemList != null && apiResponse.data.itemList.items != null) {
-                    System.debug('Items found: ' + apiResponse.data.itemList.items.size());
                     Map<String, Item> itemsMap = new Map<String, Item>();
                     for (Item item : apiResponse.data.itemList.items) {
                         itemsMap.put(item.id, item);
                     }
                     upsertKnowledge(itemsMap);
+                    // Llamar a updateLastSyncDate en una transacción futura
+                    CustomMetadataUpdateService.updateLastSyncDateAsync(today);
+                    
                 } else {
                     System.debug('No items found in the response.');
                 }
-                // Actualizar last sync date en custom metadata
-                //Mediateca_Last_Sync__mdt instancia = Mediateca_Last_Sync__mdt.GetInstance('LastSyncDate').LastSyncDate__c;
-                //if (lastSyncDate == null) {
-                // ApiSyncMetadata instance = ApiSyncMetadata.getInstance();
-                // instance.LastSyncDate__c = today;
-                // update instance;
+                
             } else {
                 System.debug('HTTP request failed with status code: ' + res.getStatusCode());
             }
@@ -104,8 +110,8 @@ public class MediatecaApiService {
         }
     }
     
-    // Method to parse date and time from the string
-    private static DateTime parseDateTime(String dateTimeString) {
+    // Metodo para parsear DateTime desde un String
+    public static DateTime parseDateTime(String dateTimeString) {
         if (dateTimeString.endsWith('Z')) {
             // UTC formato sin zona horaria
             return DateTime.valueOf(dateTimeString.substring(0, 19).replace('T', ' '));
@@ -127,7 +133,7 @@ public class MediatecaApiService {
         }
     }
     
-    private static DateTime convertToSpanishTime(DateTime dateTimeUtc) {
+    public static DateTime convertToSpanishTime(DateTime dateTimeUtc) {
         // Horario estándar de España es UTC+1
         // Horario de verano es UTC+2
         Integer standardOffset = 1;
@@ -143,6 +149,7 @@ public class MediatecaApiService {
         // Ajustar el DateTime a la hora de España
         return dateTimeUtc.addHours(offset);
     }
+    
     private static Date getLastSundayOfMonth(Integer year, Integer month) {
         // Obtener el último día del mes
         Date lastDayOfMonth = Date.newInstance(year, month, Date.daysInMonth(year, month));
@@ -155,8 +162,12 @@ public class MediatecaApiService {
         return lastDayOfMonth.addDays(-daysToSubtract);
     }
     
+    // Método para formatear DateTime según el formato requerido por la API
+    public static String formatDateTimeForApi(Datetime urldateTime) {
+        return urldateTime.format('yyyy-MM-dd\'T\'HH:mm:ssXXX');
+    }
     
-    // Method to upsert knowledge articles
+    // Metodo para actualizar knowledge
     private static void upsertKnowledge(Map<String, Item> itemsMap) {
         Set<String> itemIds = itemsMap.keySet();
         List<Knowledge__kav> knowledgeList = [SELECT Id, Id_externo__c, Fecha_del_evento__c, Fecha_de_creacion__c, Fecha_de_actualizacion__c, Entidades__c, Ambitos__c, Title, Descripcion__c, Url__c   FROM Knowledge__kav WHERE Id_externo__c IN :itemIds];
@@ -168,8 +179,7 @@ public class MediatecaApiService {
         List<Knowledge__kav> toUpdate = new List<Knowledge__kav>();
         
         for (Item item : itemsMap.values()) {
-
-            System.debug('Id: '+ item.id);
+            
             DateTime eventDateTimeUtc = parseDateTime(item.event_at);
             DateTime createdDateTimeUtc = parseDateTime(item.created_at);
             DateTime updatedDateTimeUtc = parseDateTime(item.updated_at);
@@ -177,23 +187,19 @@ public class MediatecaApiService {
             DateTime createdDateTime = convertToSpanishTime(createdDateTimeUtc);
             DateTime updatedDateTime = convertToSpanishTime(updatedDateTimeUtc);
             
-            
             if (existingKnowledgeMap.containsKey(item.id)) {
                 Knowledge__kav knowledge = existingKnowledgeMap.get(item.id);
                 if (knowledge.Fecha_de_actualizacion__c < parseDateTime(item.updated_at)) {
                     // Update existing record
-                    // knowledge.Fecha_del_evento__c = parseDateTime(item.event_at);
-                    // knowledge.Fecha_de_creacion__c = parseDateTime(item.created_at);
-                    // knowledge.Fecha_de_actualizacion__c = parseDateTime(item.updated_at);
-                    
-                    
                     knowledge.Fecha_del_evento__c = eventDateTime;
                     knowledge.Fecha_de_creacion__c = createdDateTime;
                     knowledge.Fecha_de_actualizacion__c = updatedDateTime;
-                    
-                    
                     knowledge.Entidades__c = 'Deputación';
-                    knowledge.Ambitos__c = item.metadata.emblem;
+                    if(item.metadata.emblem != ''){
+                        knowledge.Ambitos__c = item.metadata.emblem;
+                    }else {
+                        knowledge.Ambitos__c = 'Transparencia';
+                    }
                     knowledge.Title = item.metadata.title;
                     knowledge.Descripcion__c = item.metadata.description;
                     knowledge.Url__c = item.href;
@@ -201,29 +207,25 @@ public class MediatecaApiService {
                 }
             } else {
                 String mediatecaRecordTypeID = Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByName().get('Mediateca').getRecordTypeId();
-                // Insert new recordº
+                // Insertar nuevo registro
                 Knowledge__kav knowledge = new Knowledge__kav();
                 knowledge.RecordTypeId = mediatecaRecordTypeID;
                 knowledge.Id_externo__c = item.id;
                 knowledge.UrlName = item.id;
                 knowledge.Descripcion__c = item.metadata.description;
                 knowledge.Url__c = item.href;
-                
                 Datetime a = Datetime.now();
-
                 knowledge.Fecha_del_evento__c = eventDateTime;
                 knowledge.Fecha_de_creacion__c = createdDateTime;
                 knowledge.Fecha_de_actualizacion__c = updatedDateTime;
-                
-                
-                // knowledge.Fecha_de_creacion__c = parseDateTime(item.created_at);
-                // knowledge.Fecha_de_actualizacion__c = parseDateTime(item.updated_at);
-                // knowledge.Fecha_del_evento__c = parseDateTime(item.event_at);
-                
-                
                 knowledge.ValidationStatus = 'Validated';
                 knowledge.Entidades__c = 'Deputación';
-                knowledge.Ambitos__c = item.metadata.emblem;
+                if(item.metadata.emblem != ''){
+                    knowledge.Ambitos__c = item.metadata.emblem;
+                }else {
+                    knowledge.Ambitos__c = 'Transparencia';
+                }
+                
                 knowledge.Title = item.metadata.title;
                 knowledge.UrlName = item.id;
                 knowledge.Language = 'es';

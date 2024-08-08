@@ -146,4 +146,32 @@ private class RouteCasesBasedOnSkillsTest {
         Case updatedCase = [SELECT Id, OwnerId FROM Case WHERE Id = :case1.Id];
         System.assertEquals(recaudacionQueue.Id, updatedCase.OwnerId, 'Owner should be reassigned to Recaudacion queue.');
     }
+
+    @isTest
+    static void testHandleAmbitosNotChange() {
+        // Fetch the test data created in the @testSetup method
+        User testUser = [SELECT Id FROM User WHERE Alias = 'tuser1' LIMIT 1];
+        Group benestarQueue = [SELECT Id FROM Group WHERE DeveloperName = 'Benestar' LIMIT 1];
+        Group recaudacionQueue = [SELECT Id FROM Group WHERE DeveloperName = 'Recaudacion' LIMIT 1];
+
+        // Create Case records
+        Case case1 = new Case(Subject = 'Case 1', ambitos__c = 'Benestar', OwnerId = testUser.Id);
+        Case case2 = new Case(Subject = 'Case 2', ambitos__c = 'Recaudación', OwnerId = testUser.Id);
+        insert new List<Case>{case1, case2};
+
+        // Call the method to be tested
+        Test.startTest();
+        RouteCasesBasedOnSkills.handleAmbitosNotChange(new List<Case>{case1, case2});
+        Test.stopTest();
+
+        // Verify that the cases have been assigned to the correct owners/queues
+        Case updatedCase1 = [SELECT Id, OwnerId FROM Case WHERE Id = :case1.Id];
+        Case updatedCase2 = [SELECT Id, OwnerId FROM Case WHERE Id = :case2.Id];
+    
+        // Case 1: Should remain with the original owner (testUser)
+        System.assertEquals(testUser.Id, updatedCase1.OwnerId, 'Owner should remain the same for Case 1 as the user has the Benestar skill.');
+
+        // Case 2: Should be reassigned to the Recaudacion queue
+        System.assertEquals(recaudacionQueue.Id, updatedCase2.OwnerId, 'Owner should be reassigned to Recaudacion queue for Case 2.');
+    }
 }

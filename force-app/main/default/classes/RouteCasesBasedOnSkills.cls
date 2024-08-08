@@ -10,6 +10,13 @@ public with sharing class RouteCasesBasedOnSkills {
         }
     
         for (Case cs : casesObj) {
+
+            if (cs.Origin == 'Presencial' || cs.Origin == 'Phone' || cs.Origin == 'Chat') {
+                continue;
+            }
+
+            System.debug('Case Origin: ' + cs.Origin);
+
             PendingServiceRouting psr = new PendingServiceRouting();
             psr.WorkItemId = cs.Id;
             psr.ServiceChannelId = serviceChannelId;
@@ -73,7 +80,6 @@ public with sharing class RouteCasesBasedOnSkills {
     public static void handleAmbitosChange(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
         
         Id benestarQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Benestar' LIMIT 1].Id;
-        Id generalQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'General' LIMIT 1].Id;
         Id recaudacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Recaudacion' LIMIT 1].Id;
         Id asesoriaJuridicaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Asesoria_Juridica' LIMIT 1].Id;
         Id contratacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Contratacion' LIMIT 1].Id;
@@ -167,6 +173,7 @@ public with sharing class RouteCasesBasedOnSkills {
                     if (canAssign) {
                         Case caseToUpdate = new Case(Id = newCase.Id);
                         caseToUpdate.OwnerId = ownerIdToAssign;
+                        caseToUpdate.Status = 'Pendiente';
                         casesToUpdate.add(caseToUpdate);
                     }
                 }
@@ -177,6 +184,98 @@ public with sharing class RouteCasesBasedOnSkills {
             update casesToUpdate;
         }
     }
+
+    @InvocableMethod(label='Handle Ambitos Change' description='Reasigna el caso si el propietario no tiene el skill para el ámbito.')
+    public static void handleAmbitosNotChange(List<Case> cases) {
+        
+        // Las IDs de las colas para los distintos ámbitos
+        Id benestarQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Benestar' LIMIT 1].Id;
+        Id recaudacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Recaudacion' LIMIT 1].Id;
+        Id asesoriaJuridicaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Asesoria_Juridica' LIMIT 1].Id;
+        Id contratacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Contratacion' LIMIT 1].Id;
+        Id culturaYdeportesQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Cultura_y_Deportes' LIMIT 1].Id;
+        Id infraestructurasQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Infraestructuras' LIMIT 1].Id;
+        Id intervencionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Intervencion' LIMIT 1].Id;
+        Id medioAmbienteQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Medio_Ambiente' LIMIT 1].Id;
+        Id otrasQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Otras' LIMIT 1].Id;
+        Id rrhhQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'RRHH' LIMIT 1].Id;
+        Id tramitacionElectronicaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Tramitacion_Electronica' LIMIT 1].Id;
+        Id transparenciaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Transparencia' LIMIT 1].Id;
+        Id turismoQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Turismo' LIMIT 1].Id;
+
+        Map<String, Id> ambitoToSkillMap = new Map<String, Id>();
+        ambitoToSkillMap.put('Benestar', getSkillId('Benestar'));
+        ambitoToSkillMap.put('Asesoría Jurídica (legal)', getSkillId('Asesoría Jurídica'));
+        ambitoToSkillMap.put('Contratación', getSkillId('Contratación'));
+        ambitoToSkillMap.put('Cultura y Deportes', getSkillId('Cultura y Deportes'));
+        ambitoToSkillMap.put('Infraestructuras (Vías y Obras)', getSkillId('Infraestructuras (Vías y Obras)'));
+        ambitoToSkillMap.put('Intervención', getSkillId('Intervención'));
+        ambitoToSkillMap.put('Medio Ambiente', getSkillId('Medio Ambiente'));
+        ambitoToSkillMap.put('RRHH (Ofertas de empleo)', getSkillId('RRHH'));
+        ambitoToSkillMap.put('Recaudación', getSkillId('Recaudación'));
+        ambitoToSkillMap.put('Tramitación electrónica', getSkillId('Tramitación electrónica'));
+        ambitoToSkillMap.put('Transparencia', getSkillId('Transparencia'));
+        ambitoToSkillMap.put('Turismo', getSkillId('Turismo'));
+        ambitoToSkillMap.put('Otras', getSkillId('Otras'));
+
+        List<Case> casesToUpdate = new List<Case>();
+        
+        for (Case caseRecord : cases) {
+            Id ownerId = caseRecord.OwnerId;
+            Id ambitoSkillId = ambitoToSkillMap.get(caseRecord.ambitos__c);
+    
+            if (ambitoSkillId != null) {
+                Set<Id> ownerSkills = new Set<Id>();
+
+                for (ServiceResource sr : [SELECT Id, RelatedRecordId, (SELECT SkillId FROM ServiceResourceSkills) FROM ServiceResource WHERE RelatedRecordId = :ownerId]) {
+                    for (ServiceResourceSkill srs : sr.ServiceResourceSkills) {
+                        ownerSkills.add(srs.SkillId);
+                    }
+                }
+
+                if (!ownerSkills.contains(ambitoSkillId)) {
+                    Id ownerIdToAssign;
+
+                    if (caseRecord.ambitos__c == 'Benestar') {
+                        ownerIdToAssign = benestarQueueId;
+                    } else if (caseRecord.ambitos__c == 'Recaudación') {
+                        ownerIdToAssign = recaudacionQueueId;
+                    } else if (caseRecord.ambitos__c == 'Asesoría Jurídica (legal)') {
+                        ownerIdToAssign = asesoriaJuridicaQueueId;
+                    } else if (caseRecord.ambitos__c == 'Contratación') {
+                        ownerIdToAssign = contratacionQueueId;
+                    } else if (caseRecord.ambitos__c == 'Cultura y Deportes') {
+                        ownerIdToAssign = culturaYdeportesQueueId;
+                    } else if (caseRecord.ambitos__c == 'Infraestructuras (Vías y Obras)') {
+                        ownerIdToAssign = infraestructurasQueueId;
+                    } else if (caseRecord.ambitos__c == 'Intervención') {
+                        ownerIdToAssign = intervencionQueueId;
+                    } else if (caseRecord.ambitos__c == 'Medio Ambiente') {
+                        ownerIdToAssign = medioAmbienteQueueId;
+                    } else if (caseRecord.ambitos__c == 'Otras') {
+                        ownerIdToAssign = otrasQueueId;
+                    } else if (caseRecord.ambitos__c == 'RRHH (Ofertas de empleo)') {
+                        ownerIdToAssign = rrhhQueueId;
+                    } else if (caseRecord.ambitos__c == 'Tramitación electrónica') {
+                        ownerIdToAssign = tramitacionElectronicaQueueId;
+                    } else if (caseRecord.ambitos__c == 'Transparencia') {
+                        ownerIdToAssign = transparenciaQueueId;
+                    } else if (caseRecord.ambitos__c == 'Turismo') {
+                        ownerIdToAssign = turismoQueueId;
+                    }
+
+                    caseRecord.OwnerId = ownerIdToAssign;
+                    caseRecord.Status = 'Pendiente'; 
+                    casesToUpdate.add(caseRecord);
+                }
+            }
+        }
+        
+        if (!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
+        }
+    }
+
     
     private static Id getSkillId(String skillName) {
         Skill skill = [SELECT Id FROM Skill WHERE MasterLabel = :skillName LIMIT 1];

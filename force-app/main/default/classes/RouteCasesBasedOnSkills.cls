@@ -189,8 +189,7 @@ public with sharing class RouteCasesBasedOnSkills {
 
     @InvocableMethod(label='Handle Ambitos Change' description='Reasigna el caso si el propietario no tiene el skill para el ámbito.')
     public static void handleAmbitosNotChange(List<Case> cases) {
-        
-        // Las IDs de las colas para los distintos ámbitos
+    
         Id benestarQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Benestar' LIMIT 1].Id;
         Id recaudacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Recaudacion' LIMIT 1].Id;
         Id asesoriaJuridicaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Asesoria_Juridica' LIMIT 1].Id;

@@ -173,7 +173,9 @@ public with sharing class RouteCasesBasedOnSkills {
                     if (canAssign) {
                         Case caseToUpdate = new Case(Id = newCase.Id);
                         caseToUpdate.OwnerId = ownerIdToAssign;
-                        caseToUpdate.Status = 'Pendiente';
+                        if (oldCase.Status == 'En Progreso' && newCase.Status != 'Finalizado') {
+                            caseToUpdate.Status = 'Pendiente';
+                        }
                         casesToUpdate.add(caseToUpdate);
                     }
                 }
@@ -265,7 +267,9 @@ public with sharing class RouteCasesBasedOnSkills {
                     }
 
                     caseRecord.OwnerId = ownerIdToAssign;
-                    caseRecord.Status = 'Pendiente'; 
+                    if (caseRecord.Status == 'En Progreso') {
+                        caseRecord.Status = 'Pendiente'; 
+                    }
                     casesToUpdate.add(caseRecord);
                 }
             }

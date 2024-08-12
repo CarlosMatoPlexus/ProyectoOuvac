@@ -91,7 +91,7 @@ private class RouteCasesBasedOnSkillsTest {
     }
     
     @isTest
-    static void testHandleAmbitosChange_NoChangeInOwner() {
+    static void testHandleAmbitosChangeNoChangeInOwner() {
         // Get the test user
         User testUser = [SELECT Id FROM User WHERE Alias = 'tuser1' LIMIT 1];
         Skill benestarSkill = [SELECT Id FROM Skill WHERE MasterLabel = 'Benestar' LIMIT 1];

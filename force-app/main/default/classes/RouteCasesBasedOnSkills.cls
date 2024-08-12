@@ -170,10 +170,10 @@ public with sharing class RouteCasesBasedOnSkills {
                         }
                     }
     
-                    if (canAssign) {
+                    if (canAssign && newCase.Status != 'Finalizado') {
                         Case caseToUpdate = new Case(Id = newCase.Id);
                         caseToUpdate.OwnerId = ownerIdToAssign;
-                        if (oldCase.Status == 'En Progreso' && newCase.Status != 'Finalizado') {
+                        if (oldCase.Status == 'En Progreso') {
                             caseToUpdate.Status = 'Pendiente';
                         }
                         casesToUpdate.add(caseToUpdate);

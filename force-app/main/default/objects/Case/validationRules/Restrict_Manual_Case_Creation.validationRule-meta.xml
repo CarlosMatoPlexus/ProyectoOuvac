@@ -7,7 +7,8 @@
     OR(
         ISPICKVAL(Origin, &quot;Email&quot;),
         ISPICKVAL(Origin, &quot;Web&quot;)
-    )
+    ),
+				NOT($Permission.CreateCaseOriginWebAndCorreoElectronico)
 )</errorConditionFormula>
     <errorMessage>El origen del caso no puede ser &quot;Correo Electrónico&quot; o &quot;Web&quot;. Por favor, revise el origen del caso.</errorMessage>
 </ValidationRule>

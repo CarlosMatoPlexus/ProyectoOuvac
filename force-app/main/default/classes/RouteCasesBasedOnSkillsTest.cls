@@ -110,6 +110,61 @@ public class RouteCasesBasedOnSkillsTest {
         // Verify OwnerId does not change
         Case updatedCase = [SELECT Id, OwnerId FROM Case WHERE Id = :cases[0].Id];
         System.assertEquals(testUser.Id, updatedCase.OwnerId, 'Owner should not change if they have the required skill.');
+    } 
+    // Test method to verify handling of ambitos__c changes
+    @isTest
+    static void testHandleAmbitosChange_AssignToCorrectQueue() {
+        // Fetch the test data created in the @testSetup method
+        User testUser = [SELECT Id FROM User WHERE Alias = 'tuser1' LIMIT 1];
+        Group benestarQueue = [SELECT Id FROM Group WHERE DeveloperName = 'Benestar' LIMIT 1];
+        Group recaudacionQueue = [SELECT Id FROM Group WHERE DeveloperName = 'Recaudacion' LIMIT 1];
+
+        // Create Case records
+        Case case1 = new Case(Subject = 'Case 1', ambitos__c = 'Benestar', OwnerId = testUser.Id);
+        insert case1;
+
+        // Simulate ambitos__c change
+        Case caseToUpdate = [SELECT Id, ambitos__c FROM Case WHERE Id = :case1.Id LIMIT 1];
+        caseToUpdate.ambitos__c = 'Recaudación';
+
+        // Call the method to be tested
+        Test.startTest();
+        RouteCasesBasedOnSkills.handleAmbitosChange(
+            new Map<Id, Case>{case1.Id => case1},
+            new Map<Id, Case>{case1.Id => caseToUpdate}
+        );
+        Test.stopTest();
+
+        // Verify that the OwnerId is updated correctly based on ambitos__c
+        Case updatedCase = [SELECT Id, OwnerId FROM Case WHERE Id = :case1.Id];
+        System.assertEquals(recaudacionQueue.Id, updatedCase.OwnerId, 'Owner should be reassigned to Recaudacion queue.');
+    }
+
+    @isTest
+    static void testHandleAmbitosNotChange() {
+        // Fetch the test data created in the @testSetup method
+        User testUser = [SELECT Id FROM User WHERE Alias = 'tuser1' LIMIT 1];
+        Group benestarQueue = [SELECT Id FROM Group WHERE DeveloperName = 'Benestar' LIMIT 1];
+        Group recaudacionQueue = [SELECT Id FROM Group WHERE DeveloperName = 'Recaudacion' LIMIT 1];
+
+        // Create Case records
+        Case case1 = new Case(Subject = 'Case 1', ambitos__c = 'Benestar', OwnerId = testUser.Id);
+        Case case2 = new Case(Subject = 'Case 2', ambitos__c = 'Recaudación', OwnerId = testUser.Id);
+        insert new List<Case>{case1, case2};
+
+        // Call the method to be tested
+        Test.startTest();
+        RouteCasesBasedOnSkills.handleAmbitosNotChange(new List<Case>{case1, case2});
+        Test.stopTest();
+
+        // Verify that the cases have been assigned to the correct owners/queues
+        Case updatedCase1 = [SELECT Id, OwnerId FROM Case WHERE Id = :case1.Id];
+        Case updatedCase2 = [SELECT Id, OwnerId FROM Case WHERE Id = :case2.Id];
+    
+        // Case 1: Should remain with the original owner (testUser)
+        System.assertEquals(testUser.Id, updatedCase1.OwnerId, 'Owner should remain the same for Case 1 as the user has the Benestar skill.');
+
+        // Case 2: Should be reassigned to the Recaudacion queue
+        System.assertEquals(recaudacionQueue.Id, updatedCase2.OwnerId, 'Owner should be reassigned to Recaudacion queue for Case 2.');
     }
 }
-

@@ -30,8 +30,8 @@ public with sharing class RouteCasesBasedOnSkills {
             List<Id> skillNeededList = new List<Id>();
     
             if (String.isBlank(cs.ambitos__c)) {
-                if (skillMap.containsKey('Otras')) {
-                    skillNeededList.add(skillMap.get('Otras'));
+                if (skillMap.containsKey('General')) {
+                    skillNeededList.add(skillMap.get('General'));
                 }
             } else {
                 if (cs.ambitos__c == 'Benestar' && skillMap.containsKey('Benestar')) {
@@ -58,8 +58,8 @@ public with sharing class RouteCasesBasedOnSkills {
                     skillNeededList.add(skillMap.get('Transparencia'));
                 } else if (cs.ambitos__c == 'Turismo' && skillMap.containsKey('Turismo')) {
                     skillNeededList.add(skillMap.get('Turismo'));
-                } else if (cs.ambitos__c == 'Otras' && skillMap.containsKey('Otras')) {
-                    skillNeededList.add(skillMap.get('Otras'));
+                } else if (cs.ambitos__c == 'Otras' && skillMap.containsKey('General')) {
+                    skillNeededList.add(skillMap.get('General'));
                 }
             }
     
@@ -106,7 +106,7 @@ public with sharing class RouteCasesBasedOnSkills {
         ambitoToSkillMap.put('Tramitación electrónica', getSkillId('Tramitación electrónica'));
         ambitoToSkillMap.put('Transparencia', getSkillId('Transparencia'));
         ambitoToSkillMap.put('Turismo', getSkillId('Turismo'));
-        ambitoToSkillMap.put('Otras', getSkillId('Otras'));
+        ambitoToSkillMap.put('Otras', getSkillId('General'));
     
         Set<Id> ownerIds = new Set<Id>();
         for (Case c : oldMap.values()) {
@@ -139,35 +139,7 @@ public with sharing class RouteCasesBasedOnSkills {
                     if (ownerSkills != null && ownerSkills.contains(newSkillId)) {
                         canAssign = false;
                     } else {
-                        if (newCase.ambitos__c == 'Benestar') {
-                            ownerIdToAssign = benestarQueueId;
-                        } else if (newCase.ambitos__c == 'Recaudación') {
-                            ownerIdToAssign = recaudacionQueueId;
-                        } else if (newCase.ambitos__c == 'Asesoría Jurídica (legal)') {
-                            ownerIdToAssign = asesoriaJuridicaQueueId;
-                        } else if (newCase.ambitos__c == 'Contratación') {
-                            ownerIdToAssign = contratacionQueueId;
-                        } else if (newCase.ambitos__c == 'Cultura y Deportes') {
-                            ownerIdToAssign = culturaYdeportesQueueId;
-                        } else if (newCase.ambitos__c == 'Infraestructuras (Vías y Obras)') {
-                            ownerIdToAssign = infraestructurasQueueId;
-                        } else if (newCase.ambitos__c == 'Intervención') {
-                            ownerIdToAssign = intervencionQueueId;
-                        } else if (newCase.ambitos__c == 'Medio Ambiente') {
-                            ownerIdToAssign = medioAmbienteQueueId;
-                        } else if (newCase.ambitos__c == 'Otras') {
-                            ownerIdToAssign = otrasQueueId;
-                        } else if (newCase.ambitos__c == 'RRHH (Ofertas de empleo)') {
-                            ownerIdToAssign = rrhhQueueId;
-                        } else if (newCase.ambitos__c == 'Tramitación electrónica') {
-                            ownerIdToAssign = tramitacionElectronicaQueueId;
-                        } else if (newCase.ambitos__c == 'Tramitación electrónica') {
-                            ownerIdToAssign = tramitacionElectronicaQueueId;
-                        } else if (newCase.ambitos__c == 'Transparencia') {
-                            ownerIdToAssign = transparenciaQueueId;
-                        } else if (newCase.ambitos__c == 'Turismo') {
-                            ownerIdToAssign = turismoQueueId;
-                        }
+                        ownerIdToAssign = (newCase.ambitos__c == 'Benestar') ? benestarQueueId : generalQueueId;
                     }
     
                     if (canAssign) {

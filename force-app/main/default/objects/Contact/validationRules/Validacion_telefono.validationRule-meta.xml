@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validacion_telefono</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+   NOT(ISBLANK(Phone)),
+   OR(
+       LEN(Phone) &lt; 9,
+       LEN(Phone) &gt; 12,
+       NOT(REGEX(Phone, &quot;^\\+?[0-9]{9,11}$&quot;))
+   )
+)</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>El numero telefónico debe contener entre 9 y 11 dígitos.</errorMessage>
+</ValidationRule>

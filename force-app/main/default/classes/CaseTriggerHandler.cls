@@ -225,4 +225,39 @@ public class CaseTriggerHandler {
             System.debug('Error al eliminar grandes adjuntos: ' + e.getMessage());
         }
     }
+
+    public static void handleCaseStatusChange(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
+        // Obtener el perfil de supervisor
+        Id supervisorProfileId = [SELECT Id FROM Profile WHERE Name = 'Supervisor' LIMIT 1].Id;
+        
+        List<Case> casesToUpdate = new List<Case>();
+        
+        for (Id caseId : newMap.keySet()) {
+            Case oldCase = oldMap.get(caseId);
+            Case newCase = newMap.get(caseId);
+            
+            // Solo ejecuta lógica si ha cambiado el campo "status"
+            if (oldCase.Status != newCase.Status) {
+                User currentUser = [SELECT Id, ProfileId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+                
+                // Verifica si el Owner del caso es una cola
+                Group queueOwner = [SELECT Id FROM Group WHERE Id = :newCase.OwnerId AND Type = 'Queue' LIMIT 1];
+                
+                if (queueOwner != null) {
+                    // Si el Owner es una cola y el usuario tiene perfil "Supervisor"
+                    if (currentUser.ProfileId == supervisorProfileId) {
+                        // Actualiza el estado y cambia el Owner al usuario actual
+                        Case caseToUpdate = new Case(Id = newCase.Id);
+                        caseToUpdate.Status = newCase.Status;
+                        caseToUpdate.OwnerId = currentUser.Id;
+                        casesToUpdate.add(caseToUpdate);
+                    }
+                }
+            }
+        }
+        
+        if (!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
+        }
+    }
 }

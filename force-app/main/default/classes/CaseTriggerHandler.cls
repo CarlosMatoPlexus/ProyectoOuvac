@@ -107,17 +107,122 @@ public class CaseTriggerHandler {
             } else {
                 System.debug('No se han encontrado casos para borrar');
             }
-        }
+    }   
 
-        public class EmailMessageData {
-            public String toAddress;
-            public String templateId;
-            public String targetObjectId;
+    public class EmailMessageData {
+        public String toAddress;
+        public String templateId;
+        public String targetObjectId;
     
-            public EmailMessageData(String toAddress, String templateId, String targetObjectId) {
-                this.toAddress = toAddress;
-                this.templateId = templateId;
-                this.targetObjectId = targetObjectId;
-            }
+        public EmailMessageData(String toAddress, String templateId, String targetObjectId) {
+            this.toAddress = toAddress;
+            this.templateId = templateId;
+            this.targetObjectId = targetObjectId;
         }
     }
+
+    public static void getLargeAttachments(List<Case> cases) {
+        Set<Id> caseIds = new Set<Id>();
+        for (Case c : cases) {
+            caseIds.add(c.Id);
+        }
+        CaseTriggerHandler.deleteLargeAttachments(caseIds);
+    }
+    
+    @future
+    public static void deleteLargeAttachments(Set<Id> caseIds) {
+        if (caseIds == null || caseIds.isEmpty()) {
+            return;
+        }
+    
+        try {
+            List<EmailMessage> emailMessages = [
+                SELECT Id, ParentId 
+                FROM EmailMessage 
+                WHERE ParentId IN :caseIds
+            ];
+    
+            if (emailMessages.isEmpty()) {
+                return;
+            }
+    
+            Set<Id> emailMessageIds = new Set<Id>();
+            Map<Id, Id> emailMessageToCaseMap = new Map<Id, Id>();
+            for (EmailMessage em : emailMessages) {
+                emailMessageIds.add(em.Id);
+                emailMessageToCaseMap.put(em.Id, em.ParentId);
+            }
+    
+            List<ContentDocumentLink> contentDocumentLinks = [
+                SELECT ContentDocumentId, LinkedEntityId 
+                FROM ContentDocumentLink 
+                WHERE LinkedEntityId IN :emailMessageIds
+            ];
+    
+            if (contentDocumentLinks.isEmpty()) {
+                return;
+            }
+    
+            Set<Id> contentDocumentIds = new Set<Id>();
+            for (ContentDocumentLink cdl : contentDocumentLinks) {
+                contentDocumentIds.add(cdl.ContentDocumentId);
+            }
+    
+            List<ContentVersion> contentVersions = [
+                SELECT ContentDocumentId, ContentSize 
+                FROM ContentVersion 
+                WHERE ContentDocumentId IN :contentDocumentIds 
+                AND ContentSize > 1048576
+            ];
+    
+            Set<Id> contentDocumentIdsToDelete = new Set<Id>();
+            Map<Id, Long> contentDocumentSizeMap = new Map<Id, Long>();
+            for (ContentVersion cv : contentVersions) {
+                contentDocumentIdsToDelete.add(cv.ContentDocumentId);
+                contentDocumentSizeMap.put(cv.ContentDocumentId, cv.ContentSize);
+            }
+    
+            if (contentDocumentIdsToDelete.isEmpty()) {
+                return;
+            }
+            List<ContentDocument> contentDocumentsToDelete = [
+                SELECT Id 
+                FROM ContentDocument 
+                WHERE Id IN :contentDocumentIdsToDelete
+            ];
+    
+            if (!contentDocumentsToDelete.isEmpty()) {
+                delete contentDocumentsToDelete;
+    
+                List<CaseComment> caseCommentsToInsert = new List<CaseComment>();
+                for (ContentDocument cd : contentDocumentsToDelete) {
+                    Long contentSize = contentDocumentSizeMap.get(cd.Id);
+                    
+                    Id emailMessageId = null;
+                    for (ContentDocumentLink cdl : contentDocumentLinks) {
+                        if (cdl.ContentDocumentId == cd.Id) {
+                            emailMessageId = cdl.LinkedEntityId;
+                            break;
+                        }
+                    }
+                    
+                    Id caseId = emailMessageToCaseMap.get(emailMessageId);
+                    
+                    if (caseId != null && contentSize != null) {
+                        CaseComment cc = new CaseComment();
+                        cc.ParentId = caseId;
+                        cc.CommentBody = 'El adjunto no cumple con los requisitos para poder adjuntarlo porque su tamaño es: ' + contentSize + ' bytes.';
+                        cc.IsPublished = true;
+                        caseCommentsToInsert.add(cc);
+                    }
+                }
+
+                if (!caseCommentsToInsert.isEmpty()) {
+                    insert caseCommentsToInsert;
+                }
+            }
+        } catch (Exception e) {
+            System.debug('Error al eliminar grandes adjuntos: ' + e.getMessage());
+        }
+    }
+}

@@ -12,7 +12,7 @@ trigger CaseTrigger on Case (before insert, before update, after insert, after u
         if (Trigger.isUpdate) {
             CaseTriggerHandler.handleEmailToCaseToDelete(Trigger.new);
             RouteCasesBasedOnSkills.handleAmbitosChange(Trigger.oldMap, Trigger.newMap);
-            //CaseTriggerHandler.handleCaseStatusChange(Trigger.oldMap, Trigger.newMap);
+            RouteCasesBasedOnSkills.handleCaseStatusChange(Trigger.oldMap, Trigger.newMap);
         } 
     }
 }

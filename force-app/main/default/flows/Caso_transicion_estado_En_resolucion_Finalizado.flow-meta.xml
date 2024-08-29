@@ -57,14 +57,6 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>Ayuntamientos</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Ayuntamientos__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
         <name>Entidades</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -151,8 +143,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_no_resuelto</name>
         <label>Actualizar estado caso finalizado no resuelto</label>
-        <locationX>336</locationX>
-        <locationY>516</locationY>
+        <locationX>339</locationX>
+        <locationY>519</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -205,8 +197,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_resuelto</name>
         <label>Actualizar estado caso finalizado resuelto</label>
-        <locationX>555</locationX>
-        <locationY>199</locationY>
+        <locationX>556</locationX>
+        <locationY>202</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -259,8 +251,8 @@
     <screens>
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
-        <locationX>240</locationX>
-        <locationY>231</locationY>
+        <locationX>241</locationX>
+        <locationY>237</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -308,7 +300,7 @@
                     <defaultValue>
                         <elementReference>Obtener_casos.Entidades__c</elementReference>
                     </defaultValue>
-                    <fieldText>Entidad 1</fieldText>
+                    <fieldText>Entidades</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
@@ -362,7 +354,7 @@
             <targetReference>Obtener_casos</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>caseId</name>
         <dataType>String</dataType>

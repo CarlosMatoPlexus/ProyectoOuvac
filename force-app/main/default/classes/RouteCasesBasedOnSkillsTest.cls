@@ -49,7 +49,7 @@ private class RouteCasesBasedOnSkillsTest {
 
     @isTest
     static void testRouteCasesBasedOnSkills() {
-        // Create Case records
+        
         List<Case> cases = new List<Case>{
             new Case(Subject = 'Case 1', ambitos__c = 'Benestar'),
             new Case(Subject = 'Case 2', ambitos__c = 'Contratación'),
@@ -68,29 +68,26 @@ private class RouteCasesBasedOnSkillsTest {
         };
         insert cases;
 
-        // Ensure no existing PendingServiceRouting
         List<PendingServiceRouting> existingPSRs = [SELECT Id FROM PendingServiceRouting WHERE WorkItemId IN :cases];
         delete existingPSRs;
 
-        // Call the method to be tested
         Test.startTest();
         RouteCasesBasedOnSkills.RouteCasesBasedOnSkills(cases);
         Test.stopTest();
 
-        // Verify PendingServiceRouting and SkillRequirement records
         List<PendingServiceRouting> psrs = [SELECT Id, WorkItemId, IsReadyForRouting FROM PendingServiceRouting WHERE WorkItemId IN :cases];
         System.assertEquals(14, psrs.size(), 'There should be 14 PendingServiceRouting records.');
 
         List<SkillRequirement> skillRequirements = [SELECT Id, SkillId, RelatedRecordId FROM SkillRequirement WHERE RelatedRecordId IN :psrs];
         System.assertEquals(14, skillRequirements.size(), 'There should be 14 SkillRequirement records.');
 
-        // Verify that PendingServiceRouting records are ready for routing
         for (PendingServiceRouting psr : psrs) {
             System.assertEquals(true, psr.IsReadyForRouting, 'PendingServiceRouting should be ready for routing.');
         }
     }
-    
+
     @isTest
+    static void testHandleAmbitosChangeNoChangeInOwner() {
     static void testHandleAmbitosChangeNoChangeInOwner() {
         // Get the test user
         User testUser = [SELECT Id FROM User WHERE Alias = 'tuser1' LIMIT 1];
@@ -118,6 +115,7 @@ private class RouteCasesBasedOnSkillsTest {
         Case updatedCase = [SELECT Id, OwnerId FROM Case WHERE Id = :cases[0].Id];
         System.assertEquals(testUser.Id, updatedCase.OwnerId, 'Owner should not change if they have the required skill.');
     } 
+
     // Test method to verify handling of ambitos__c changes
     @isTest
     static void testHandleAmbitosChange_AssignToCorrectQueue() {
@@ -131,7 +129,7 @@ private class RouteCasesBasedOnSkillsTest {
         insert case1;
 
         // Simulate ambitos__c change
-        Case caseToUpdate = [SELECT Id, ambitos__c FROM Case WHERE Id = :case1.Id LIMIT 1];
+        Case caseToUpdate = [SELECT Id, ambitos__c, status FROM Case WHERE Id = :case1.Id LIMIT 1];
         caseToUpdate.ambitos__c = 'Recaudación';
 
         // Call the method to be tested
@@ -173,5 +171,32 @@ private class RouteCasesBasedOnSkillsTest {
 
         // Case 2: Should be reassigned to the Recaudacion queue
         System.assertEquals(recaudacionQueue.Id, updatedCase2.OwnerId, 'Owner should be reassigned to Recaudacion queue for Case 2.');
+    }
+    
+    @isTest
+    static void testHandleCaseStatusChange() {
+        // Fetch the test user created in test setup
+        User testUser = [SELECT Id FROM User WHERE Alias = 'tuser1' LIMIT 1];
+
+        // Create a new case with initial status as 'En Progreso'
+        Case testCase = new Case(Subject = 'Test Case', Status = 'En progreso', Origin = 'Presencial', OwnerId = testUser.Id);
+        insert testCase;
+
+        // Create a map to simulate the old and new values of the case
+        Map<Id, Case> oldMap = new Map<Id, Case>();
+        oldMap.put(testCase.Id, new Case(Id = testCase.Id, Status = 'En progreso'));
+
+        Map<Id, Case> newMap = new Map<Id, Case>();
+        newMap.put(testCase.Id, new Case(Id = testCase.Id, Status = 'Finalizado'));
+
+        // Call the handleCaseStatusChange method
+        Test.startTest();
+        RouteCasesBasedOnSkills.handleCaseStatusChange(oldMap, newMap);
+        Test.stopTest();
+
+        // Retrieve the updated case and assert that the OwnerId was updated to the current user
+        Case updatedCase = [SELECT Id, OwnerId, Status FROM Case WHERE Id = :testCase.Id];
+        System.assertEquals(UserInfo.getUserId(), updatedCase.OwnerId, 'The case owner should be updated to the current user.');
+        System.assertEquals('En progreso', updatedCase.Status, 'The case status should remain as Finalizado.');
     }
 }

@@ -1,21 +1,33 @@
 public with sharing class RouteCasesBasedOnSkills {
+
+    private static Id getSkillId(String skillName) {
+        Skill skill = [SELECT Id FROM Skill WHERE MasterLabel = :skillName LIMIT 1];
+        return (skill != null) ? skill.Id : null;
+    }
+
     public static void RouteCasesBasedOnSkills(List<Case> casesObj) {
+        
         
         List<ServiceChannel> servChannelList = [SELECT Id, DeveloperName FROM ServiceChannel WHERE DeveloperName = 'caseChannel'];
         Id serviceChannelId = servChannelList[0].Id;
+        
         
         Map<String, Id> skillMap = new Map<String, Id>();
         for (Skill skillObj : [SELECT Id, MasterLabel FROM Skill]) {
             skillMap.put(skillObj.MasterLabel, skillObj.Id);
         }
         
+        
         for (Case cs : casesObj) {
+            
             
             if (cs.Origin == 'Presencial' || cs.Origin == 'Phone' || cs.Origin == 'Chat') {
                 continue;
             }
             
+            
             System.debug('Case Origin: ' + cs.Origin);
+            
             
             PendingServiceRouting psr = new PendingServiceRouting();
             psr.WorkItemId = cs.Id;
@@ -27,7 +39,9 @@ public with sharing class RouteCasesBasedOnSkills {
             psr.IsReadyForRouting = false;
             insert psr;
             
+            
             List<Id> skillNeededList = new List<Id>();
+            
             
             if (String.isBlank(cs.ambitos__c)) {
                 if (skillMap.containsKey('Otras')) {
@@ -63,6 +77,7 @@ public with sharing class RouteCasesBasedOnSkills {
                 }
             }
             
+            
             List<SkillRequirement> lstSkillReq = new List<SkillRequirement>();
             for (Id skillNeeded : skillNeededList) {
                 SkillRequirement skillreq = new SkillRequirement();
@@ -72,6 +87,7 @@ public with sharing class RouteCasesBasedOnSkills {
                 lstSkillReq.add(skillreq);
             }
             insert lstSkillReq;
+            
             
             psr.IsReadyForRouting = true;
             update psr;
@@ -93,6 +109,7 @@ public with sharing class RouteCasesBasedOnSkills {
         Id transparenciaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Transparencia' LIMIT 1].Id;
         Id turismoQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Turismo' LIMIT 1].Id;
         
+        
         Map<String, Id> ambitoToSkillMap = new Map<String, Id>();
         ambitoToSkillMap.put('Benestar', getSkillId('Benestar'));
         ambitoToSkillMap.put('Asesoría Jurídica (legal)', getSkillId('Asesoría Jurídica'));
@@ -108,10 +125,12 @@ public with sharing class RouteCasesBasedOnSkills {
         ambitoToSkillMap.put('Turismo', getSkillId('Turismo'));
         ambitoToSkillMap.put('Otras', getSkillId('Otras'));
         
+        
         Set<Id> ownerIds = new Set<Id>();
         for (Case c : oldMap.values()) {
             ownerIds.add(c.OwnerId);
         }
+        
         
         Map<Id, Set<Id>> userSkillsMap = new Map<Id, Set<Id>>();
         for (ServiceResource sr : [SELECT Id, RelatedRecordId, Name, (SELECT SkillId FROM ServiceResourceSkills) FROM ServiceResource WHERE RelatedRecordId IN :ownerIds]) {
@@ -123,17 +142,21 @@ public with sharing class RouteCasesBasedOnSkills {
             }
         }
         
+        
         List<Case> casesToUpdate = new List<Case>();
+        
         
         for (Id caseId : newMap.keySet()) {
             Case oldCase = oldMap.get(caseId);
             Case newCase = newMap.get(caseId);
+            
             
             if (oldCase.ambitos__c != newCase.ambitos__c) {
                 Id newSkillId = ambitoToSkillMap.get(newCase.ambitos__c);
                 if (newSkillId != null) {
                     Boolean canAssign = true;
                     Id ownerIdToAssign = oldCase.OwnerId;
+                    
                     
                     Set<Id> ownerSkills = userSkillsMap.get(oldCase.OwnerId);
                     if (ownerSkills != null && ownerSkills.contains(newSkillId)) {
@@ -171,8 +194,13 @@ public with sharing class RouteCasesBasedOnSkills {
                     }
                     
                     if (canAssign && newCase.Status != 'Finalizado') {
+                    
+                    if (canAssign && newCase.Status != 'Finalizado') {
                         Case caseToUpdate = new Case(Id = newCase.Id);
                         caseToUpdate.OwnerId = ownerIdToAssign;
+                        if (oldCase.Status == 'En Progreso') {
+                            caseToUpdate.Status = 'Pendiente';
+                        }
                         if (oldCase.Status == 'En Progreso') {
                             caseToUpdate.Status = 'Pendiente';
                         }
@@ -182,10 +210,12 @@ public with sharing class RouteCasesBasedOnSkills {
             }
         }
         
+        
         if (!casesToUpdate.isEmpty()) {
             update casesToUpdate;
         }
     }
+    
     
     @InvocableMethod(label='Handle Ambitos Change' description='Reasigna el caso si el propietario no tiene el skill para el ámbito.')
     public static void handleAmbitosNotChange(List<Case> cases) {
@@ -205,6 +235,7 @@ public with sharing class RouteCasesBasedOnSkills {
         Id transparenciaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Transparencia' LIMIT 1].Id;
         Id turismoQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Turismo' LIMIT 1].Id;
         
+        
         Map<String, Id> ambitoToSkillMap = new Map<String, Id>();
         ambitoToSkillMap.put('Benestar', getSkillId('Benestar'));
         ambitoToSkillMap.put('Asesoría Jurídica (legal)', getSkillId('Asesoría Jurídica'));
@@ -220,14 +251,17 @@ public with sharing class RouteCasesBasedOnSkills {
         ambitoToSkillMap.put('Turismo', getSkillId('Turismo'));
         ambitoToSkillMap.put('Otras', getSkillId('Otras'));
         
+        
         List<Case> casesToUpdate = new List<Case>();
         
         for (Case caseRecord : cases) {
             Id ownerId = caseRecord.OwnerId;
             Id ambitoSkillId = ambitoToSkillMap.get(caseRecord.ambitos__c);
             
+            
             if (ambitoSkillId != null) {
                 Set<Id> ownerSkills = new Set<Id>();
+                
                 
                 for (ServiceResource sr : [SELECT Id, RelatedRecordId, (SELECT SkillId FROM ServiceResourceSkills) FROM ServiceResource WHERE RelatedRecordId = :ownerId]) {
                     for (ServiceResourceSkill srs : sr.ServiceResourceSkills) {
@@ -235,8 +269,10 @@ public with sharing class RouteCasesBasedOnSkills {
                     }
                 }
                 
+                
                 if (!ownerSkills.contains(ambitoSkillId)) {
                     Id ownerIdToAssign;
+                    
                     
                     if (caseRecord.ambitos__c == 'Benestar') {
                         ownerIdToAssign = benestarQueueId;
@@ -266,7 +302,11 @@ public with sharing class RouteCasesBasedOnSkills {
                         ownerIdToAssign = turismoQueueId;
                     }
                     
+                    
                     caseRecord.OwnerId = ownerIdToAssign;
+                    if (caseRecord.Status == 'En Progreso') {
+                        caseRecord.Status = 'Pendiente';
+                    }
                     if (caseRecord.Status == 'En Progreso') {
                         caseRecord.Status = 'Pendiente';
                     }
@@ -279,10 +319,26 @@ public with sharing class RouteCasesBasedOnSkills {
             update casesToUpdate;
         }
     }
+
+    public static void handleCaseStatusChange(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
+        List<Case> casesToUpdate = new List<Case>();
     
+        for (Id caseId : newMap.keySet()) {
+            Case oldCase = oldMap.get(caseId);
+            Case newCase = newMap.get(caseId);
     
-    private static Id getSkillId(String skillName) {
-        Skill skill = [SELECT Id FROM Skill WHERE MasterLabel = :skillName LIMIT 1];
-        return (skill != null) ? skill.Id : null;
+            if (oldCase.Status != newCase.Status) {
+                if (newCase.Status == 'Finalizado' || newCase.Status == 'Cerrado') {
+                    Case caseToUpdate = new Case(Id = newCase.Id);
+                    caseToUpdate.OwnerId = UserInfo.getUserId();
+                    casesToUpdate.add(caseToUpdate);
+                }
+            }
+        }
+    
+        if (!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
+        }
     }
 }
+

@@ -225,4 +225,38 @@ public class CaseTriggerHandler {
             System.debug('Error al eliminar grandes adjuntos: ' + e.getMessage());
         }
     }
+
+    public static void validateStatus(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
+
+        User currentUserProfile = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String userProfileName = currentUserProfile.Profile.Name;
+    
+        if (userProfileName == 'Agente') {
+            for (Id caseId : newMap.keySet()) {
+                Case newCase = newMap.get(caseId);
+                Case oldCase = oldMap.get(caseId);
+    
+                if (oldCase.Status != newCase.Status) {
+                    if (oldCase.Status == 'Abierto' && newCase.Status != 'Finalizado' && newCase.Status != 'Pendiente' && newCase.Status != 'En progreso') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'Pendiente' && newCase.Status != 'En progreso') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'En progreso' && newCase.Status != 'Finalizado' && newCase.Status != 'En espera' && newCase.Status != 'Pendiente') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'En espera' && newCase.Status != 'En resolucion') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'En resolucion' && newCase.Status != 'Finalizado') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'Finalizado' && newCase.Status != 'Pendiente') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,4 +1,10 @@
 public with sharing class RouteCasesBasedOnSkills {
+
+    private static Id getSkillId(String skillName) {
+        Skill skill = [SELECT Id FROM Skill WHERE MasterLabel = :skillName LIMIT 1];
+        return (skill != null) ? skill.Id : null;
+    }
+
     public static void RouteCasesBasedOnSkills(List<Case> casesObj) {
         
         List<ServiceChannel> servChannelList = [SELECT Id, DeveloperName FROM ServiceChannel WHERE DeveloperName = 'caseChannel'];
@@ -279,10 +285,30 @@ public with sharing class RouteCasesBasedOnSkills {
             update casesToUpdate;
         }
     }
+
+    public static void handleCaseStatusChange(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
+        
+        User currentUserProfile = [SELECT Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String userProfileName = currentUserProfile.Profile.Name;
     
+        List<Case> casesToUpdate = new List<Case>();
     
-    private static Id getSkillId(String skillName) {
-        Skill skill = [SELECT Id FROM Skill WHERE MasterLabel = :skillName LIMIT 1];
-        return (skill != null) ? skill.Id : null;
+        for (Id caseId : newMap.keySet()) {
+            Case oldCase = oldMap.get(caseId);
+            Case newCase = newMap.get(caseId);
+    
+            if (oldCase.Status != newCase.Status) {
+                
+                if ((newCase.Status == 'Finalizado' || newCase.Status == 'Cerrado') && userProfileName != 'Agente') {
+                    Case caseToUpdate = new Case(Id = newCase.Id);
+                    caseToUpdate.OwnerId = UserInfo.getUserId();
+                    casesToUpdate.add(caseToUpdate);
+                }
+            }
+        }
+    
+        if (!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
+        }
     }
 }

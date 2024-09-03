@@ -9,5 +9,5 @@
       $Profile.Name  = &apos;Agente&apos; 
 
      )</errorConditionFormula>
-    <errorMessage>No puede modificar este campo manualmente. Por favor, reclasifique el caso, reasígnelo o contacte con su supervisor.</errorMessage>
+    <errorMessage>No puede modificar este campo. Por favor, reclasifique el caso, reasígnelo o contacte con su supervisor.</errorMessage>
 </ValidationRule>

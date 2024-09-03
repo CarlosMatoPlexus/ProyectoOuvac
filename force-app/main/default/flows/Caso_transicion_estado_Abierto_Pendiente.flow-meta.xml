@@ -36,8 +36,8 @@
     <decisions>
         <name>Apellido_vacio</name>
         <label>Apellido vacio</label>
-        <locationX>811</locationX>
-        <locationY>721</locationY>
+        <locationX>739</locationX>
+        <locationY>727</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si_Apellido_Vacio</name>
@@ -68,38 +68,6 @@
                 <targetReference>Crear_contacto_ciudadano</targetReference>
             </connector>
             <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Buscar_ciudadano</name>
-        <label>Buscar ciudadano</label>
-        <locationX>897</locationX>
-        <locationY>353</locationY>
-        <defaultConnector>
-            <targetReference>Ingreso_Datos_ciudadano</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Email_y_phone</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Email.value</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Telefono.value</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>get_Ciudadano</targetReference>
-            </connector>
-            <label>Email y phone</label>
         </rules>
     </decisions>
     <decisions>
@@ -164,8 +132,8 @@
     <decisions>
         <name>Ciudadano_identificado</name>
         <label>Ciudadano identificado</label>
-        <locationX>573</locationX>
-        <locationY>349</locationY>
+        <locationX>574</locationX>
+        <locationY>409</locationY>
         <defaultConnector>
             <targetReference>Verifque_la_informacion</targetReference>
         </defaultConnector>
@@ -208,35 +176,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Existe_ciudadano</name>
-        <label>Existe ciudadano</label>
-        <locationX>510</locationX>
-        <locationY>588</locationY>
-        <defaultConnector>
-            <targetReference>Ingreso_Datos_ciudadano</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Existe ciudadano</defaultConnectorLabel>
-        <rules>
-            <name>Si_Existe_ciudadano</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>contactId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Actualizar_estado_caso_Pendiente</targetReference>
-            </connector>
-            <label>Si Existe ciudadano</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Ingreso_Datos_ciudadano</name>
         <label>Ingreso Datos ciudadano?</label>
-        <locationX>939</locationX>
-        <locationY>601</locationY>
+        <locationX>735</locationX>
+        <locationY>574</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si_Datos</name>
@@ -339,36 +282,6 @@
         <object>Contact</object>
     </recordCreates>
     <recordLookups>
-        <name>get_Ciudadano</name>
-        <label>get Ciudadano</label>
-        <locationX>805</locationX>
-        <locationY>505</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Existe_ciudadano</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Phone</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Telefono.value</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Email</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Email.value</elementReference>
-            </value>
-        </filters>
-        <object>Contact</object>
-        <outputAssignments>
-            <assignToReference>contactId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
         <name>Obtener_Caso</name>
         <label>Obtener Caso</label>
         <locationX>584</locationX>
@@ -392,8 +305,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_Pendiente</name>
         <label>Actualizar estado caso Pendiente</label>
-        <locationX>158</locationX>
-        <locationY>624</locationY>
+        <locationX>298</locationX>
+        <locationY>626</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -428,8 +341,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_Pendiente_con_contact_asociado</name>
         <label>Actualizar estado caso Pendiente con contact asociado</label>
-        <locationX>385</locationX>
-        <locationY>333</locationY>
+        <locationX>384</locationX>
+        <locationY>393</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -480,13 +393,13 @@
     <screens>
         <name>Verifque_la_informacion</name>
         <label>Verifque la informacion</label>
-        <locationX>745</locationX>
-        <locationY>333</locationY>
+        <locationX>767</locationX>
+        <locationY>414</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Buscar_ciudadano</targetReference>
+            <targetReference>Ingreso_Datos_ciudadano</targetReference>
         </connector>
         <fields>
             <name>MsjError</name>

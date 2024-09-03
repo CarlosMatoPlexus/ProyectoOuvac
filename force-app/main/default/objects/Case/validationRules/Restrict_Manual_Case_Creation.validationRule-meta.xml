@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Manual_Case_Creation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISNEW(),
+    OR(
+        ISPICKVAL(Origin, &quot;Email&quot;),
+        ISPICKVAL(Origin, &quot;Web&quot;)
+    ),
+				NOT($Permission.CreateCaseOriginWebAndCorreoElectronico)
+)</errorConditionFormula>
+    <errorMessage>El origen del caso no puede ser &quot;Correo Electrónico&quot; o &quot;Web&quot;. Por favor, revise el origen del caso.</errorMessage>
+</ValidationRule>

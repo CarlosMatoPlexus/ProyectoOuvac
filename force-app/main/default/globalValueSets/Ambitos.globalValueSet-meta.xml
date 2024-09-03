@@ -16,19 +16,14 @@
         <label>Medio Ambiente</label>
     </customValue>
     <customValue>
-        <fullName>Intervención</fullName>
+        <fullName>Intervención y Recaudación</fullName>
         <default>false</default>
-        <label>Intervención</label>
+        <label>Intervención y Recaudación</label>
     </customValue>
     <customValue>
-        <fullName>Recaudación</fullName>
+        <fullName>Asuntos Sociales (Benestar)</fullName>
         <default>false</default>
-        <label>Recaudación</label>
-    </customValue>
-    <customValue>
-        <fullName>Benestar</fullName>
-        <default>false</default>
-        <label>Benestar</label>
+        <label>Asuntos Sociales (Benestar)</label>
     </customValue>
     <customValue>
         <fullName>Turismo</fullName>
@@ -67,4 +62,4 @@
     </customValue>
     <masterLabel>Ámbitos</masterLabel>
     <sorted>false</sorted>
-</GlobalValueSet> 
+</GlobalValueSet>

@@ -41,5 +41,5 @@
     <standardLabel>New</standardLabel>
     <targetObject>Case</targetObject>
     <targetParentField>Parent</targetParentField>
-    <type>Create</type> 
+    <type>Create</type>
 </QuickAction>

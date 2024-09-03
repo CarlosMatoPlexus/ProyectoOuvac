@@ -38,9 +38,6 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Subject</field>
             </layoutItems>
@@ -107,10 +104,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Informacion_faltante__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Informacion_faltante_ciudadano__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

@@ -3,15 +3,18 @@
     <actionCalls>
         <name>Recordatorio_Caso_en_espera</name>
         <label>Recordatorio Caso en espera</label>
-        <locationX>634</locationX>
-        <locationY>536</locationY>
+        <locationX>633</locationX>
+        <locationY>704</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>For_Obtener_casos_En_espera_interna</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>$Record.Owner:User.Email</elementReference>
+                <elementReference>For_Obtener_casos_En_espera_interna.Owner:User.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -32,12 +35,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>relatedRecordId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
         <nameSegment>emailSimple</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -45,31 +42,58 @@
     <decisions>
         <name>Hay_casos_en_espera_interna_para_recordar</name>
         <label>Hay casos en espera interna para recordar?</label>
-        <locationX>627</locationX>
-        <locationY>281</locationY>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <locationX>580</locationX>
+        <locationY>441</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Si_0</name>
+            <name>Si</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Status</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Obtener_casos_En_espera_interna</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>En espera</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>For_Obtener_casos_En_espera_interna</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Estado_En_espera__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Obtener_casos_En_espera_interna</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Interno</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Pasaron_7_dias</name>
+        <label>Pasaron 7 dias?</label>
+        <locationX>433</locationX>
+        <locationY>702</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Si_7_dias</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Pasaron_7_dias__c</leftValueReference>
+                <leftValueReference>Pasaron7dias</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>For_Obtener_casos_En_espera_interna.Fecha_hora_cambio_de_estado_old__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -77,10 +101,45 @@
             </connector>
             <label>Si</label>
         </rules>
+        <rules>
+            <name>No_7_dias</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Pasaron7dias</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>For_Obtener_casos_En_espera_interna.Fecha_hora_cambio_de_estado_old__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>Pasaron7dias</name>
+        <dataType>Boolean</dataType>
+        <expression>MOD(TODAY() - DATEVALUE({!For_Obtener_casos_En_espera_interna.Fecha_hora_cambio_de_estado__c}), 7) ==0</expression>
+    </formulas>
     <interviewLabel>Caso transición estado En espera Interno_Envio correo {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Caso transición estado En espera Interno_Envio correo</label>
+    <loops>
+        <name>For_Obtener_casos_En_espera_interna</name>
+        <label>For Obtener casos En espera interna</label>
+        <locationX>450</locationX>
+        <locationY>504</locationY>
+        <collectionReference>Obtener_casos_En_espera_interna</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Pasaron_7_dias</targetReference>
+        </nextValueConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -100,9 +159,12 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <start>
-        <locationX>511</locationX>
-        <locationY>2</locationY>
+    <recordLookups>
+        <name>Obtener_casos_En_espera_interna</name>
+        <label>Obtener casos En espera interna</label>
+        <locationX>584</locationX>
+        <locationY>286</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Hay_casos_en_espera_interna_para_recordar</targetReference>
         </connector>
@@ -121,18 +183,21 @@
                 <stringValue>Interno</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>Pasaron_7_dias__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>458</locationX>
+        <locationY>47</locationY>
+        <connector>
+            <targetReference>Obtener_casos_En_espera_interna</targetReference>
+        </connector>
         <object>Case</object>
         <schedule>
             <frequency>Daily</frequency>
-            <startDate>2024-07-03</startDate>
-            <startTime>13:26:00.000Z</startTime>
+            <startDate>2024-06-07</startDate>
+            <startTime>02:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
@@ -140,6 +205,6 @@
     <textTemplates>
         <name>CuerpoMail</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Hola {!$Record.Owner:User.Name}!&lt;/p&gt;&lt;p&gt;El caso {!$Record.CaseNumber} continua en &lt;strong&gt;En espera, &lt;/strong&gt;a la espera de:&lt;/p&gt;&lt;p&gt;&lt;strong&gt;{!$Record.Ultima_informacion_faltante_interna__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Por favor de haber obtenido la información faltante actualizar el estado del mismo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Si desea ver el caso &lt;a href=&quot;https://ouvacdepourense--sandcarlos.sandbox.lightning.force.com/lightning/r/Case/{!$Record.Id}/view&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Click aquí&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Muchas gracias!&lt;/p&gt;</text>
+        <text>&lt;p&gt;Hola {!For_Obtener_casos_En_espera_interna.Owner:User.Name}!&lt;/p&gt;&lt;p&gt;El caso {!For_Obtener_casos_En_espera_interna.CaseNumber} continua en estado &lt;strong&gt;En espera&lt;/strong&gt;. Por favor de haber obtenido la informacion faltante actualizar el estado del mismo.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Si desea ver el caso &lt;a href=&quot;https://ouvacdepourense--sandcarlos.sandbox.lightning.force.com/lightning/r/Case/{!$Record.Id}/view&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Click aquí&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Muchas gracias!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</text>
     </textTemplates>
 </Flow>

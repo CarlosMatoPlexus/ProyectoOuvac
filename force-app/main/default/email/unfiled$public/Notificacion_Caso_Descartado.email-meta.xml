@@ -5,7 +5,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Notificación Caso Descartado</name>
     <style>none</style>
-    <subject>Necesitamos que revise su solicitud</subject>
+    <subject>Su solicitud de información ha sido rechazada</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

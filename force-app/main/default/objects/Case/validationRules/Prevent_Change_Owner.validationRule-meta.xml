@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Change_Owner</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT(ISNEW()), 
+
+      ISCHANGED( OwnerId ), 
+
+      $Profile.Name  = &apos;Agente&apos; 
+
+     )</errorConditionFormula>
+    <errorMessage>No puede modificar este campo manualmente. Por favor, reclasifique el caso, reasígnelo o contacte con su supervisor.</errorMessage>
+</ValidationRule>

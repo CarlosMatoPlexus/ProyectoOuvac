@@ -181,4 +181,61 @@ public class CaseTriggerHandlerTest {
         System.assertEquals(1, caseComments.size(), 'Debería haberse creado un comentario en el caso');
         System.assert(caseComments[0].CommentBody.contains('El adjunto no cumple con los requisitos para poder adjuntarlo'), 'El comentario debería indicar que el adjunto es demasiado grande');
     }
+
+    @isTest
+    static void testValidateStatus() {
+        Profile agenteProfile = [SELECT Id FROM Profile WHERE Name = 'Agente' LIMIT 1];
+
+        User agenteUser = new User(
+            FirstName = 'Test',
+            LastName = 'User',
+            Alias = 'tuser',
+            Email = 'testuser@example.com',
+            Username = 'testuser@example.com' + System.currentTimeMillis(),
+            ProfileId = agenteProfile.Id,
+            TimeZoneSidKey = 'GMT',
+            LocaleSidKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US'
+        );
+        insert agenteUser;
+
+        Case caseAbierto = new Case(Subject = 'Caso Abierto', Origin = 'Email', Status = 'Abierto');
+        Case casePendiente = new Case(Subject = 'Caso Pendiente', Origin = 'Email', Status = 'Pendiente');
+        Case caseEnProgreso = new Case(Subject = 'Caso En Progreso', Origin = 'Email', Status = 'En progreso');
+        Case caseEnEspera = new Case(Subject = 'Caso En Espera', Origin = 'Email', Status = 'En espera');
+        Case caseEnResolucion = new Case(Subject = 'Caso En Resolución', Origin = 'Email', Status = 'En resolucion');
+        Case caseFinalizado = new Case(Subject = 'Caso Finalizado', Origin = 'Email', Status = 'Finalizado');
+        
+        insert new List<Case>{caseAbierto, casePendiente, caseEnProgreso, caseEnEspera, caseEnResolucion, caseFinalizado};
+
+        caseAbierto.Status = 'Finalizado';  // Estado inválido desde 'Abierto'
+        casePendiente.Status = 'Finalizado'; // Estado inválido desde 'Pendiente'
+        caseEnProgreso.Status = 'Abierto';   // Estado inválido desde 'En progreso'
+        caseEnEspera.Status = 'Finalizado';  // Estado inválido desde 'En espera'
+        caseEnResolucion.Status = 'En progreso';  // Estado inválido desde 'En resolución'
+        caseFinalizado.Status = 'Abierto';   // Estado inválido desde 'Finalizado'
+        
+        List<Case> casesToUpdate = new List<Case>{caseAbierto, casePendiente, caseEnProgreso, caseEnEspera, caseEnResolucion, caseFinalizado};
+        
+        Map<Id, Case> oldMap = new Map<Id, Case>([SELECT Id, Status FROM Case WHERE Id IN :casesToUpdate]);
+
+        Test.startTest();
+
+        System.runAs(agenteUser) {
+            try {
+                update casesToUpdate;
+            } catch (DmlException e) {
+                System.debug('Se capturó una DmlException: ' + e.getMessage());
+            }
+        }
+
+        Test.stopTest();
+
+        List<Case> updatedCases = [SELECT Id, Status FROM Case WHERE Id IN :casesToUpdate];
+        
+        for (Case updatedCase : updatedCases) {
+            System.assertEquals(oldMap.get(updatedCase.Id).Status, updatedCase.Status, 'El cambio de estado no fue válido y no debería haberse aplicado');
+        }
+    }
 }

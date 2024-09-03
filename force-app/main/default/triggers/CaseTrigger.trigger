@@ -3,6 +3,9 @@ trigger CaseTrigger on Case (before insert, before update, after insert, after u
         if (Trigger.isInsert) {
             CaseTriggerHandler.findEmailSubjectEmpty(Trigger.new);
         }
+        if (Trigger.isUpdate) {
+            CaseTriggerHandler.validateStatus(Trigger.oldMap, Trigger.newMap);
+        }
     }
     if (Trigger.isAfter) {
         if (Trigger.isInsert) {

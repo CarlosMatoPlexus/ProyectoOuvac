@@ -226,38 +226,37 @@ public class CaseTriggerHandler {
         }
     }
 
-    public static void handleCaseStatusChange(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
-        // Obtener el perfil de supervisor
-        Id supervisorProfileId = [SELECT Id FROM Profile WHERE Name = 'Supervisor' LIMIT 1].Id;
-        
-        List<Case> casesToUpdate = new List<Case>();
-        
-        for (Id caseId : newMap.keySet()) {
-            Case oldCase = oldMap.get(caseId);
-            Case newCase = newMap.get(caseId);
-            
-            // Solo ejecuta lógica si ha cambiado el campo "status"
-            if (oldCase.Status != newCase.Status) {
-                User currentUser = [SELECT Id, ProfileId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-                
-                // Verifica si el Owner del caso es una cola
-                Group queueOwner = [SELECT Id FROM Group WHERE Id = :newCase.OwnerId AND Type = 'Queue' LIMIT 1];
-                
-                if (queueOwner != null) {
-                    // Si el Owner es una cola y el usuario tiene perfil "Supervisor"
-                    if (currentUser.ProfileId == supervisorProfileId) {
-                        // Actualiza el estado y cambia el Owner al usuario actual
-                        Case caseToUpdate = new Case(Id = newCase.Id);
-                        caseToUpdate.Status = newCase.Status;
-                        caseToUpdate.OwnerId = currentUser.Id;
-                        casesToUpdate.add(caseToUpdate);
+    public static void validateStatus(Map<Id, Case> oldMap, Map<Id, Case> newMap) {
+
+        User currentUserProfile = [SELECT Id, Profile.Name FROM User WHERE Id = :UserInfo.getUserId()];
+        String userProfileName = currentUserProfile.Profile.Name;
+    
+        if (userProfileName == 'Agente') {
+            for (Id caseId : newMap.keySet()) {
+                Case newCase = newMap.get(caseId);
+                Case oldCase = oldMap.get(caseId);
+    
+                if (oldCase.Status != newCase.Status) {
+                    if (oldCase.Status == 'Abierto' && newCase.Status != 'Finalizado' && newCase.Status != 'Pendiente' && newCase.Status != 'En progreso') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'Pendiente' && newCase.Status != 'En progreso') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'En progreso' && newCase.Status != 'Finalizado' && newCase.Status != 'En espera' && newCase.Status != 'Pendiente') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'En espera' && newCase.Status != 'En resolucion') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'En resolucion' && newCase.Status != 'Finalizado') {
+                        newCase.addError('Cambio de estado no válido');
+                    }
+                    else if (oldCase.Status == 'Finalizado' && newCase.Status != 'Pendiente') {
+                        newCase.addError('Cambio de estado no válido');
                     }
                 }
             }
-        }
-        
-        if (!casesToUpdate.isEmpty()) {
-            update casesToUpdate;
         }
     }
 }

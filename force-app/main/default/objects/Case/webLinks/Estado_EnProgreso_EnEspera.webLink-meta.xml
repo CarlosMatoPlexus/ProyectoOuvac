@@ -5,7 +5,7 @@
     <displayType>button</displayType>
     <encodingKey>UTF-8</encodingKey>
     <linkType>url</linkType>
-    <masterLabel>Estado En espera</masterLabel>
+    <masterLabel>Estado En espera interno</masterLabel>
     <openType>replace</openType>
     <protected>false</protected>
     <url>/flow/Caso_transicion_estado_En_progreso_En_Espera?caseId={!Case.Id}&amp;retURL=/{!Case.Id}</url>

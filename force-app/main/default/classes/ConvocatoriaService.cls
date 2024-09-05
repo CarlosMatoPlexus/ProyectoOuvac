@@ -277,7 +277,6 @@ public class ConvocatoriaService {
                     knowOtraLengua.RecordTypeId = convocatoriaRecordTypeID;
                     
                     knowOtraLengua.ValidationStatus = 'Validated';
-                    //knowOtraLengua.PublishStatus = 'Online';
                     knowOtraLengua.Entidades__c = 'Deputación';
                     knowOtraLengua.Ambitos__c = 'Contratación';
                     knowOtraLengua.UrlName = knowCastellano.code_bdns__c;
@@ -290,23 +289,12 @@ public class ConvocatoriaService {
                     
                     insert lstKnowledge;
                     
-                    // List<Knowledge__kav> knowlegeToUpdate = new List<Knowledge__kav>();
-                    // knowlegeToUpdate = [SELECT Id,PublishStatus, KnowledgeArticleId FROM Knowledge__kav WHERE RecordTypeId =: convocatoriaRecordTypeID AND PublishStatus = 'Draft'];
                     List<KnowledgeArticleVersion> lstKnowPublish = new List<KnowledgeArticleVersion>();
                     lstKnowPublish = [SELECT Id, KnowledgeArticleId, PublishStatus FROM KnowledgeArticleVersion WHERE PublishStatus = 'Draft'];
                     for(KnowledgeArticleVersion know : lstKnowPublish){
                         KbManagement.PublishingService.publishArticle(know.KnowledgeArticleId, true);
                     }
                     system.debug('lstKnowPublish: '+lstKnowPublish);
-                    // List<Knowledge__kav> knowlegeToUpdate = new List<Knowledge__kav>();
-                    // knowlegeToUpdate = [SELECT Id,PublishStatus FROM Knowledge__kav WHERE RecordTypeId =: convocatoriaRecordTypeID AND PublishStatus = 'Draft'];
-                    // if(knowlegeToUpdate.size()>0){
-                    //     for(Knowledge__kav knowlege : knowlegeToUpdate){
-                    //         knowlege.PublishStatus = 'Online';
-                    //     }
-                    //     update knowlegeToUpdate;
-                    //     System.debug('Todas las knowledge updates: '+ knowlegeToUpdate.size());
-                    // }
                 }
             } catch (Exception ex) {
                 System.debug('Ocurrió un error al procesar la convocatoria: ' + ex.getMessage());

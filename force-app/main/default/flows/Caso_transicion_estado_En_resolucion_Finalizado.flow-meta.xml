@@ -57,6 +57,14 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>Ayuntamientos</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Ayuntamientos__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>Entidades</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -91,12 +99,12 @@
     <formulas>
         <name>NoResolucionConcatenacion</name>
         <dataType>String</dataType>
-        <expression>&apos;Caso no resuelto &apos;&amp;{!FechaHoraFormateada}&amp; &apos;: &apos;&amp; {!ResolucionLong}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_no_resolucion__c}</expression>
+        <expression>&apos;Caso no resuelto &apos;&amp;{!FechaHoraFormateada}&amp; &apos;: &apos;&amp; {!Resolucion}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_no_resolucion__c}</expression>
     </formulas>
     <formulas>
         <name>ResolucionConcatenacion</name>
         <dataType>String</dataType>
-        <expression>&apos;Resolución del caso &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!ResolucionLong}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_Resolucion__c}</expression>
+        <expression>&apos;Resolución del caso &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!Resolucion}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_Resolucion__c}</expression>
     </formulas>
     <interviewLabel>Caso transición estado En resolución_Finalizado {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Caso transición estado En resolución_Finalizado</label>
@@ -143,8 +151,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_no_resuelto</name>
         <label>Actualizar estado caso finalizado no resuelto</label>
-        <locationX>339</locationX>
-        <locationY>519</locationY>
+        <locationX>336</locationX>
+        <locationY>516</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -197,8 +205,8 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizado_resuelto</name>
         <label>Actualizar estado caso finalizado resuelto</label>
-        <locationX>556</locationX>
-        <locationY>202</locationY>
+        <locationX>555</locationX>
+        <locationY>199</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -251,8 +259,8 @@
     <screens>
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
-        <locationX>241</locationX>
-        <locationY>237</locationY>
+        <locationX>240</locationX>
+        <locationY>231</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -275,9 +283,10 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>ResolucionLong</name>
+            <name>Resolucion</name>
+            <dataType>String</dataType>
             <fieldText>Descripción</fieldText>
-            <fieldType>LargeTextArea</fieldType>
+            <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
@@ -299,7 +308,7 @@
                     <defaultValue>
                         <elementReference>Obtener_casos.Entidades__c</elementReference>
                     </defaultValue>
-                    <fieldText>Entidades</fieldText>
+                    <fieldText>Entidad 1</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
@@ -353,7 +362,7 @@
             <targetReference>Obtener_casos</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>caseId</name>
         <dataType>String</dataType>

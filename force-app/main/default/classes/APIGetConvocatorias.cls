@@ -2,7 +2,7 @@ public class APIGetConvocatorias {
     public static void obtenerConvocatorias() {
         // Token de autenticación
         String token = APILoginService.login();
-        //String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjU0NTEwMjksImV4cCI6MTcyNTQ1NDYyOSwicm9sZXMiOlsiUk9MRV9VU0VSIiwxMF0sInVzZXJuYW1lIjoiZ25vc3MifQ.tApPX9xirySkSjTx3uVcPKMsTUe22r0cSq6pl0q8vuJ2laBHcH4NfAtGJu9SmaF51tvhRGQB0zbNAOuscSuUf-WlTzhf__AMiDyJx7HVA46bD2Prf_kJLUBjN5p_nRMpd8i01ZCLV6UzfoKQ54A28V5a4KDdD-H1lJEg8K1R0hR6GEFYlMgbtdlnPwosQ4g5zBWxwrVjhNO_ebKB6y4kFag8m8eyIvacwZysQmIf2FkZqEE7h_ics0VFI6CA2Wy0AH_R20mxKkfGsT6a_ZYbGDTJv1sOJ4qK9fqOnRymfP4mBsz0b8nHdwWpT9saZfoYlYssQXWttRJ9Hwb9SDJvgA';
+        //String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjU1MzE4MjcsImV4cCI6MTcyNTUzNTQyNywicm9sZXMiOlsiUk9MRV9VU0VSIiwxMF0sInVzZXJuYW1lIjoiZ25vc3MifQ.ZCnBg4OnGwiVPto6hLJj6qivGjOmwEb_YxXAVmMdKrE8V3Ul9z3zaYPqGRHvukrXqTuf7svFQ6oB3uHJStuhUWGd2TeBxI9AmDDOua_ZwRWyesfVazk4BE4NoBwhNcI2bmAGj62eMrxzE5NwZOtAWDQ69kMX7kB6LZOOA2iVK5nzzbBxI-a1BcvBv4OZEtcZe6w0GOB3r82mdmVVt21h50cwRn58DFIsYY330zzt0mWvpjZIRwVbr0C_AZAbff6vc3OLK_lp7EToQ2qD-jyn1kGnHsXEgiYNgMCNxwvdRbggdKBi1gAvcvQCDqIh5QOB46GFlZbLE45b5jIkv-mnBg';
         System.debug('Token: '+ token );
         if (token == null || token == '') {
             System.debug('No se pudo obtener el token');
@@ -24,6 +24,7 @@ public class APIGetConvocatorias {
                 Map<String, Object> convocatoria = (Map<String, Object>) obj;
                 String codeBdn = (String) convocatoria.get('code_bdns');
                 //codeBdns.add('773553');
+                //codeBdns.add('384926');
                 codeBdns.add(codeBdn);
                 //break;
             }
@@ -55,15 +56,15 @@ public class APIGetConvocatorias {
             HttpResponse res = http.send(req);
             if (res.getStatusCode() == 200) {
                 Blob responseBlob = Blob.valueOf(res.getBody());
-                System.debug(responseBlob.size());
+                System.debug('Tamaño del archivo: '+responseBlob.size());
                 detallesJson.add(res.getBody());
-                //Integer maxSize = 120000;
-                // if (responseBlob.size() > maxSize) {
-                //     System.debug('Respuesta demasiado grande para procesar: ' + res.getBody().length());
-                //     continue;
-                // }else {
-                //     detallesJson.add(res.getBody());
-                // }
+                Integer maxSize = 12000000;
+                if (responseBlob.size() > maxSize) {
+                    System.debug('Respuesta demasiado grande para procesar: ' + res.getBody().length());
+                    continue;
+                }else {
+                    detallesJson.add(res.getBody());
+                }
             } else {
                 System.debug('Error al obtener el detalle de la convocatoria: ' + res.getBody());
             }

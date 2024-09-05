@@ -1,0 +1,13 @@
+@isTest
+global class MockHttpResponseGenerator implements HttpCalloutMock {
+   global HTTPResponse respond(HTTPRequest req) {
+       // Crear una respuesta simulada
+       HttpResponse res = new HttpResponse();
+       res.setHeader('Content-Type', 'application/json');
+       res.setStatusCode(200);
+       // Incluye un registro con Id_externo__c = 67890 en la respuesta
+       String jsonResponse = '{"version": "1.0.1","header": {"timestamp": "2024-07-25 20:21:28 +0200","timezone": "(GMT+01:00) Europe/Madrid","request": "/api/items?date_from=2020-01-01T12:00:00+02:00&date_to=2024-04-25T12:00:00+02:00","result": {"status": 200,"message": ""}},"data": {"list": {"summary": {"page": 1,"page_records": 25,"page_offset": 0,"total_records": 536,"total_pages": 22,"page_size": 25},"items": [{"id": 669,"uuid": "07ea6247-1439-4818-bc84-4d51c0130316","legacy_id": null,"watch_id": "MDdlYTYyNDctMTQzOS00ODE4LWJjODQtNGQ1MWMwMTMwMzE2","type": "asset","title": "Rolda de prensa PSdeG-PSOE","emblem1": "Transparencia","emblem2": null,"date": "2024-04-18T00:00:00+02:00","event_at": "2024-04-18T11:09:00+02:00","created_at": "2024-04-17T16:25:47+02:00","updated_at": "2024-04-18T11:12:26+02:00","protected": false,"visibility": null,"audience": 5,"audience_inherited": 5,"rating": null,"published": true,"playable": true,"ingesting": false,"featured": null,"favouritable": false,"favourite_id": null,"signeable": false,"user_signed": false,"href": "https://depourense.seneca.tv:443/watch?id=MDdlYTYyNDctMTQzOS00ODE4LWJjODQtNGQ1MWMwMTMwMzE2","poster": "https://depourense.seneca.tv:443/p/bitstreams/1683.jpg","metadata": {"title": "Rolda de prensa PSdeG-PSOE","description": "Rolda de prensa PSdeG-PSOE","date": "2024-04-18T11:09:00+02:00","emblem": "Transparencia","emblem1": "Transparencia","emblem2": "","channel": "Roldas de Prensa","category": "Diputación Provincial de Ourense","tags": "Diputación Provincial de Ourense"},"event": {"type": "","date": "2024-04-18T11:09:00+02:00"},"media": {"count": 1,"duration": 1680,"duration2": "28 min.","duration3": "28 min."},"xactofp": {"xmeeting_id": 669,"xlegs_id": "","xlegs_emblem": "","xlegs_emblem1": "","xlegs_emblem2": "","xlegs_ordinal": "","xlegs_name": "","xgbody_id": "","xgbody_emblem": "","xgbody_emblem1": "","xgbody_emblem2": "","xgbody_name": "","xmeetingroom_id": "","xmeetingroom_name": ""}}]}}}';
+       res.setBody(jsonResponse);
+       return res;
+   }
+}

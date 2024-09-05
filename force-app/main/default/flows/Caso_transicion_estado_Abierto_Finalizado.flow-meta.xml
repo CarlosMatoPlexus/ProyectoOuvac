@@ -58,6 +58,14 @@
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>Ayuntamientos</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Ayuntamientos__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>Entidades</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -84,12 +92,12 @@
     <formulas>
         <name>NoResolucionConcatenacion</name>
         <dataType>String</dataType>
-        <expression>&apos;Caso no resuelto &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!ResolucionLong}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_no_resolucion__c}</expression>
+        <expression>&apos;Caso no resuelto &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!Resolucion}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_no_resolucion__c}</expression>
     </formulas>
     <formulas>
         <name>ResolucionConcatenacion</name>
         <dataType>String</dataType>
-        <expression>&apos;Resolución del caso &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!ResolucionLong}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_Resolucion__c}</expression>
+        <expression>&apos;Resolución del caso &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!Resolucion}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_Resolucion__c}</expression>
     </formulas>
     <interviewLabel>Petición transición caso Abierto_Finalizado {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Caso transición estado Abierto_Finalizado</label>
@@ -136,7 +144,7 @@
     <recordUpdates>
         <name>Actualizar_estado_caso_finalizada</name>
         <label>Actualizar estado caso finalizada</label>
-        <locationX>581</locationX>
+        <locationX>580</locationX>
         <locationY>182</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
@@ -191,7 +199,7 @@
         <name>Actualizar_estado_caso_finalizado_no_resuelto</name>
         <label>Actualizar estado caso finalizado no resuelto</label>
         <locationX>577</locationX>
-        <locationY>375</locationY>
+        <locationY>374</locationY>
         <connector>
             <targetReference>Ventana_estado_actualizado</targetReference>
         </connector>
@@ -244,7 +252,7 @@
     <screens>
         <name>Screen_Resolucion</name>
         <label>Screen Resolución</label>
-        <locationX>242</locationX>
+        <locationX>240</locationX>
         <locationY>291</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -268,9 +276,10 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>ResolucionLong</name>
+            <name>Resolucion</name>
+            <dataType>String</dataType>
             <fieldText>Descripción</fieldText>
-            <fieldType>LargeTextArea</fieldType>
+            <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
@@ -303,7 +312,7 @@
             <defaultValue>
                 <elementReference>Obtener_casos.Entidades__c</elementReference>
             </defaultValue>
-            <fieldText>Entidades</fieldText>
+            <fieldText>Entidad 1</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>

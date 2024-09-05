@@ -24,5 +24,14 @@
     <enableHistory>false</enableHistory>
     <label>Knowledge</label>
     <pluralLabel>Knowledge</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>TITLE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ambitos__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Answer__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Descripcion__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Entidades__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Id_externo__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Question__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Url__c</searchResultsAdditionalFields>
+    </searchLayouts>
 </CustomObject>

@@ -34,4 +34,4 @@
         <searchResultsAdditionalFields>Question__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Url__c</searchResultsAdditionalFields>
     </searchLayouts>
-</CustomObject>
+</CustomObject> 

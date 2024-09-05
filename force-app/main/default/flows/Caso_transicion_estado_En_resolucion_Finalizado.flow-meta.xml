@@ -99,12 +99,12 @@
     <formulas>
         <name>NoResolucionConcatenacion</name>
         <dataType>String</dataType>
-        <expression>&apos;Caso no resuelto &apos;&amp;{!FechaHoraFormateada}&amp; &apos;: &apos;&amp; {!Resolucion}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_no_resolucion__c}</expression>
+        <expression>&apos;Caso no resuelto &apos;&amp;{!FechaHoraFormateada}&amp; &apos;: &apos;&amp; {!ResolucionLong}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_no_resolucion__c}</expression>
     </formulas>
     <formulas>
         <name>ResolucionConcatenacion</name>
         <dataType>String</dataType>
-        <expression>&apos;Resolución del caso &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!Resolucion}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_Resolucion__c}</expression>
+        <expression>&apos;Resolución del caso &apos;&amp;{!FechaHoraFormateada}&amp;&apos; : &apos;&amp; {!ResolucionLong}&amp;&apos; - &apos;&amp; {!Obtener_casos.Motivo_Resolucion__c}</expression>
     </formulas>
     <interviewLabel>Caso transición estado En resolución_Finalizado {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Caso transición estado En resolución_Finalizado</label>
@@ -283,10 +283,9 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Resolucion</name>
-            <dataType>String</dataType>
+            <name>ResolucionLong</name>
             <fieldText>Descripción</fieldText>
-            <fieldType>InputField</fieldType>
+            <fieldType>LargeTextArea</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>

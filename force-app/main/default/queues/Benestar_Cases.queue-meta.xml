@@ -8,9 +8,6 @@
             <role>Agente</role>
             <role>Validador</role>
         </roles>
-        <users>
-            <user>melani@depourense.ouvac</user>
-        </users>
     </queueMembers>
     <queueRoutingConfig>Benestar_Cases</queueRoutingConfig>
     <queueSobject>

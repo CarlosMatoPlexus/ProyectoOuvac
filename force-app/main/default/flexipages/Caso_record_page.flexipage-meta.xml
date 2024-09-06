@@ -7,6 +7,9 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Edit</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Case.Estado_Abierto_Finalizado</value>
                             <visibilityRule>
                                 <criteria>
@@ -131,16 +134,6 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>En espera</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Case.Reasignar_caso</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>En progreso</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -319,6 +312,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ContactPhone</fieldItem>
                 <identifier>RecordContactPhoneField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ContactMobile</fieldItem>
+                <identifier>RecordContactMobileField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-ce611764-d2f8-45f8-8d3b-28eb016fd6ca</name>

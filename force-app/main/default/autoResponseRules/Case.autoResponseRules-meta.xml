@@ -8,13 +8,7 @@
         <fullName>Email%2FWeb To Case Response</fullName>
         <active>true</active>
         <ruleEntry>
-            <formula>AND(
-    OR(
-        ISPICKVAL(Origin, &quot;Web&quot;),
-        ISPICKVAL(Origin, &quot;Email&quot;)
-    ),
-    NOT(ISBLANK(Subject))
-)</formula>
+            <formula>AND(     OR(         ISPICKVAL(Origin, &quot;Web&quot;),         ISPICKVAL(Origin, &quot;Email&quot;)     ),     NOT(ISBLANK(Subject)) )</formula>
             <notifyCcRecipients>true</notifyCcRecipients>
             <replyToEmail>melani.pardoroman@plexus.es</replyToEmail>
             <senderEmail>melani.pardoroman@plexus.es</senderEmail>

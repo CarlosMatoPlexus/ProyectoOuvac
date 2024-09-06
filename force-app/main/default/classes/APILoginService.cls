@@ -17,7 +17,7 @@ public class APILoginService {
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
         req.setHeader('accept', 'application/json');
-        req.setTimeout(1500);
+        //req.setTimeout(1500);
         Map<String, String> credentialsMap = new Map<String, String>{
             'username' => credentials.Username__c,
             'password' => credentials.Password__c

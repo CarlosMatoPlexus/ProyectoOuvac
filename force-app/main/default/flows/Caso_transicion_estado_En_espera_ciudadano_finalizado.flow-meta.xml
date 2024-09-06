@@ -124,8 +124,8 @@
             </value>
         </filters>
         <filters>
-            <field>Fecha_hora_cambio_de_estado_old__c</field>
-            <operator>LessThanOrEqualTo</operator>
+            <field>Fecha_hora_cambio_de_estado__c</field>
+            <operator>EqualTo</operator>
             <value>
                 <elementReference>FechaHace7Dias</elementReference>
             </value>
@@ -155,5 +155,5 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

@@ -34,9 +34,6 @@
         <queue>Cultura_y_Deportes</queue>
     </omniSupervisorConfigQueue>
     <omniSupervisorConfigQueue>
-        <queue>General</queue>
-    </omniSupervisorConfigQueue>
-    <omniSupervisorConfigQueue>
         <queue>Infraestructuras</queue>
     </omniSupervisorConfigQueue>
     <omniSupervisorConfigQueue>

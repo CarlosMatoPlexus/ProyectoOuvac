@@ -10,24 +10,4 @@
         <fullName>Cerrado</fullName>
         <default>false</default>
     </values>
-    <values>
-        <fullName>En espera</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>En progreso</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>En resolución</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Finalizado</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Pendiente</fullName>
-        <default>false</default>
-    </values>
 </BusinessProcess>

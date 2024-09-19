@@ -5,7 +5,7 @@
     <formula>IF(TEXT(Language) = &quot;es&quot;, &quot;Español&quot;,
  IF(TEXT(Language) = &quot;es_MX&quot;, &quot;Galego&quot;, &quot;&quot;))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Idioma</label>
+    <label>Idioma Knowledge</label>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

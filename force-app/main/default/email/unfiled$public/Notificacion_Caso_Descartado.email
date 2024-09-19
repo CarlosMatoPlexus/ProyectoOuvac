@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+</style>
+</head>
+<body style="background-color:#CCCCCC; font-family: Arial, Helvetica, sans-serif; font-size: 15px;">
+<center>
+  <table cellpadding="0" cellspacing="0" width="500" style="background-color:#FFFFFF; width: 100%;">
+    <tr>
+      <td style="background-color:#FFFFFF; color:#000000; font-size:12pt; font-family:arial;">
+        <table cellpadding="5" cellspacing="5" width="100%">
+          <tr>
+            <td style="background-color:#FFFFFF; color:#000000; font-size:12pt; font-family:arial;">
+              <span style="color:rgb(0, 0, 0); font-family:Helvetica, sans-serif; font-size:13.3333px;">
+                Estimado/a ciudadano/a:
+              </span>
+              <div style="color:rgb(0, 0, 0);">
+                <span style="font-family:Helvetica, sans-serif; font-size:13.3333px;">
+                  <br>
+                </span>
+              </div>
+              <div style="color:rgb(0, 0, 0);">
+                <span style="font-family:Helvetica, sans-serif; font-size:13.3333px;">
+                  Gracias por contactar con nosotros.
+                </span>
+                <span style="font-family:Helvetica, sans-serif; font-size:13.3333px;">
+                  Lamentablemente su solicitud no ha podido ser procesada porque el asunto de su email estaba vacío. Por favor, repita la petición completando esta información o poniéndose en contacto con nosotros por alguna otra vía de comunicación. 
+                </span>
+              </div>
+              <div style="color:rgb(0, 0, 0);">
+                <span style="font-family:Helvetica, sans-serif; font-size:13.3333px;">
+                  <br>
+                </span>
+              </div>
+              <div style="color:rgb(0, 0, 0);">
+                <span style="font-family:Helvetica, sans-serif; font-size:13.3333px;">
+                  Reciba un cordial saludo,
+                </span>
+              </div>
+              <div>
+                <div style="color:rgb(0, 0, 0);">
+                  <span style="font-family:Arial, Helvetica, sans-serif; font-size:11.36px;">
+                    <br>
+                  </span>
+                </div>
+                <div style="color:rgb(0, 0, 0);">
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; line-height:normal; background-color:white !important;">
+                    <br>
+                  </p>
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;">
+                    <span style="color:rgb(12, 100, 192); font-size:11pt; font-family:Helvetica, sans-serif;">
+                      <b>Oficina Única Virtual de Atención al ciudadano (OUVAC)</b>
+                    </span>
+                  </p>
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;">
+                    <span style="color:black; font-size:10pt; font-family:Helvetica, sans-serif;">
+                      Deputación de Ourense
+                    </span>
+                  </p>
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;">
+                    <span style="color:black; font-size:10pt; font-family:Helvetica, sans-serif;">
+                      Progreso, 32 - Ourense 32003
+                    </span>
+                  </p>
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;">
+                    <span style="color:rgb(64, 64, 64); font-size:10pt; font-family:Helvetica, sans-serif;">
+                      Tel: <a href="tel:+34988317700" style="color:rgb(64, 64, 64); text-decoration:none;">988 317 700</a>
+                    </span>
+                  </p>
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;">
+                    <br>
+                  </p>
+                  <p style="color:rgb(36, 36, 36); font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;">
+                    <br>
+                  </p>
+                  <p style="font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin: 15px 0; background-color:white !important;">
+                    <a href="https://www.depourense.gal/index.php/aviso-confidencialidad-correo" style="color:rgb(12, 100, 192); font-size:8pt; font-family:Helvetica, sans-serif;">
+                      ADVERTENCIA LEGAL
+                    </a>
+                  </p>
+                  <p style="font-family:'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif; font-size:15px; margin: 15px 0; background-color:white !important;">
+                    Aviso Legal: Le informamos de que sus datos están incorporados a nuestra Base de Datos con la finalidad de mantenerle informado. Usted podrá ejercer los derechos de acceso, rectificación, cancelación y oposición al tratamiento conforme a lo establecido en la legislación vigente.
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</center>
+</body>
+</html>

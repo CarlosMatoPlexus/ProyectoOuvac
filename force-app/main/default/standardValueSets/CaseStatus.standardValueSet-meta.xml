@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Abierto</fullName>
+        <default>true</default>
+        <label>Abierto</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pendiente</fullName>
+        <default>false</default>
+        <label>Pendiente</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>En progreso</fullName>
+        <default>false</default>
+        <label>En progreso</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>En espera</fullName>
+        <default>false</default>
+        <label>En espera</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>En resolucion</fullName>
+        <default>false</default>
+        <label>En resolución</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Finalizado</fullName>
+        <default>false</default>
+        <label>Finalizado</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Cerrado</fullName>
+        <default>false</default>
+        <label>Cerrado</label>
+        <closed>true</closed>
+    </standardValue>
+</StandardValueSet>

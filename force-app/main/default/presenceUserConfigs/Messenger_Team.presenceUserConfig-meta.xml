@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PresenceUserConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <profiles>
+            <profile>admin</profile>
+            <profile>agente</profile>
+            <profile>supervisor</profile>
+        </profiles>
+        <users>
+            <user>melani@depourense.ouvac</user>
+            <user>sonia.castropazos@ouvacprod.com</user>
+            <user>admin@depourense.ouvac</user>
+        </users>
+    </assignments>
+    <capacity>2</capacity>
+    <enableAutoAccept>false</enableAutoAccept>
+    <enableDecline>false</enableDecline>
+    <enableDeclineReason>false</enableDeclineReason>
+    <enableDisconnectSound>false</enableDisconnectSound>
+    <enableRequestSound>true</enableRequestSound>
+    <label>Messenger Team</label>
+</PresenceUserConfig>

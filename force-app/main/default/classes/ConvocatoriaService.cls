@@ -5,15 +5,14 @@ public class ConvocatoriaService {
                 //Declaracion de variables
                 Knowledge__kav knowCastellano = new Knowledge__kav();
                 Knowledge__kav knowOtraLengua = new Knowledge__kav();
+                List<Knowledge__kav> lstKnowledge = new List<Knowledge__kav>();
                 String code_bdns;
                 String descripcion;
                 Decimal importe_total;
                 Boolean fondo_ue;
                 Boolean activo;
                 String documentoCastellanoNombre;
-                String documentoCastellanoFichero;
                 String documentoOtraLenguaNombre;
-                String documentoOtraLenguaFichero;
                 String uRLEspBR;
                 String uRLengBR;
                 String solicitudInicioSolicitud;
@@ -28,7 +27,6 @@ public class ConvocatoriaService {
                 String textoExtractoOtraLengua;
                 String otroDocDescripcionOtro;
                 String otroDocNombre;
-                String otroDocFichero;
                 String fecha_modificacion;
                 
                 // Deserializa el JSON en un objeto de Convocatoria
@@ -43,37 +41,18 @@ public class ConvocatoriaService {
                     activo = convocatoria.activo;
                     fecha_modificacion = convocatoria.fecha_modificacion;
                     if (convocatoria.data_json != null) {
-                        
                         // Procesar DatosGeneralesCov
-                        
                         // Procesar DatosGeneralesCov.DocumentoCastellano
                         documentoCastellanoNombre = convocatoria.data_json.DatosGeneralesCov.DocumentoCastellano.Nombre;
-                        if(convocatoria.data_json.DatosGeneralesCov.DocumentoCastellano.Fichero != null){
-                            Integer maxSize = 131071;
-                            if(convocatoria.data_json.DatosGeneralesCov.DocumentoCastellano.Fichero.length() > maxSize){
-                                convocatoria.data_json.DatosGeneralesCov.DocumentoCastellano.Fichero = convocatoria.data_json.DatosGeneralesCov.DocumentoCastellano.Fichero.substring(0, maxSize);
-                            }
-                            documentoCastellanoFichero = convocatoria.data_json.DatosGeneralesCov.DocumentoCastellano.Fichero;
-                        }
-                        
                         // Procesar DatosGeneralesCov.DocumentoOtraLengua
                         if(convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua != null){
                             if(convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Nombre != null){
                                 documentoOtraLenguaNombre = convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Nombre;
                             }
-                            if(convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Fichero != null){
-                                Integer maxSize = 131071;
-                                if(convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Fichero.length() > maxSize){
-                                    convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Fichero = convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Fichero.substring(0, maxSize);
-                                }
-                                documentoOtraLenguaFichero = convocatoria.data_json.DatosGeneralesCov.DocumentoOtraLengua.Fichero;
-                            }
                         }
-                        
                         // Procesar DatosBaseReguladora
                         uRLEspBR = convocatoria.data_json.DatosBaseReguladora.URLEspBR;
                         uRLengBR = convocatoria.data_json.DatosBaseReguladora.URLengBR;
-                        
                         // Procesar Datos Solicitud Justificacion Financiacion
                         if (convocatoria.data_json.DatosSolicitudJustificacionFinanciacion.Solicitud.InicioSolicitud != null){
                             solicitudInicioSolicitud = convocatoria.data_json.DatosSolicitudJustificacionFinanciacion.Solicitud.InicioSolicitud;
@@ -88,11 +67,8 @@ public class ConvocatoriaService {
                         if (convocatoria.data_json.DatosSolicitudJustificacionFinanciacion.FechaJustificacion != null){
                             fechaJustificacion = Date.valueOf(convocatoria.data_json.DatosSolicitudJustificacionFinanciacion.FechaJustificacion);
                         }
-                        
-                        
                         // Procesar OtrosDatos
                         if (convocatoria.data_json.OtrosDatos != null) {
-                            //System.debug('Procesando OtrosDatos...');
                             // ImpactoGenero
                             if (convocatoria.data_json.OtrosDatos.ImpactoGenero != null) {
                                 if(convocatoria.data_json.OtrosDatos.ImpactoGenero.codigo != null){
@@ -112,13 +88,11 @@ public class ConvocatoriaService {
                                     if(extracto.ExtractoCastellano.TituloExtracto != null){
                                         extractoCastellanoTituloExtracto = extracto.ExtractoCastellano.TituloExtracto;
                                     }
-                                    
                                     if (extracto.ExtractoCastellano.TextoExtractoCastellano != null) {
                                         textoExtractoCastellano = extracto.ExtractoCastellano.TextoExtractoCastellano.p + '  \n ';
                                     }
                                     if (extracto.ExtractoCastellano.PieFirmaExtracto != null) {
                                         textoExtractoCastellano += extracto.ExtractoCastellano.PieFirmaExtracto.LugarFirma + '  \n ' + extracto.ExtractoCastellano.PieFirmaExtracto.FechaFirma + '  \n ' + extracto.ExtractoCastellano.PieFirmaExtracto.Firmante;
-                                        //knowCastellano.ExtractoCastellano__c += extracto.ExtractoCastellano.PieFirmaExtracto.LugarFirma + '  \n ' + extracto.ExtractoCastellano.PieFirmaExtracto.FechaFirma + '  \n ' + extracto.ExtractoCastellano.PieFirmaExtracto.Firmante;
                                     }
                                 }
                                 if (extracto.ExtractoOtraLengua != null) {
@@ -130,7 +104,6 @@ public class ConvocatoriaService {
                                     }
                                     if (extracto.ExtractoOtraLengua.PieFirmaExtracto != null) {
                                         textoExtractoOtraLengua += extracto.ExtractoOtraLengua.PieFirmaExtracto.LugarFirma + '  \n ' + extracto.ExtractoOtraLengua.PieFirmaExtracto.FechaFirma + '  \n ' + extracto.ExtractoOtraLengua.PieFirmaExtracto.Firmante;
-                                        //knowOtraLengua.ExtractoOtraLengua__c += extracto.ExtractoOtraLengua.PieFirmaExtracto.LugarFirma + '  \n ' + extracto.ExtractoOtraLengua.PieFirmaExtracto.FechaFirma + '  \n ' + extracto.ExtractoOtraLengua.PieFirmaExtracto.Firmante;
                                     }
                                 }
                             }
@@ -146,19 +119,11 @@ public class ConvocatoriaService {
                                 if (otroDoc.Nombre != null){
                                     otroDocNombre = otroDoc.Nombre;
                                 }
-                                if(otroDoc.Fichero != null){
-                                    Integer maxSize = 131071;
-                                    if(otroDoc.Fichero.length() > maxSize){
-                                        otroDoc.Fichero = otroDoc.Fichero.substring(0, maxSize);
-                                    }
-                                    otroDocFichero = otroDoc.Fichero;
-                                }
                             }
                         } else {
                             System.debug('OtrosDocumentos es nulo');
                         }
                     }
-                    
                     String fechaSinOffset = fecha_modificacion.substring(0, 19);
                     String offSet = fecha_modificacion.substring(19, 22);
                     Integer horasOffset = Integer.valueOf(offSet);
@@ -177,9 +142,7 @@ public class ConvocatoriaService {
                     knowCastellano.Activo__c = activo;
                     knowOtraLengua.Activo__c = activo;
                     knowCastellano.NombreDocumentoCastellano__c = documentoCastellanoNombre;
-                    knowCastellano.FicheroDocumentoCastellano__c = documentoCastellanoFichero;
                     knowOtraLengua.NombreDocumentoOtraLengua__c = documentoOtraLenguaNombre;
-                    knowOtraLengua.FicheroDocumentoOtraLengua__c = documentoOtraLenguaFichero;
                     knowCastellano.URLEspBR__c = uRLEspBR;
                     knowOtraLengua.URLEspBR__c = uRLEspBR;
                     knowCastellano.URLengBR__c = uRLengBR;
@@ -229,12 +192,6 @@ public class ConvocatoriaService {
                         knowCastellano.NombreOtrosDocumentos__c = otroDocNombre;
                         knowOtraLengua.NombreOtrosDocumentos__c = otroDocNombre;
                     }
-                    if(otroDocFichero != null){
-                        knowCastellano.FicheroOtrosDocumentos__c = otroDocFichero;
-                        knowOtraLengua.FicheroOtrosDocumentos__c = otroDocFichero;
-                    }
-                    
-                    
                     String convocatoriaRecordTypeID = Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByName().get('Convocatoria').getRecordTypeId();
                     knowCastellano.RecordTypeId = convocatoriaRecordTypeID;
                     if(extractoCastellanoTituloExtracto != null){
@@ -263,9 +220,7 @@ public class ConvocatoriaService {
                         }
                         knowOtraLengua.Title = descripcion;
                     }
-                    
                     knowCastellano.ValidationStatus = 'Validated';
-                    //knowCastellano.PublishStatus = 'Online';
                     knowCastellano.Entidades__c = 'Deputación';
                     knowCastellano.Ambitos__c = 'Contratación';
                     knowCastellano.UrlName = knowCastellano.code_bdns__c;
@@ -273,17 +228,19 @@ public class ConvocatoriaService {
                     if(fechaModificacion != null){
                         knowCastellano.fecha_modificacion__c = fechaModificacion;
                     }
-                    
                     knowOtraLengua.RecordTypeId = convocatoriaRecordTypeID;
-                    
                     knowOtraLengua.ValidationStatus = 'Validated';
                     knowOtraLengua.Entidades__c = 'Deputación';
                     knowOtraLengua.Ambitos__c = 'Contratación';
                     knowOtraLengua.UrlName = knowCastellano.code_bdns__c;
                     knowOtraLengua.Language = 'es_MX';
-                    knowOtraLengua.fecha_modificacion__c = fechaModificacion;
-                    
-                    List<Knowledge__kav> lstKnowledge = new List<Knowledge__kav>();
+                    if(fechaModificacion != null){
+                        knowOtraLengua.fecha_modificacion__c = fechaModificacion;
+                    }
+                    if(code_bdns != null){
+                        knowCastellano.URL_documentacion_convocatoria__c = 'https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/'+code_bdns;
+                        knowOtraLengua.URL_documentacion_convocatoria__c = 'https://www.pap.hacienda.gob.es/bdnstrans/GE/es/convocatorias/'+code_bdns;
+                    }
                     lstKnowledge.add(knowCastellano);
                     lstKnowledge.add(knowOtraLengua);
                     

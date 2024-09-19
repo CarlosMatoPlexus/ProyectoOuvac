@@ -7,7 +7,7 @@ public class Convocatoria {
     public Boolean activo;
     public String fecha_modificacion;
     public DataJson data_json;
-
+    
     public class DataJson {
         public DatosGeneralesCov DatosGeneralesCov;
         public DatosBaseReguladora DatosBaseReguladora;
@@ -15,48 +15,36 @@ public class Convocatoria {
         public OtrosDatos OtrosDatos;
         public Extractos Extractos;
         public List<OtrosDocumentos> OtrosDocumentos;
-        
     }
     public class DatosGeneralesCov {
         public DocumentoCastellano DocumentoCastellano;
         public DocumentoOtraLengua DocumentoOtraLengua;
     }
-
     public class DocumentoCastellano{
         public String Nombre;
-        public String Fichero;
-    
     }
-
     public class DocumentoOtraLengua{
         public String Nombre;
-        public String Fichero;
     }
-
     public class DatosBaseReguladora {
         public String URLEspBR;
         public String URLengBR;
     }
-    
     public class DatosSolicitudJustificacionFinanciacion {
         public Solicitud Solicitud;
         public Justificacion Justificacion;
         public String FechaJustificacion;
     }
-    
     public class Solicitud {
         public String InicioSolicitud;
         public String FechaFinSolicitud;
     }
-    
     public class Justificacion {
         public String nombre;
     }
-    
     public class OtrosDatos {
         public ImpactoGenero ImpactoGenero;
     }
-    
     public class ImpactoGenero {
         public String codigo;
         public String nombre;
@@ -79,11 +67,9 @@ public class Convocatoria {
         public TextoExtractoOtraLengua TextoExtractoOtraLengua;
         public PieFirmaExtracto PieFirmaExtracto;
     }
-    
     public class TextoExtractoCastellano {
         public List<String> p;
     }
-    
     public class TextoExtractoOtraLengua {
         public List<String> p;
     }
@@ -92,10 +78,8 @@ public class Convocatoria {
         public String LugarFirma;
         public String Firmante;
     }
-    
     public class OtrosDocumentos {
-		public String DescripcionOtro;
-		public String Nombre;
-		public String Fichero;
-	}
+        public String DescripcionOtro;
+        public String Nombre;
+    }
 }

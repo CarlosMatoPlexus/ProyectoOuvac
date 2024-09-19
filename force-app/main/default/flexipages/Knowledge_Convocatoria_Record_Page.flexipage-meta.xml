@@ -124,6 +124,22 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Language</fieldItem>
                 <identifier>RecordLanguageField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CreatedBy.Username}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.IdiomaFormula__c</fieldItem>
+                <identifier>RecordIdiomaFormula_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5ff1fc74-7e3a-4f45-9f86-3b29f1da0fb9</name>

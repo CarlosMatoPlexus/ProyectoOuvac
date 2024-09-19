@@ -33,7 +33,7 @@
                 <field>Descripcion__c</field>
             </layoutItems>
             <layoutItems>
-                <field>Language</field>
+                <field>IdiomaFormula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

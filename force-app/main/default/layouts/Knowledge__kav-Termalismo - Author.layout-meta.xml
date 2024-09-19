@@ -15,9 +15,6 @@
             <layoutItems>
                 <field>PublishStatus</field>
             </layoutItems>
-            <layoutItems>
-                <field>Language</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -28,6 +25,9 @@
             </layoutItems>
             <layoutItems>
                 <field>ValidationStatus</field>
+            </layoutItems>
+            <layoutItems>
+                <field>IdiomaFormula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

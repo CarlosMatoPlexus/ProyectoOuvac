@@ -33,7 +33,7 @@
                 <field>Descripcion__c</field>
             </layoutItems>
             <layoutItems>
-                <field>Language</field>
+                <field>IdiomaFormula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -53,10 +53,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <field>FicheroDocumentoCastellano__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>FicheroDocumentoOtraLengua__c</field>
+                <field>URL_documentacion_convocatoria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -127,9 +124,6 @@
             <layoutItems>
                 <field>NombreOtrosDocumentos__c</field>
             </layoutItems>
-            <layoutItems>
-                <field>FicheroOtrosDocumentos__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -168,6 +162,29 @@
         <layoutColumns>
             <layoutItems>
                 <field>ExtractoOtraLengua__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Publicación</label>
+        <layoutColumns>
+            <layoutItems>
+                <field>Id_extracto_diario_oficial_Convocatoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>URL_publicacion_Convocatoria__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <field>Fecha_envio_Convocatoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>Fecha_publicacion_Convocatoria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

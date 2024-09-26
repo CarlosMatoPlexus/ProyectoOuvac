@@ -82,6 +82,30 @@
                 <identifier>Recordfecha_modificacion__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Fecha_publicacion_Convocatoria__c</fieldItem>
+                <identifier>RecordFecha_publicacion_Convocatoria__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Id_extracto_diario_oficial_Convocatoria__c</fieldItem>
+                <identifier>RecordId_extracto_diario_oficial_Convocatoria__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.URL_publicacion_Convocatoria__c</fieldItem>
+                <identifier>RecordURL_publicacion_Convocatoria__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Fecha_envio_Convocatoria__c</fieldItem>
+                <identifier>RecordFecha_envio_Convocatoria__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-3de1ed4a-6660-4acd-af7a-9ee985e2f136</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -122,8 +146,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Language</fieldItem>
-                <identifier>RecordLanguageField</identifier>
+                <fieldItem>Record.IdiomaFormula__c</fieldItem>
+                <identifier>RecordIdiomaFormula__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5ff1fc74-7e3a-4f45-9f86-3b29f1da0fb9</name>
@@ -198,32 +222,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FicheroDocumentoCastellano__c</fieldItem>
-                <identifier>RecordFicheroDocumentoCastellano_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Language}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>es</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FicheroDocumentoOtraLengua__c</fieldItem>
-                <identifier>RecordFicheroDocumentoOtraLengua_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Language}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>es_MX</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.URL_documentacion_convocatoria__c</fieldItem>
+                <identifier>RecordURL_documentacion_convocatoria__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e59219bf-31a0-4c08-b2cb-2a3889edc7ae</name>
@@ -271,10 +271,6 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-dd3a9be9-fa48-4d6e-90fb-9aaf3f3c6658</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -292,6 +288,10 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-dd3a9be9-fa48-4d6e-90fb-9aaf3f3c6658</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <name>Facet-7a7b97ba-71ca-4f2f-960d-5a7c7f9d7f0d</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -452,16 +452,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.NombreOtrosDocumentos__c</fieldItem>
                 <identifier>RecordNombreOtrosDocumentos_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FicheroOtrosDocumentos__c</fieldItem>
-                <identifier>RecordFicheroOtrosDocumentos_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-19403f39-129b-454a-990a-4ba6ce13c62f</name>

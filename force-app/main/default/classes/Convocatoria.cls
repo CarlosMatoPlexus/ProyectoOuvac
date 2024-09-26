@@ -13,7 +13,7 @@ public class Convocatoria {
         public DatosBaseReguladora DatosBaseReguladora;
         public DatosSolicitudJustificacionFinanciacion DatosSolicitudJustificacionFinanciacion;
         public OtrosDatos OtrosDatos;
-        public Extractos Extractos;
+        public List<Extracto> Extractos;
         public List<OtrosDocumentos> OtrosDocumentos;
     }
     public class DatosGeneralesCov {
@@ -49,13 +49,12 @@ public class Convocatoria {
         public String codigo;
         public String nombre;
     }
-    public class Extractos{
-        public Extracto[] Extracto;
-    }
     public class Extracto {
         public String DiarioOficial;
         public ExtractoCastellano ExtractoCastellano;
         public ExtractoOtraLengua ExtractoOtraLengua;
+        public String FechaEnvio;
+        public Publicacion Publicacion;
     }
     public class ExtractoCastellano {
         public String TituloExtracto;
@@ -81,5 +80,16 @@ public class Convocatoria {
     public class OtrosDocumentos {
         public String DescripcionOtro;
         public String Nombre;
+    }
+    public class Publicacion {
+        public String IdExtractoDiarioOficial;
+        public EstadoPublicacion EstadoPublicacion;
+    }
+    public class EstadoPublicacion {
+        public Publicado Publicado;
+    }
+    public class Publicado {
+        public String FechaPublicacion;
+        public String URL;
     }
 }

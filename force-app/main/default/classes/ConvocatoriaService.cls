@@ -28,10 +28,14 @@ public class ConvocatoriaService {
                 String otroDocDescripcionOtro;
                 String otroDocNombre;
                 String fecha_modificacion;
+                Date publicacionFechaPublicacion;
+                String publicacionIdExtractoDiarioOficial;
+                String publicacionUrlPublicacion;
+                Date fechaEnvio;
+                
                 
                 // Deserializa el JSON en un objeto de Convocatoria
                 Convocatoria convocatoria = (Convocatoria) JSON.deserialize(jsonDetalle, Convocatoria.class);
-                System.debug('code_bdns: '+ convocatoria.code_bdns);
                 // Procesar los datos principales de la convocatoria
                 if (convocatoria != null) {
                     code_bdns = convocatoria.code_bdns;
@@ -82,8 +86,8 @@ public class ConvocatoriaService {
                             System.debug('OtrosDatos es nulo');
                         }
                         // Procesar Extractos
-                        if (convocatoria.data_json.Extractos != null && convocatoria.data_json.Extractos.Extracto != null) {
-                            for (Convocatoria.Extracto extracto : convocatoria.data_json.Extractos.Extracto) {
+                        if (convocatoria.data_json.Extractos != null && convocatoria.data_json.Extractos != null) {
+                            for (Convocatoria.Extracto extracto : convocatoria.data_json.Extractos) {
                                 if (extracto.ExtractoCastellano != null) {
                                     if(extracto.ExtractoCastellano.TituloExtracto != null){
                                         extractoCastellanoTituloExtracto = extracto.ExtractoCastellano.TituloExtracto;
@@ -104,6 +108,21 @@ public class ConvocatoriaService {
                                     }
                                     if (extracto.ExtractoOtraLengua.PieFirmaExtracto != null) {
                                         textoExtractoOtraLengua += extracto.ExtractoOtraLengua.PieFirmaExtracto.LugarFirma + '  \n ' + extracto.ExtractoOtraLengua.PieFirmaExtracto.FechaFirma + '  \n ' + extracto.ExtractoOtraLengua.PieFirmaExtracto.Firmante;
+                                    }
+                                }
+                                
+                                if(extracto.FechaEnvio !=null ){
+                                    fechaEnvio = Date.valueOf(extracto.FechaEnvio);
+                                }
+                                if (extracto.Publicacion != null && extracto.Publicacion.IdExtractoDiarioOficial != null){
+                                    publicacionIdExtractoDiarioOficial = extracto.Publicacion.IdExtractoDiarioOficial;
+                                }
+                                if (extracto.Publicacion != null && extracto.Publicacion.EstadoPublicacion != null && extracto.Publicacion.EstadoPublicacion.Publicado != null) {
+                                    if(extracto.Publicacion.EstadoPublicacion.Publicado.FechaPublicacion != null){
+                                        publicacionFechaPublicacion = Date.valueOf(extracto.Publicacion.EstadoPublicacion.Publicado.FechaPublicacion);
+                                    }
+                                    if(extracto.Publicacion.EstadoPublicacion.Publicado.URL != null) {
+                                        publicacionUrlPublicacion = extracto.Publicacion.EstadoPublicacion.Publicado.URL;
                                     }
                                 }
                             }
@@ -220,6 +239,23 @@ public class ConvocatoriaService {
                         }
                         knowOtraLengua.Title = descripcion;
                     }
+
+                    if(fechaEnvio != null){
+                        knowCastellano.Fecha_envio_Convocatoria__c = fechaEnvio;
+                        knowOtraLengua.Fecha_envio_Convocatoria__c = fechaEnvio;
+                    }
+                    if(publicacionUrlPublicacion != null){
+                        knowCastellano.URL_publicacion_Convocatoria__c = publicacionUrlPublicacion;
+                        knowOtraLengua.URL_publicacion_Convocatoria__c = publicacionUrlPublicacion;
+                    }
+                    if(publicacionIdExtractoDiarioOficial != null){
+                        knowCastellano.Id_extracto_diario_oficial_Convocatoria__c = publicacionIdExtractoDiarioOficial;
+                        knowOtraLengua.Id_extracto_diario_oficial_Convocatoria__c= publicacionIdExtractoDiarioOficial;
+                    }
+                    if(publicacionFechaPublicacion != null){
+                        knowCastellano.Fecha_publicacion_Convocatoria__c = publicacionFechaPublicacion;
+                        knowOtraLengua.Fecha_publicacion_Convocatoria__c = publicacionFechaPublicacion;
+                    }
                     knowCastellano.ValidationStatus = 'Validated';
                     knowCastellano.Entidades__c = 'Deputación';
                     knowCastellano.Ambitos__c = 'Contratación';
@@ -251,7 +287,6 @@ public class ConvocatoriaService {
                     for(KnowledgeArticleVersion know : lstKnowPublish){
                         KbManagement.PublishingService.publishArticle(know.KnowledgeArticleId, true);
                     }
-                    system.debug('lstKnowPublish: '+lstKnowPublish);
                 }
             } catch (Exception ex) {
                 System.debug('Ocurrió un error al procesar la convocatoria: ' + ex.getMessage());

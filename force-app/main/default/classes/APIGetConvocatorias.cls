@@ -3,7 +3,6 @@ public class APIGetConvocatorias {
     public static void obtenerConvocatorias() {
         Integer bloqueSize = 1;
         String token = APILoginService.login();
-        //String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjY2NjUzNzAsImV4cCI6MTcyNjY2ODk3MCwicm9sZXMiOlsiUk9MRV9VU0VSIiwxMF0sInVzZXJuYW1lIjoiZ25vc3MifQ.WTvdNiXmbFzCdoFuWoz9qDdBm6sEmqIvJSnvUtT7iRXDsi19aHWHGyhtVaoxFvltEg10ufFabeFX9ktN-ZbfmVMtW0TbFpLBtrNkGAmpjHnsGL152KdpvqT1_XM712mI8iHn-HzfCMYXkrtDz1L4-kidcWcDvAVfE7Of0KkxszZnSAL_7u-oe6TxYg92SPL7HIRyL4PwPu49p08JVbz8yYuGtzCYJL7fCCD75DrDgn8SRQe2SzW6IWAJwn5xUhu3VgycBB68dUKg5TlYXxPcFs_B3gjtFfx85jItgsV98H78hAgUrf700vKu1UfNeWemIL7okTHptOETLjHdnYln_A';
         if (token == null || token == '') {
             System.debug('No se pudo obtener el token');
             return;
@@ -15,7 +14,6 @@ public class APIGetConvocatorias {
         req.setHeader('Accept', 'application/json');
         Http http = new Http();
         HttpResponse res;
-        // Retry logic for obtenerConvocatorias
         Integer retryCount = 0;
         Boolean success = false;
         while (retryCount < 3 && !success) {
@@ -24,14 +22,14 @@ public class APIGetConvocatorias {
                 if (res.getStatusCode() == 200) {
                     List<Object> convocatorias = (List<Object>) JSON.deserializeUntyped(res.getBody());
                     Set<String> codeBdns = new Set<String>();
+                    Map<String, String> convocatoriaFechaMap = new Map<String, String>();
                     for (Object obj : convocatorias) {
                         Map<String, Object> convocatoria = (Map<String, Object>) obj;
                         String codeBdn = (String) convocatoria.get('code_bdns');
-                        //codeBdns.add('321906');
+                        String fechaModificacion = (String) convocatoria.get('fecha_modificacion');
                         codeBdns.add(codeBdn);
-                        //break;
+                        convocatoriaFechaMap.put(codeBdn, fechaModificacion);
                     }
-                    // Validar si el code_bdns existe en Salesforce
                     List<String> codeBdnList = new List<String>(codeBdns);
                     Map<String, Knowledge__kav> existingKnowledgeMap = getExistingKnowledgeRecords(codeBdnList);
                     List<String> newRecordsToProcess = new List<String>();
@@ -40,19 +38,24 @@ public class APIGetConvocatorias {
                         if (!existingKnowledgeMap.containsKey(codeBdn)) {
                             newRecordsToProcess.add(codeBdn); // Nuevo registro
                         } else {
-                            existingRecordsToUpdate.add(codeBdn); // Registro existente, enviar para actualizar
+                            // Obtener la fecha_modificacion de Salesforce
+                            Knowledge__kav existingKnowledge = existingKnowledgeMap.get(codeBdn);
+                            String fechaModificacionApi = convocatoriaFechaMap.get(codeBdn);
+                            DateTime fechaModificacionSalesforce = existingKnowledge.fecha_modificacion__c;
+                            String fechaModificacionSinOffset = fechaModificacionApi.substring(0, 19).replace('T', ' ');
+                            DateTime fechaModificacionApiDateTime = DateTime.valueOf(fechaModificacionSinOffset);
+                            // Comparar solo la parte de la fecha
+                            if (fechaModificacionApiDateTime.date() > fechaModificacionSalesforce.date()) {
+                                existingRecordsToUpdate.add(codeBdn); // Agregar a la lista de actualización si la fecha es mayor
+                            }
                         }
                     }
                     // Procesar nuevos registros en un batch job
                     if (!newRecordsToProcess.isEmpty()) {
-                        // Procesar en bloques y enviar a la cola
-                        
                         List<String> codeBdnListDivInsert = new List<String>(newRecordsToProcess);
                         List<List<String>> bloquesInsert = dividirLista(codeBdnListDivInsert, bloqueSize);
-                        for (List<String> bloqueCodeBdnsInsert : bloquesInsert){
-                            System.debug('tamaño de la lista: '+ newRecordsToProcess.size());
+                        for (List<String> bloqueCodeBdnsInsert : bloquesInsert) {
                             System.debug('Procesando nuevos registros...');
-                            //Database.executeBatch(new ConvocatoriaBatchable(newRecordsToProcess, token), 10);
                             Database.executeBatch(new ConvocatoriaBatchable(bloqueCodeBdnsInsert, token), 1);
                         }
                     }
@@ -60,15 +63,15 @@ public class APIGetConvocatorias {
                     if (!existingRecordsToUpdate.isEmpty()) {
                         List<String> codeBdnListDivUpdate = new List<String>(existingRecordsToUpdate);
                         List<List<String>> bloquesUpdate = dividirLista(codeBdnListDivUpdate, bloqueSize);
-                        for (List<String> bloqueCodeBdnsUpdate : bloquesUpdate){
+                        for (List<String> bloqueCodeBdnsUpdate : bloquesUpdate) {
                             System.debug('Actualizando registros existentes...');
-                            Database.executeBatch(new KnowledgeUpdateBatchable(bloqueCodeBdnsUpdate, token), 1);
+                            Database.executeBatch(new ConvocatoriaUpdateBatchable(bloqueCodeBdnsUpdate, token), 1);
                         }
                     }
-                    success = true; // Mark as success
+                    success = true; // Marcar como éxito
                 }
             } catch (System.CalloutException e) {
-                if (e.getMessage().contains('Read timed out')) {
+                if (e.getMessage().contains('Read timed out') || e.getMessage().contains('Expired JWT Token')) {
                     retryCount++;
                     System.debug('Timeout occurred, retrying: ' + retryCount);
                 } else {
@@ -89,7 +92,6 @@ public class APIGetConvocatorias {
             req.setHeader('Accept', 'application/json');
             Http http = new Http();
             HttpResponse res;
-            // Retry logic for obtenerDetallesConvocatorias
             Integer retryCount = 0;
             Boolean success = false;
             while (retryCount < 3 && !success) {
@@ -97,10 +99,10 @@ public class APIGetConvocatorias {
                     res = http.send(req);
                     if (res.getStatusCode() == 200) {
                         detallesJson.add(res.getBody());
-                        success = true; // Mark as success
+                        success = true; // Marcar como éxito
                     }
                 } catch (System.CalloutException e) {
-                    if (e.getMessage().contains('Read timed out')) {
+                    if (e.getMessage().contains('Read timed out') || e.getMessage().contains('Expired JWT Token')) {
                         retryCount++;
                         System.debug('Timeout occurred, retrying: ' + retryCount);
                     } else {

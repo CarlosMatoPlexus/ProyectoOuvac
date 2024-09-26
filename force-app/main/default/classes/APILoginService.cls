@@ -4,7 +4,7 @@ public class APILoginService {
         public String refresh_token;
         public Long refresh_token_expiration;
     }
-
+    
     public static String login() {
         APICredentials__mdt credentials = APICredentials__mdt.getInstance('Default_Credentials');
         if (credentials == null) {
@@ -17,7 +17,6 @@ public class APILoginService {
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
         req.setHeader('accept', 'application/json');
-        //req.setTimeout(1500);
         Map<String, String> credentialsMap = new Map<String, String>{
             'username' => credentials.Username__c,
             'password' => credentials.Password__c
@@ -33,7 +32,6 @@ public class APILoginService {
         }
         if (res.getStatusCode() == 200) {
             LoginResponse loginResponse = (LoginResponse) JSON.deserialize(res.getBody(), LoginResponse.class);
-            System.debug('loginResponse.token: ' + loginResponse.token);
             return loginResponse.token;
         } else {
             System.debug('Failed with status code: ' + res.getStatusCode());

@@ -25,6 +25,9 @@
     <label>Knowledge</label>
     <pluralLabel>Knowledge</pluralLabel>
     <searchLayouts>
+        <excludedStandardButtons>MassRestoreKnowledgeArticleVersion</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwnerKnowledgeArticleVersion</excludedStandardButtons>
+        <excludedStandardButtons>MassSubmitKnowledgeArticleVersionForTranslation</excludedStandardButtons>
         <searchResultsAdditionalFields>TITLE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Ambitos__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Answer__c</searchResultsAdditionalFields>
@@ -34,4 +37,4 @@
         <searchResultsAdditionalFields>Question__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Url__c</searchResultsAdditionalFields>
     </searchLayouts>
-</CustomObject> 
+</CustomObject>

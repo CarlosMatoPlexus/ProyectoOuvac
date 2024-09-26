@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <layoutSections>
-        <customLabel>false</customLabel>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
+        <label>Fields</label>
         <layoutColumns>
-            <layoutItems>
-                <field>Title</field>
-            </layoutItems>
-            <layoutItems>
-                <field>UrlName</field>
-            </layoutItems>
             <layoutItems>
                 <field>Importe_total__c</field>
             </layoutItems>
@@ -22,9 +17,6 @@
             </layoutItems>
             <layoutItems>
                 <field>NombreDocumentoCastellano__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>FicheroDocumentoCastellano__c</field>
             </layoutItems>
             <layoutItems>
                 <field>URLEspBR__c</field>
@@ -57,9 +49,6 @@
                 <field>NombreOtrosDocumentos__c</field>
             </layoutItems>
             <layoutItems>
-                <field>FicheroOtrosDocumentos__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>TituloExtractoCastellano__c</field>
             </layoutItems>
             <layoutItems>
@@ -75,19 +64,43 @@
                 <field>NombreDocumentoOtraLengua__c</field>
             </layoutItems>
             <layoutItems>
-                <field>FicheroDocumentoOtraLengua__c</field>
+                <field>fecha_modificacion__c</field>
             </layoutItems>
             <layoutItems>
-                <field>fecha_modificacion__c</field>
+                <field>URL_documentacion_convocatoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>Title</field>
+            </layoutItems>
+            <layoutItems>
+                <field>UrlName</field>
+            </layoutItems>
+            <layoutItems>
+                <field>IdiomaFormula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>Fecha_publicacion_Convocatoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>Id_extracto_diario_oficial_Convocatoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>URL_publicacion_Convocatoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>Fecha_envio_Convocatoria__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
+        <label>Custom Links</label>
+        <layoutColumns/>
+        <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>

@@ -8,7 +8,7 @@ public class ConvocatoriaBatchable implements Database.Batchable<String>, Databa
     // El método start devolverá la lista de codeBdns directamente como un Iterable
     public Iterable<String> start(Database.BatchableContext bc) {
         System.debug('Batch iniciado con ' + codeBdns.size() + ' convocatorias');
-        return codeBdns;  // Devolver la lista de codeBdns como el iterable
+        return codeBdns;
     }
     // El método execute recibe una lista de codeBdns (Strings) para procesar
     public void execute(Database.BatchableContext bc, List<String> scope) {
@@ -25,4 +25,4 @@ public class ConvocatoriaBatchable implements Database.Batchable<String>, Databa
                           FROM AsyncApexJob WHERE Id = :bc.getJobId()];
         System.debug('Job result: ' + a.JobItemsProcessed + ' de ' + a.TotalJobItems + ' procesadas.');
     }
- }
+}

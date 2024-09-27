@@ -1,32 +1,46 @@
 @isTest
 public class APIGetConvocatoriasSchedulerTest {
     @isTest
-    static void testScheduler() {
-        // Configurar el mock para simular la llamada HTTP
+    static void testScheduleJob() {
+        // Simular el mock para el callout
         Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
-        // Simular la programación del job
+        // Simular la ejecución del trabajo programado
         Test.startTest();
         String cronExp = '0 0 3 * * ?';
+        System.schedule('Test Convocatorias Job', cronExp, new APIGetConvocatoriasScheduler());
+        Test.stopTest();
+        // Verificar que el trabajo programado se haya encolado
+        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime
+                         FROM CronTrigger WHERE CronJobDetail.Name = 'Test Convocatorias Job' LIMIT 1];
+        System.assertEquals(cronExp, ct.CronExpression, 'La expresión cron debe ser la misma.');
+        System.assert(ct.NextFireTime != null, 'El trabajo programado debe tener una próxima ejecución.');
+    }
+    // Nuevo método para cubrir el método scheduleDailyJob()
+    @isTest
+    static void testScheduleDailyJob() {
+        // Simular el mock para el callout
+        Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
+        // Simular la ejecución del método scheduleDailyJob
+        Test.startTest();
         APIGetConvocatoriasScheduler.scheduleDailyJob();
         Test.stopTest();
-        // Verificar que el job fue programado correctamente
+        // Verificar que el trabajo programado se haya encolado correctamente
         CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime
-                         FROM CronTrigger WHERE CronExpression = :cronExp];
-        System.assertEquals(cronExp, ct.CronExpression, 'La expresión cron debe coincidir');
-        System.assertEquals(0, ct.TimesTriggered, 'El job no debe haber sido ejecutado aún');
+                         FROM CronTrigger WHERE CronJobDetail.Name = 'Daily APIGetConvocatorias Job' LIMIT 1];
+        System.assertEquals('0 0 3 * * ?', ct.CronExpression, 'La expresión cron debe ser la misma.');
+        System.assert(ct.NextFireTime != null, 'El trabajo programado debe tener una próxima ejecución.');
     }
-    // Método para probar la ejecución de la tarea
     @isTest
-    static void testExecuteMethod() {
-        // Configurar el mock para simular la llamada HTTP
+    static void testQueueableCallout() {
+        // Simular el mock para el callout
         Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
-        // Simular la llamada del método 'execute'
+        // Ejecutar el Queueable directamente
         Test.startTest();
-        APIGetConvocatoriasScheduler scheduler = new APIGetConvocatoriasScheduler();
-        scheduler.execute(null);
+        System.enqueueJob(new APIGetConvocatoriasQueueable());
         Test.stopTest();
+        // Verificar si se ejecutó correctamente (agregar verificaciones adicionales si es necesario)
     }
-
+    // Mock class para simular las respuestas de las llamadas HTTP
     private class APIGetConvocatoriasMock implements HttpCalloutMock {
         public HttpResponse respond(HttpRequest req) {
             HttpResponse res = new HttpResponse();

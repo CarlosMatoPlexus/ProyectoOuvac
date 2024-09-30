@@ -258,7 +258,7 @@ public class ConvocatoriaService {
                     }
                     knowCastellano.ValidationStatus = 'Validated';
                     knowCastellano.Entidades__c = 'Deputación';
-                    knowCastellano.Ambitos__c = 'Contratación';
+                    knowCastellano.Ambitos__c = 'Transparencia';
                     knowCastellano.UrlName = knowCastellano.code_bdns__c;
                     knowCastellano.Language = 'es';
                     if(fechaModificacion != null){
@@ -267,7 +267,7 @@ public class ConvocatoriaService {
                     knowOtraLengua.RecordTypeId = convocatoriaRecordTypeID;
                     knowOtraLengua.ValidationStatus = 'Validated';
                     knowOtraLengua.Entidades__c = 'Deputación';
-                    knowOtraLengua.Ambitos__c = 'Contratación';
+                    knowOtraLengua.Ambitos__c = 'Transparencia';
                     knowOtraLengua.UrlName = knowCastellano.code_bdns__c;
                     knowOtraLengua.Language = 'es_MX';
                     if(fechaModificacion != null){

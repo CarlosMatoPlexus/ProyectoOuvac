@@ -55,14 +55,7 @@ public class MediatecaApiService {
             lastSyncMetadata = [SELECT LastSyncDate__c FROM Mediateca_Last_Sync__mdt WHERE DeveloperName = 'LastSyncDate' LIMIT 1];
         }
         DateTime lastSyncDate = lastSyncMetadata.LastSyncDate__c;
-        // Obtener el custom metadata de la fecha de ultima llamada a la Api
-        // Datetime lastSyncDate = Mediateca_Last_Sync__mdt.GetInstance('LastSyncDate').LastSyncDate__c;
-        // if (lastSyncDate == null) {
-        //     lastSyncDate = Date.today().addDays(-1); // Default to yesterday if not set
-        // }
-        //Datetime lastSyncDate = Date.today().addDays(-1);
         Datetime today = Date.today();
-        
         // Formatear las fechas según el formato requerido por la API
         String lastSyncDateFormatted = formatDateTimeForApi(lastSyncDate);
         String todayFormatted = formatDateTimeForApi(today);
@@ -97,11 +90,9 @@ public class MediatecaApiService {
                     upsertKnowledge(itemsMap);
                     // Llamar a updateLastSyncDate en una transacción futura
                     CustomMetadataUpdateService.updateLastSyncDateAsync(today);
-                    
                 } else {
                     System.debug('No items found in the response.');
                 }
-                
             } else {
                 System.debug('HTTP request failed with status code: ' + res.getStatusCode());
             }
@@ -161,23 +152,21 @@ public class MediatecaApiService {
         // Devolver el último domingo del mes
         return lastDayOfMonth.addDays(-daysToSubtract);
     }
-    
     // Método para formatear DateTime según el formato requerido por la API
     public static String formatDateTimeForApi(Datetime urldateTime) {
         return urldateTime.format('yyyy-MM-dd\'T\'HH:mm:ssXXX');
     }
-    
     // Metodo para actualizar knowledge
     private static void upsertKnowledge(Map<String, Item> itemsMap) {
         Set<String> itemIds = itemsMap.keySet();
-        List<Knowledge__kav> knowledgeList = [SELECT Id, Id_externo__c, Fecha_del_evento__c, Fecha_de_creacion__c, Fecha_de_actualizacion__c, Entidades__c, Ambitos__c, Title, Descripcion__c, Url__c   FROM Knowledge__kav WHERE Id_externo__c IN :itemIds];
+        List<Knowledge__kav> knowledgeList = [SELECT Id, Id_externo__c, Fecha_del_evento__c, Fecha_de_creacion__c, Fecha_de_actualizacion__c, Entidades__c, Ambitos__c, Title, Descripcion__c, Url__c, PublishStatus, KnowledgeArticleId FROM Knowledge__kav WHERE Id_externo__c IN :itemIds];
         Map<String, Knowledge__kav> existingKnowledgeMap = new Map<String, Knowledge__kav>();
+        String mediatecaRecordTypeID = Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByName().get('Mediateca').getRecordTypeId();
         for (Knowledge__kav knowledge : knowledgeList) {
             existingKnowledgeMap.put(knowledge.Id_externo__c, knowledge);
         }
         List<Knowledge__kav> toInsert = new List<Knowledge__kav>();
         List<Knowledge__kav> toUpdate = new List<Knowledge__kav>();
-        
         for (Item item : itemsMap.values()) {
             
             DateTime eventDateTimeUtc = parseDateTime(item.event_at);
@@ -186,10 +175,10 @@ public class MediatecaApiService {
             DateTime eventDateTime = convertToSpanishTime(eventDateTimeUtc);
             DateTime createdDateTime = convertToSpanishTime(createdDateTimeUtc);
             DateTime updatedDateTime = convertToSpanishTime(updatedDateTimeUtc);
-            
             if (existingKnowledgeMap.containsKey(item.id)) {
                 Knowledge__kav knowledge = existingKnowledgeMap.get(item.id);
                 if (knowledge.Fecha_de_actualizacion__c < parseDateTime(item.updated_at)) {
+                    retractIfPublished(knowledge);
                     // Update existing record
                     knowledge.Fecha_del_evento__c = eventDateTime;
                     knowledge.Fecha_de_creacion__c = createdDateTime;
@@ -206,7 +195,6 @@ public class MediatecaApiService {
                     toUpdate.add(knowledge);
                 }
             } else {
-                String mediatecaRecordTypeID = Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByName().get('Mediateca').getRecordTypeId();
                 // Insertar nuevo registro
                 Knowledge__kav knowledge = new Knowledge__kav();
                 knowledge.RecordTypeId = mediatecaRecordTypeID;
@@ -233,12 +221,31 @@ public class MediatecaApiService {
             }
         }
         if (!toInsert.isEmpty()) {
-            System.debug('mediateca to insert: '+ toInsert.size());
             insert toInsert;
+            System.debug('mediateca to insert: '+ toInsert.size());
         }
         if (!toUpdate.isEmpty()) {
-            System.debug('mediateca to update: '+ toUpdate.size());
+            for(Knowledge__kav k : toUpdate){
+                if(k.PublishStatus == 'Online'){
+                    retractIfPublished(k);
+                }
+            }
             update toUpdate;
+            System.debug('mediateca to update: '+ toUpdate.size());
+        }
+        // Publicar artículos
+        if(!toInsert.isEmpty() || !toUpdate.isEmpty()){
+            List<KnowledgeArticleVersion> lstKnowPublish = new List<KnowledgeArticleVersion>();
+            lstKnowPublish = [SELECT Id, KnowledgeArticleId, PublishStatus FROM KnowledgeArticleVersion WHERE PublishStatus = 'Draft'];
+            for(KnowledgeArticleVersion know : lstKnowPublish){
+                KbManagement.PublishingService.publishArticle(know.KnowledgeArticleId, true);
+            }
+        }
+    }
+    private static void retractIfPublished(Knowledge__kav knowledge) {
+        if (knowledge.PublishStatus == 'Online') {
+            KbManagement.PublishingService.editOnlineArticle(knowledge.KnowledgeArticleId, false);
+            System.debug('Retractando artículo con Id: ' + knowledge.Id);
         }
     }
 }

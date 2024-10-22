@@ -80,7 +80,6 @@ public class MediatecaApiService {
                         apiResponse.data.itemList = (ItemList) JSON.deserialize(listJson, ItemList.class);
                     }
                 }
-                
                 // Procesar items
                 if (apiResponse.data != null && apiResponse.data.itemList != null && apiResponse.data.itemList.items != null) {
                     Map<String, Item> itemsMap = new Map<String, Item>();
@@ -100,29 +99,35 @@ public class MediatecaApiService {
             System.debug('Error during API call: ' + e.getMessage());
         }
     }
-    
-    // Metodo para parsear DateTime desde un String
+
     public static DateTime parseDateTime(String dateTimeString) {
-        if (dateTimeString.endsWith('Z')) {
-            // UTC formato sin zona horaria
-            return DateTime.valueOf(dateTimeString.substring(0, 19).replace('T', ' '));
-        } else if (dateTimeString.length() > 19 && (dateTimeString.substring(19, 20) == '+' || dateTimeString.substring(19, 20) == '-')) {
-            // Zona horaria en formato +hh:mm o -hh:mm
-            String dateTimeWithoutOffset = dateTimeString.substring(0, 19).replace('T', ' ');
-            String offset = dateTimeString.substring(19);
-            DateTime dateTimeUtc = DateTime.valueOf(dateTimeWithoutOffset);
-            Integer offsetHours = Integer.valueOf(offset.substring(1, 3));
-            Integer offsetMinutes = Integer.valueOf(offset.substring(4, 6));
-            if (offset.startsWith('-')) {
-                offsetHours = -offsetHours;
-                offsetMinutes = -offsetMinutes;
+        try {
+            if (dateTimeString.endsWith('Z')) {
+                // UTC formato sin zona horaria
+                return DateTime.valueOf(dateTimeString.substring(0, 19).replace('T', ' '));
+            } else if (dateTimeString.length() > 19 && (dateTimeString.substring(19, 20) == '+' || dateTimeString.substring(19, 20) == '-')) {
+                // Zona horaria en formato +hh:mm o -hh:mm
+                String dateTimeWithoutOffset = dateTimeString.substring(0, 19).replace('T', ' ');
+                String offset = dateTimeString.substring(19);
+                DateTime dateTimeUtc = DateTime.valueOf(dateTimeWithoutOffset);
+                Integer offsetHours = Integer.valueOf(offset.substring(1, 3));
+                Integer offsetMinutes = Integer.valueOf(offset.substring(4, 6));
+                if (offset.startsWith('-')) {
+                    offsetHours = -offsetHours;
+                    offsetMinutes = -offsetMinutes;
+                }
+                return dateTimeUtc.addHours(-offsetHours).addMinutes(-offsetMinutes);
+            } else {
+                // Formato de fecha y hora sin zona horaria
+                return DateTime.valueOf(dateTimeString.replace('T', ' '));
             }
-            return dateTimeUtc.addHours(-offsetHours).addMinutes(-offsetMinutes);
-        } else {
-            // Formato de fecha y hora sin zona horaria
-            return DateTime.valueOf(dateTimeString.replace('T', ' '));
+        } catch (Exception e) {
+            // Si el formato es inválido, retorna null
+            System.debug('Error parsing date: ' + dateTimeString + ' - ' + e.getMessage());
+            return null;
         }
     }
+    
     
     public static DateTime convertToSpanishTime(DateTime dateTimeUtc) {
         // Horario estándar de España es UTC+1
@@ -168,7 +173,6 @@ public class MediatecaApiService {
         List<Knowledge__kav> toInsert = new List<Knowledge__kav>();
         List<Knowledge__kav> toUpdate = new List<Knowledge__kav>();
         for (Item item : itemsMap.values()) {
-            
             DateTime eventDateTimeUtc = parseDateTime(item.event_at);
             DateTime createdDateTimeUtc = parseDateTime(item.created_at);
             DateTime updatedDateTimeUtc = parseDateTime(item.updated_at);
@@ -202,10 +206,15 @@ public class MediatecaApiService {
                 knowledge.UrlName = item.id;
                 knowledge.Descripcion__c = item.metadata.description;
                 knowledge.Url__c = item.href;
-                Datetime a = Datetime.now();
-                knowledge.Fecha_del_evento__c = eventDateTime;
-                knowledge.Fecha_de_creacion__c = createdDateTime;
-                knowledge.Fecha_de_actualizacion__c = updatedDateTime;
+                if(eventDateTime.year()>1900){
+                    knowledge.Fecha_del_evento__c = eventDateTime;
+                }
+                if(createdDateTime.year()>1900){
+                    knowledge.Fecha_de_creacion__c = createdDateTime;
+                }
+                if(updatedDateTime.year()>1900){
+                    knowledge.Fecha_de_actualizacion__c = updatedDateTime;
+                }
                 knowledge.ValidationStatus = 'Validated';
                 knowledge.Entidades__c = 'Deputación';
                 if(item.metadata.emblem != ''){
@@ -213,7 +222,6 @@ public class MediatecaApiService {
                 }else {
                     knowledge.Ambitos__c = 'Transparencia';
                 }
-                
                 knowledge.Title = item.metadata.title;
                 knowledge.UrlName = item.id;
                 knowledge.Language = 'es';

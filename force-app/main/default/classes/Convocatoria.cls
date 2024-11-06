@@ -3,11 +3,30 @@ public class Convocatoria {
     public String descripcion;
     public Decimal importe_total;
     public Boolean fondo_ue;
+    public OrganoGestor organo_gestor;
+    public Tema tema;
     public String version_json;
     public Boolean activo;
     public String fecha_modificacion;
+    public Ambito ambito;
     public DataJson data_json;
     
+    public class OrganoGestor {
+        public String code;
+        public String name;
+    }
+
+    public class Tema {
+        public String code;
+        public String name;
+    }
+
+    public class Ambito {
+        public String code;
+        public String name;
+    }
+    
+
     public class DataJson {
         public DatosGeneralesCov DatosGeneralesCov;
         public DatosBaseReguladora DatosBaseReguladora;

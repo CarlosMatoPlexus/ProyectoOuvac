@@ -8,6 +8,7 @@ public class Tramite{
 	public boolean activo;
 	public String fecha_creacion;	
 	public String fecha_modificacion;
+	public cls_ambito ambito;
 	public cls_data_es_json data_es_json;
 	public cls_data_gl_json data_gl_json;
     
@@ -16,6 +17,10 @@ public class Tramite{
 		public String name;	
 	}
 	public class cls_tema {
+		public String code;	
+		public String name;	
+	}
+	public class cls_ambito {
 		public String code;	
 		public String name;	
 	}

@@ -82,6 +82,16 @@
                 <identifier>Recordfecha_modificacion__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Entidades__c</fieldItem>
+                <identifier>RecordEntidades_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-3de1ed4a-6660-4acd-af7a-9ee985e2f136</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -140,6 +150,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.IdiomaFormula__c</fieldItem>
                 <identifier>RecordIdiomaFormula_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Ambitos__c</fieldItem>
+                <identifier>RecordAmbitos_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5ff1fc74-7e3a-4f45-9f86-3b29f1da0fb9</name>
@@ -214,32 +234,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FicheroDocumentoCastellano__c</fieldItem>
-                <identifier>RecordFicheroDocumentoCastellano_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Language}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>es</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FicheroDocumentoOtraLengua__c</fieldItem>
-                <identifier>RecordFicheroDocumentoOtraLengua_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Language}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>es_MX</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <fieldItem>Record.URL_documentacion_convocatoria__c</fieldItem>
+                <identifier>RecordURL_documentacion_convocatoria_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-e59219bf-31a0-4c08-b2cb-2a3889edc7ae</name>

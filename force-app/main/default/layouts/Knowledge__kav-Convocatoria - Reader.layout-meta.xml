@@ -21,6 +21,9 @@
             <layoutItems>
                 <field>fecha_modificacion__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>Entidades__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -34,6 +37,9 @@
             </layoutItems>
             <layoutItems>
                 <field>IdiomaFormula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>Ambitos__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

@@ -1,73 +1,53 @@
 @isTest
-public class APIGetConvocatoriasTest {
+public class ConvocatoriaServiceToUpdateTest {
     @isTest
-    static void testObtenerConvocatorias() {
-        // Configurar el mock para simular la llamada HTTP
-        Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
-        Test.startTest();
-        APIGetConvocatorias.obtenerConvocatorias();
-        Test.stopTest();
-        // Verificar que se programaron batch jobs para procesar registros
-        List<AsyncApexJob> jobs = [SELECT Id, Status FROM AsyncApexJob WHERE JobType = 'BatchApex' LIMIT 10];
-        System.assert(!jobs.isEmpty(), 'Debe haber al menos un batch job programado.');
-        System.assertEquals('Completed', jobs[0].Status, 'El primer batch job debería estar completado.');
-    }
-
-    @isTest
-    static void testObtenerConvocatoriasCompareDate() {
+    static void testConvocatoriaServiceToUpdateTest() {
         // Configurar el mock para simular la llamada HTTP
         Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
         // Simular algunos datos existentes de Knowledge en Salesforce
-        Knowledge__kav knowledgeExisting = new Knowledge__kav(
+        Knowledge__kav knowledgeEsp = new Knowledge__kav(
             code_bdns__c = '321902',
         fecha_modificacion__c = DateTime.now().addDays(-2), // Fecha anterior para forzar actualización
-        Title = 'knowledgeExisting',
-        UrlName = 'knowledgeExisting'
+        Title = 'knowledgeEsp',
+        UrlName = 'knowledgeEsp',
+        Language = 'es'
             );
-        insert knowledgeExisting;
-        // Ejecutar el método a probar
+        insert knowledgeEsp;
+        Knowledge__kav knowledgeGal = new Knowledge__kav(
+            code_bdns__c = '321902',    
+        fecha_modificacion__c = DateTime.now().addDays(-2), // Fecha anterior para forzar actualización
+        Title = 'knowledgeGal',
+        UrlName = 'knowledgeGal',
+        Language = 'es_MX'
+            );
+        insert knowledgeGal;
+        // Ejecutar los métodos
         Test.startTest();
-        APIGetConvocatorias.obtenerConvocatorias();
-        Test.stopTest();
-        // Verificar que se programaron batch jobs para procesar registros
-        List<AsyncApexJob> jobs = [SELECT Id, Status FROM AsyncApexJob WHERE JobType = 'BatchApex' LIMIT 10];
-        System.assert(!jobs.isEmpty(), 'Debe haber al menos un batch job programado.');
-        System.assertEquals('Completed', jobs[0].Status, 'El primer batch job debería estar completado.');
-    }
-    
-    @isTest
-    static void testObtenerConvocatoriasNew() {
-        // Configurar el mock para simular la llamada HTTP
-        Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
-        // Ejecutar el método a probar
-        Test.startTest();
+        List<String> detallesJson = new List<String>();
         List<String>  scope = new List<String>();
         scope.add('321902');
         String token = 'mockToken123';
-        List<String> detallesJson = APIGetConvocatorias.obtenerDetallesConvocatorias(scope, token);
-        ConvocatoriaService.procesarConvocatoria(detallesJson);
+        detallesJson = APIGetConvocatorias.obtenerDetallesConvocatorias(scope, token);
+        ConvocatoriaServiceToUpdate.updateConvocatoria(detallesJson);
         Test.stopTest();
-        //Verificar si el registro de Knowledge fue insertado correctamente
-        Knowledge__kav neKnowledge = [SELECT Id, code_bdns__c FROM Knowledge__kav WHERE code_bdns__c = '321902' LIMIT 1];
-        System.Assert(neKnowledge != null, 'El nuevo registro de Knowledge deberia haber sido insertado.');
-        System.assertEquals('321902', neKnowledge.code_bdns__c, 'El código BDNS del nuevo Knowledge deberia ser "321902"');
+        Knowledge__kav assignKnowEsp;
+        Knowledge__kav assignKnowGal;
+        List<Knowledge__kav> knowLst = [SELECT Id, fecha_modificacion__c, Language FROM Knowledge__kav WHERE code_bdns__c = '321902'];
+
+        for(Knowledge__kav k : knowLst){
+            if(k.Language =='es'){
+                assignKnowEsp = k;
+            }else if (k.Language == 'es_MX') {
+                assignKnowGal = k;
+            }
+        }
+        System.assertEquals(Datetime.now().date(), assignKnowEsp.fecha_modificacion__c.date(), 'La fecha de modificacion del registro Knowledge en esapñol debe ser igual que'+' '+ Datetime.now().date());
+        System.assertEquals(Datetime.now().date(), assignKnowGal.fecha_modificacion__c.date(), 'La fecha de modificacion del registro Knowledge en galego debe ser igual que'+' '+ Datetime.now().date());
+        System.assert(assignKnowEsp.fecha_modificacion__c.date() > knowledgeEsp.fecha_modificacion__c.date(), 'La fecha de modificacion del registro Knowledge en esapñol debe ser mayor.');
+        System.assert(assignKnowGal.fecha_modificacion__c.date() > knowledgeGal.fecha_modificacion__c.date(), 'La fecha de modificacion del registro Knowledge en galego debe ser mayor.');
     }
     
-    @isTest
-    static void testObtenerDetallesConvocatorias() {
-        // Configurar el mock para simular la llamada HTTP
-        Test.setMock(HttpCalloutMock.class, new APIGetConvocatoriasMock());
-        // Simular algunos code_bdns para la prueba
-        List<String> codeBdnsList = new List<String>{ '321902' };
-        String token = 'mockToken123';
-        // Ejecutar el método que obtiene los detalles de las convocatorias
-        Test.startTest();
-        List<String> detalles = APIGetConvocatorias.obtenerDetallesConvocatorias(codeBdnsList, token);
-        Test.stopTest();
-        // Verificar que los detalles se obtuvieron correctamente
-        System.assert(!detalles.isEmpty(), 'Debe haberse recuperado al menos un detalle de la convocatoria.');
-        System.assert(detalles[0].contains('"code_bdns": "321902"'), 'El detalle debe contener la convocatoria con code_bdns "321902".');
-    }
+    
     // Mock class para simular las respuestas de las llamadas HTTP
     private class APIGetConvocatoriasMock implements HttpCalloutMock {
         public HttpResponse respond(HttpRequest req) {
@@ -92,7 +72,7 @@ public class APIGetConvocatoriasTest {
                     '    "version_json": null,'+
                     '    "activo": true,'+
                     '    "fecha_creacion": "2024-07-11T14:29:00+02:00",'+
-                    '    "fecha_modificacion": "2024-09-17T15:50:25+02:00",'+
+                         '"fecha_modificacion": "' + fechaActual + '",' +
                     '    "data_json": {'+
                     '        "DatosGeneralesCov": {'+
                     '            "IdConvocatoria": "321902",'+
@@ -272,21 +252,6 @@ public class APIGetConvocatoriasTest {
                     '        ]'+
                     '    }'+
                     '}');
-            }
-            // Simulación de la respuesta JSON de la API para obtener detalles de convocatorias
-            else if (req.getEndpoint().contains('/convocatorias')) {
-                // Usar DateTime.now() para simular la fecha actual en los detalles
-                String fechaActual = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'+\'02:00');
-                res.setBody('[' +
-                    '{' +
-                    '"code_bdns": "321902",' +
-                    '"fecha_recepcion": "2016-11-08T01:00:00+01:00",' +
-                    '"descripcion": "Acuerdo de Junta de Gobierno de 29/09/2016 por el que se convocan subvenciones...",' +
-                    '"importe_total": 25000,' +
-                    '"fecha_modificacion": "' + fechaActual + '",' +  // Fecha actual simulada
-                    '"fondo_ue": false' +
-                    '}' +
-                    ']');
             }
             return res;
         }

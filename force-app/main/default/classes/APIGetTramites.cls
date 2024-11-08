@@ -1,6 +1,6 @@
-public class APIGetConvocatorias {
-    // Método para obtener convocatorias y pasarlas a la cola de actualización
-    public static void obtenerConvocatorias() {
+public class APIGetTramites {
+    // Método para obtener tramites y pasarlas a la cola de actualización
+    public static void obtenerTramites() {
         Integer bloqueSize = 1;
         String token = APILoginService.login();
         if (token == null || token == '') {
@@ -8,7 +8,7 @@ public class APIGetConvocatorias {
             return;
         }
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://apigrafo.depourense.es/api/convocatorias');
+        req.setEndpoint('https://apigrafo.depourense.es/api/tramites');
         req.setMethod('GET');
         req.setHeader('Authorization', 'Bearer ' + token);
         req.setHeader('Accept', 'application/json');
@@ -20,52 +20,56 @@ public class APIGetConvocatorias {
             try {
                 res = http.send(req);
                 if (res.getStatusCode() == 200) {
-                    List<Object> convocatorias = (List<Object>) JSON.deserializeUntyped(res.getBody());
-                    Set<String> codeBdns = new Set<String>();
-                    Map<String, String> convocatoriaFechaMap = new Map<String, String>();
-                    for (Object obj : convocatorias) {
-                        Map<String, Object> convocatoria = (Map<String, Object>) obj;
-                        String codeBdn = (String) convocatoria.get('code_bdns');
-                        String fechaModificacion = (String) convocatoria.get('fecha_modificacion');
-                        codeBdns.add(codeBdn);
-                        convocatoriaFechaMap.put(codeBdn, fechaModificacion);
+                    List<Object> tramites = (List<Object>) JSON.deserializeUntyped(res.getBody());
+                    Set<String> setIdTramite = new Set<String>();
+                    Map<String, String> tramiteFechaMap = new Map<String, String>();
+                    for (Object obj : tramites) {
+                        Map<String, Object> tramite = (Map<String, Object>) obj;
+                        Integer tramiteId = (Integer)tramite.get('id');
+                        String stringTramiteId = String.valueOf(tramiteId);
+                        String fechaModificacion = (String) tramite.get('fecha_modificacion');
+                        setIdTramite.add(stringTramiteId);
+                        tramiteFechaMap.put(stringTramiteId, fechaModificacion);
                     }
-                    List<String> codeBdnList = new List<String>(codeBdns);
-                    Map<String, Knowledge__kav> existingKnowledgeMap = getExistingKnowledgeRecords(codeBdnList);
+                    List<String> idTramiteList = new List<String>(setIdTramite);
+                    Map<String, Knowledge__kav> existingKnowledgeMap = getExistingKnowledgeRecords(idTramiteList);
                     List<String> newRecordsToProcess = new List<String>();
                     List<String> existingRecordsToUpdate = new List<String>();
-                    for (String codeBdn : codeBdnList) {
-                        if (!existingKnowledgeMap.containsKey(codeBdn)) {
-                            newRecordsToProcess.add(codeBdn); // Nuevo registro
+                    for (String tramiteId : idTramiteList) {
+                        if (!existingKnowledgeMap.containsKey(tramiteId)) {
+                            newRecordsToProcess.add(tramiteId);
                         } else {
                             // Obtener la fecha_modificacion de Salesforce
-                            Knowledge__kav existingKnowledge = existingKnowledgeMap.get(codeBdn);
-                            String fechaModificacionApi = convocatoriaFechaMap.get(codeBdn);
+                            Knowledge__kav existingKnowledge = existingKnowledgeMap.get(tramiteId);
+                            String fechaModificacionApi = tramiteFechaMap.get(tramiteId);
                             DateTime fechaModificacionSalesforce = existingKnowledge.fecha_modificacion__c;
                             String fechaModificacionSinOffset = fechaModificacionApi.substring(0, 19).replace('T', ' ');
                             DateTime fechaModificacionApiDateTime = DateTime.valueOf(fechaModificacionSinOffset);
                             // Comparar solo la parte de la fecha
                             if (fechaModificacionApiDateTime.date() > fechaModificacionSalesforce.date()) {
-                                existingRecordsToUpdate.add(codeBdn); // Agregar a la lista de actualización si la fecha es mayor
+                                System.debug('tramite to update: '+' '+ tramiteId);
+                                existingRecordsToUpdate.add(tramiteId); // Agregar a la lista de actualización si la fecha es mayor
                             }
                         }
                     }
                     // Procesar nuevos registros en un batch job
                     if (!newRecordsToProcess.isEmpty()) {
-                        List<String> codeBdnListDivInsert = new List<String>(newRecordsToProcess);
-                        List<List<String>> bloquesInsert = dividirLista(codeBdnListDivInsert, bloqueSize);
-                        for (List<String> bloqueCodeBdnsInsert : bloquesInsert) {
+                        List<String> idTramiteListDivInsert = new List<String>(newRecordsToProcess);
+                        List<List<String>> bloquesInsert = dividirLista(idTramiteListDivInsert, bloqueSize);
+                        for (List<String> bloqueIdTramiteInsert : bloquesInsert) {
                             System.debug('Procesando nuevos registros...');
-                            Database.executeBatch(new ConvocatoriaBatchable(bloqueCodeBdnsInsert, token), 1);
+                            System.debug('Procesando nuevos registros...' + bloqueIdTramiteInsert);
+                            Database.executeBatch(new TramiteBatchable(bloqueIdTramiteInsert, token), 1);
                         }
                     }
                     // Actualizar registros existentes usando KnowledgeUpdater
                     if (!existingRecordsToUpdate.isEmpty()) {
-                        List<String> codeBdnListDivUpdate = new List<String>(existingRecordsToUpdate);
-                        List<List<String>> bloquesUpdate = dividirLista(codeBdnListDivUpdate, bloqueSize);
-                        for (List<String> bloqueCodeBdnsUpdate : bloquesUpdate) {
+                        List<String> idTramiteListDivUpdate = new List<String>(existingRecordsToUpdate);
+                        List<List<String>> bloquesUpdate = dividirLista(idTramiteListDivUpdate, bloqueSize);
+                        for (List<String> bloqueIdTramiteUpdate : bloquesUpdate) {
                             System.debug('Actualizando registros existentes...');
-                            Database.executeBatch(new ConvocatoriaUpdateBatchable(bloqueCodeBdnsUpdate, token), 1);
+                            System.debug('Actualizando registros existentes...' + bloqueIdTramiteUpdate);
+                            Database.executeBatch(new TramiteUpdateBatchable(bloqueIdTramiteUpdate, token), 1);
                         }
                     }
                     success = true; // Marcar como éxito
@@ -75,18 +79,19 @@ public class APIGetConvocatorias {
                     retryCount++;
                     System.debug('Timeout occurred, retrying: ' + retryCount);
                 } else {
-                    System.debug('Error al obtener convocatorias: ' + e.getMessage());
+                    System.debug('Error al obtener los trámites: ' + e.getMessage());
                     break;
                 }
             }
         }
     }
-    // Obtener los detalles de las convocatorias en bloques con retry logic
-    public static List<String> obtenerDetallesConvocatorias(List<String> codeBdns, String token) {
+    
+    // Obtener los detalles de las tramites en bloques con retry logic
+    public static List<String> obtenerDetallesTramites(List<String> idTramites, String token) {
         List<String> detallesJson = new List<String>();
-        for (String codeBdn : codeBdns) {
+        for (String idTramite : idTramites) {
             HttpRequest req = new HttpRequest();
-            req.setEndpoint('https://apigrafo.depourense.es/api/convocatorias/' + codeBdn);
+            req.setEndpoint('https://apigrafo.depourense.es/api/tramites/' + idTramite);
             req.setMethod('GET');
             req.setHeader('Authorization', 'Bearer ' + token);
             req.setHeader('Accept', 'application/json');
@@ -106,7 +111,7 @@ public class APIGetConvocatorias {
                         retryCount++;
                         System.debug('Timeout occurred, retrying: ' + retryCount);
                     } else {
-                        System.debug('Error al obtener el detalle de la convocatoria: ' + e.getMessage());
+                        System.debug('Error al obtener el detalle del tramite: ' + e.getMessage());
                         break;
                     }
                 }
@@ -114,6 +119,7 @@ public class APIGetConvocatorias {
         }
         return detallesJson;
     }
+    
     // Método para dividir una lista en bloques
     public static List<List<String>> dividirLista(List<String> lista, Integer bloqueSize) {
         List<List<String>> bloques = new List<List<String>>();
@@ -126,18 +132,20 @@ public class APIGetConvocatorias {
         }
         return bloques;
     }
+    
     // Método para consultar los registros de Knowledge en Salesforce
-    public static Map<String, Knowledge__kav> getExistingKnowledgeRecords(List<String> codeBdns) {
+    public static Map<String, Knowledge__kav> getExistingKnowledgeRecords(List<String> idTramiteList) {
         Map<String, Knowledge__kav> existingKnowledgeMap = new Map<String, Knowledge__kav>();
         // SOQL query para obtener los registros que ya existen en Salesforce
         List<Knowledge__kav> existingKnowledges = [
-            SELECT Id, code_bdns__c, fecha_modificacion__c
+            SELECT Id, Tramite_id__c, fecha_modificacion__c, Tramite_codigo__c
             FROM Knowledge__kav
-            WHERE code_bdns__c IN :codeBdns
+            WHERE Tramite_id__c IN :idTramiteList
         ];
         for (Knowledge__kav knowledge : existingKnowledges) {
-            existingKnowledgeMap.put(knowledge.code_bdns__c, knowledge);
+            existingKnowledgeMap.put(knowledge.Tramite_id__c, knowledge);
         }
         return existingKnowledgeMap;
     }
+    
 }

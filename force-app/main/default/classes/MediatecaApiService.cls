@@ -55,14 +55,7 @@ public class MediatecaApiService {
             lastSyncMetadata = [SELECT LastSyncDate__c FROM Mediateca_Last_Sync__mdt WHERE DeveloperName = 'LastSyncDate' LIMIT 1];
         }
         DateTime lastSyncDate = lastSyncMetadata.LastSyncDate__c;
-        // Obtener el custom metadata de la fecha de ultima llamada a la Api
-        // Datetime lastSyncDate = Mediateca_Last_Sync__mdt.GetInstance('LastSyncDate').LastSyncDate__c;
-        // if (lastSyncDate == null) {
-        //     lastSyncDate = Date.today().addDays(-1); // Default to yesterday if not set
-        // }
-        //Datetime lastSyncDate = Date.today().addDays(-1);
         Datetime today = Date.today();
-        
         // Formatear las fechas según el formato requerido por la API
         String lastSyncDateFormatted = formatDateTimeForApi(lastSyncDate);
         String todayFormatted = formatDateTimeForApi(today);
@@ -87,7 +80,6 @@ public class MediatecaApiService {
                         apiResponse.data.itemList = (ItemList) JSON.deserialize(listJson, ItemList.class);
                     }
                 }
-                
                 // Procesar items
                 if (apiResponse.data != null && apiResponse.data.itemList != null && apiResponse.data.itemList.items != null) {
                     Map<String, Item> itemsMap = new Map<String, Item>();
@@ -97,11 +89,9 @@ public class MediatecaApiService {
                     upsertKnowledge(itemsMap);
                     // Llamar a updateLastSyncDate en una transacción futura
                     CustomMetadataUpdateService.updateLastSyncDateAsync(today);
-                    
                 } else {
                     System.debug('No items found in the response.');
                 }
-                
             } else {
                 System.debug('HTTP request failed with status code: ' + res.getStatusCode());
             }
@@ -109,29 +99,35 @@ public class MediatecaApiService {
             System.debug('Error during API call: ' + e.getMessage());
         }
     }
-    
-    // Metodo para parsear DateTime desde un String
+
     public static DateTime parseDateTime(String dateTimeString) {
-        if (dateTimeString.endsWith('Z')) {
-            // UTC formato sin zona horaria
-            return DateTime.valueOf(dateTimeString.substring(0, 19).replace('T', ' '));
-        } else if (dateTimeString.length() > 19 && (dateTimeString.substring(19, 20) == '+' || dateTimeString.substring(19, 20) == '-')) {
-            // Zona horaria en formato +hh:mm o -hh:mm
-            String dateTimeWithoutOffset = dateTimeString.substring(0, 19).replace('T', ' ');
-            String offset = dateTimeString.substring(19);
-            DateTime dateTimeUtc = DateTime.valueOf(dateTimeWithoutOffset);
-            Integer offsetHours = Integer.valueOf(offset.substring(1, 3));
-            Integer offsetMinutes = Integer.valueOf(offset.substring(4, 6));
-            if (offset.startsWith('-')) {
-                offsetHours = -offsetHours;
-                offsetMinutes = -offsetMinutes;
+        try {
+            if (dateTimeString.endsWith('Z')) {
+                // UTC formato sin zona horaria
+                return DateTime.valueOf(dateTimeString.substring(0, 19).replace('T', ' '));
+            } else if (dateTimeString.length() > 19 && (dateTimeString.substring(19, 20) == '+' || dateTimeString.substring(19, 20) == '-')) {
+                // Zona horaria en formato +hh:mm o -hh:mm
+                String dateTimeWithoutOffset = dateTimeString.substring(0, 19).replace('T', ' ');
+                String offset = dateTimeString.substring(19);
+                DateTime dateTimeUtc = DateTime.valueOf(dateTimeWithoutOffset);
+                Integer offsetHours = Integer.valueOf(offset.substring(1, 3));
+                Integer offsetMinutes = Integer.valueOf(offset.substring(4, 6));
+                if (offset.startsWith('-')) {
+                    offsetHours = -offsetHours;
+                    offsetMinutes = -offsetMinutes;
+                }
+                return dateTimeUtc.addHours(-offsetHours).addMinutes(-offsetMinutes);
+            } else {
+                // Formato de fecha y hora sin zona horaria
+                return DateTime.valueOf(dateTimeString.replace('T', ' '));
             }
-            return dateTimeUtc.addHours(-offsetHours).addMinutes(-offsetMinutes);
-        } else {
-            // Formato de fecha y hora sin zona horaria
-            return DateTime.valueOf(dateTimeString.replace('T', ' '));
+        } catch (Exception e) {
+            // Si el formato es inválido, retorna null
+            System.debug('Error parsing date: ' + dateTimeString + ' - ' + e.getMessage());
+            return null;
         }
     }
+    
     
     public static DateTime convertToSpanishTime(DateTime dateTimeUtc) {
         // Horario estándar de España es UTC+1
@@ -161,35 +157,32 @@ public class MediatecaApiService {
         // Devolver el último domingo del mes
         return lastDayOfMonth.addDays(-daysToSubtract);
     }
-    
     // Método para formatear DateTime según el formato requerido por la API
     public static String formatDateTimeForApi(Datetime urldateTime) {
         return urldateTime.format('yyyy-MM-dd\'T\'HH:mm:ssXXX');
     }
-    
     // Metodo para actualizar knowledge
     private static void upsertKnowledge(Map<String, Item> itemsMap) {
         Set<String> itemIds = itemsMap.keySet();
-        List<Knowledge__kav> knowledgeList = [SELECT Id, Id_externo__c, Fecha_del_evento__c, Fecha_de_creacion__c, Fecha_de_actualizacion__c, Entidades__c, Ambitos__c, Title, Descripcion__c, Url__c   FROM Knowledge__kav WHERE Id_externo__c IN :itemIds];
+        List<Knowledge__kav> knowledgeList = [SELECT Id, Id_externo__c, Fecha_del_evento__c, Fecha_de_creacion__c, Fecha_de_actualizacion__c, Entidades__c, Ambitos__c, Title, Descripcion__c, Url__c, PublishStatus, KnowledgeArticleId FROM Knowledge__kav WHERE Id_externo__c IN :itemIds];
         Map<String, Knowledge__kav> existingKnowledgeMap = new Map<String, Knowledge__kav>();
+        String mediatecaRecordTypeID = Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByName().get('Mediateca').getRecordTypeId();
         for (Knowledge__kav knowledge : knowledgeList) {
             existingKnowledgeMap.put(knowledge.Id_externo__c, knowledge);
         }
         List<Knowledge__kav> toInsert = new List<Knowledge__kav>();
         List<Knowledge__kav> toUpdate = new List<Knowledge__kav>();
-        
         for (Item item : itemsMap.values()) {
-            
             DateTime eventDateTimeUtc = parseDateTime(item.event_at);
             DateTime createdDateTimeUtc = parseDateTime(item.created_at);
             DateTime updatedDateTimeUtc = parseDateTime(item.updated_at);
             DateTime eventDateTime = convertToSpanishTime(eventDateTimeUtc);
             DateTime createdDateTime = convertToSpanishTime(createdDateTimeUtc);
             DateTime updatedDateTime = convertToSpanishTime(updatedDateTimeUtc);
-            
             if (existingKnowledgeMap.containsKey(item.id)) {
                 Knowledge__kav knowledge = existingKnowledgeMap.get(item.id);
                 if (knowledge.Fecha_de_actualizacion__c < parseDateTime(item.updated_at)) {
+                    retractIfPublished(knowledge);
                     // Update existing record
                     knowledge.Fecha_del_evento__c = eventDateTime;
                     knowledge.Fecha_de_creacion__c = createdDateTime;
@@ -206,7 +199,6 @@ public class MediatecaApiService {
                     toUpdate.add(knowledge);
                 }
             } else {
-                String mediatecaRecordTypeID = Schema.SObjectType.Knowledge__kav.getRecordTypeInfosByName().get('Mediateca').getRecordTypeId();
                 // Insertar nuevo registro
                 Knowledge__kav knowledge = new Knowledge__kav();
                 knowledge.RecordTypeId = mediatecaRecordTypeID;
@@ -214,10 +206,15 @@ public class MediatecaApiService {
                 knowledge.UrlName = item.id;
                 knowledge.Descripcion__c = item.metadata.description;
                 knowledge.Url__c = item.href;
-                Datetime a = Datetime.now();
-                knowledge.Fecha_del_evento__c = eventDateTime;
-                knowledge.Fecha_de_creacion__c = createdDateTime;
-                knowledge.Fecha_de_actualizacion__c = updatedDateTime;
+                if(eventDateTime.year()>1900){
+                    knowledge.Fecha_del_evento__c = eventDateTime;
+                }
+                if(createdDateTime.year()>1900){
+                    knowledge.Fecha_de_creacion__c = createdDateTime;
+                }
+                if(updatedDateTime.year()>1900){
+                    knowledge.Fecha_de_actualizacion__c = updatedDateTime;
+                }
                 knowledge.ValidationStatus = 'Validated';
                 knowledge.Entidades__c = 'Deputación';
                 if(item.metadata.emblem != ''){
@@ -225,7 +222,6 @@ public class MediatecaApiService {
                 }else {
                     knowledge.Ambitos__c = 'Transparencia';
                 }
-                
                 knowledge.Title = item.metadata.title;
                 knowledge.UrlName = item.id;
                 knowledge.Language = 'es';
@@ -233,12 +229,31 @@ public class MediatecaApiService {
             }
         }
         if (!toInsert.isEmpty()) {
-            System.debug('mediateca to insert: '+ toInsert.size());
             insert toInsert;
+            System.debug('mediateca to insert: '+ toInsert.size());
         }
         if (!toUpdate.isEmpty()) {
-            System.debug('mediateca to update: '+ toUpdate.size());
+            for(Knowledge__kav k : toUpdate){
+                if(k.PublishStatus == 'Online'){
+                    retractIfPublished(k);
+                }
+            }
             update toUpdate;
+            System.debug('mediateca to update: '+ toUpdate.size());
+        }
+        // Publicar artículos
+        if(!toInsert.isEmpty() || !toUpdate.isEmpty()){
+            List<KnowledgeArticleVersion> lstKnowPublish = new List<KnowledgeArticleVersion>();
+            lstKnowPublish = [SELECT Id, KnowledgeArticleId, PublishStatus FROM KnowledgeArticleVersion WHERE PublishStatus = 'Draft'];
+            for(KnowledgeArticleVersion know : lstKnowPublish){
+                KbManagement.PublishingService.publishArticle(know.KnowledgeArticleId, true);
+            }
+        }
+    }
+    private static void retractIfPublished(Knowledge__kav knowledge) {
+        if (knowledge.PublishStatus == 'Online') {
+            KbManagement.PublishingService.editOnlineArticle(knowledge.KnowledgeArticleId, false);
+            System.debug('Retractando artículo con Id: ' + knowledge.Id);
         }
     }
 }

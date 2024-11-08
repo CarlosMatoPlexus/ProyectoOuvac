@@ -8,9 +8,6 @@ public class APIGetConvocatoriasQueueableTest {
         Test.startTest();
         System.enqueueJob(new APIGetConvocatoriasQueueable());
         Test.stopTest();
-        // Aquí podrías agregar más verificaciones según lo que haga APIGetConvocatorias.obtenerConvocatorias(),
-        // como por ejemplo la inserción de registros en Salesforce o procesamiento de datos.
-        // Como ejemplo básico, puedes verificar que no hubo errores en la ejecución del job.
         List<AsyncApexJob> jobs = [SELECT Id, Status FROM AsyncApexJob WHERE JobType = 'Queueable' LIMIT 1];
         System.assertEquals('Completed', jobs[0].Status, 'El trabajo Queueable debe haberse completado.');
     }

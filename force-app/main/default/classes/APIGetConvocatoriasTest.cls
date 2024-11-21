@@ -88,7 +88,10 @@ public class APIGetConvocatoriasTest {
                     '    "descripcion": "Acuerdo de Junta de Gobierno de 29/09/2016 por el que se convocan subvenciones a deportistas orensanos cualificados en modalidades deportivas individuales del año 2016",'+
                     '    "importe_total": 25000,'+
                     '    "fondo_ue": false,'+
-                    '    "tema": "/api/temas/008",'+
+                    '     "tema": {'+
+                    '         "code": "008",'+
+                    '         "name": "Transparencia"'+
+                    '      },'+
                     '    "version_json": null,'+
                     '    "activo": true,'+
                     '    "fecha_creacion": "2024-07-11T14:29:00+02:00",'+

@@ -1,10 +1,117 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+   <!-- Clases de Apex -->
     <types>
-        <members>Admin</members>
-        <members>Agente</members>
-        <members>Supervisor</members>
-        <name>Profile</name>
+            <members>APILoginService</members>
+            <members>APILoginServiceTest</members>
+            <members>APIGetConvocatorias</members>
+            <members>APIGetConvocatoriasQueueable</members>
+            <members>APIGetConvocatoriasQueueableTest</members>
+            <members>APIGetConvocatoriasScheduler</members>
+            <members>APIGetConvocatoriasSchedulerTest</members>
+            <members>APIGetConvocatoriasTest</members>
+            <members>APIGetTramites</members>
+            <members>APIGetTramitesQueueable</members>
+            <members>APIGetTramitesQueueableTest</members>
+            <members>APIGetTramitesScheduler</members>
+            <members>APIGetTramitesSchedulerTest</members>
+            <members>APIGetTramitesTest</members>
+            <members>Convocatoria</members>
+            <members>ConvocatoriaBatchable</members>
+            <members>ConvocatoriaBatchableTest</members>
+            <members>ConvocatoriaQueueable</members>
+            <members>ConvocatoriaQueueableTest</members>
+            <members>ConvocatoriaService</members>
+            <members>ConvocatoriaServiceTest</members>
+            <members>ConvocatoriaServiceToUpdate</members>
+            <members>ConvocatoriaServiceToUpdateTest</members>
+            <members>ConvocatoriaTest</members>
+            <members>ConvocatoriaUpdateBatchable</members>
+            <members>ConvocatoriaUpdateBatchableTest</members>
+            <members>MediatecaApiService</members>
+            <members>MediatecaApiServiceTest</members>
+            <members>MediatecaSyncScheduler</members>
+            <members>MediatecaSyncSchedulerTest</members>
+            <members>Tramite</members>
+            <members>TramiteBatchable</members>
+            <members>TramiteBatchableTest</members>
+            <members>TramiteQueueable</members>
+            <members>TramiteQueueableTest</members>
+            <members>TramiteService</members>
+            <members>TramiteServiceTest</members>
+            <members>TramiteServiceToUpdate</members>
+            <members>TramiteServiceToUpdateTest</members>
+            <members>TramiteTest</members>
+            <members>TramiteUpdateBatchable</members>
+            <members>TramiteUpdateBatchableTest</members>
+        <name>ApexClass</name>
+    </types>
+    <!-- Campos del objeto Knowledge -->
+    <types>
+            <members>Knowledge__kav.Fecha_envio_Convocatoria__c</members>
+            <members>Knowledge__kav.Fecha_publicacion_Convocatoria__c</members>
+            <members>Knowledge__kav.Id_extracto_diario_oficial_Convocatoria__c</members>
+            <members>Knowledge__kav.URL_documentacion_convocatoria__c</members>
+            <members>Knowledge__kav.URL_publicacion_Convocatoria__c</members>
+            <members>Knowledge__kav.Tramite_id__c</members> 
+            <members>Knowledge__kav.Tramite_codigo__c</members>
+            <members>Knowledge__kav.Tramite_codigo_espanol__c</members>
+            <members>Knowledge__kav.Tramite_titulo_espanol__c</members>
+            <members>Knowledge__kav.Tramite_descripcion_espanol__c</members>
+            <members>Knowledge__kav.Tramite_finalidad_espanol__c</members>
+            <members>Knowledge__kav.Tramite_requisitos_espanol__c</members>
+            <members>Knowledge__kav.Tramite_plazo_presentacion_espanol__c</members>
+            <members>Knowledge__kav.Tramite_presentacion_espanol__c</members>
+            <members>Knowledge__kav.Tramite_presentar_por_espanol__c</members>
+            <members>Knowledge__kav.Tramite_organo_gestor_espanol__c</members>
+            <members>Knowledge__kav.Tramite_plazo_resolucion_espanol__c</members>
+            <members>Knowledge__kav.Tramite_efecto_silencio_admin_espanol__c</members>
+            <members>Knowledge__kav.Tramite_recursos_espanol__c</members>
+            <members>Knowledge__kav.Tramite_normativa_basica_espanol__c</members>
+            <members>Knowledge__kav.Tramite_coleccion_normativas_espanol__c</members>
+            <members>Knowledge__kav.Tramite_informacion_adicional_espanol__c</members>
+            <members>Knowledge__kav.Tramite_nivel_identificacion_sol_esp__c</members>
+            <members>Knowledge__kav.Tramite_url_inicio_tramitacion_espanol__c</members>
+            <members>Knowledge__kav.Tramite_url_descarga_instancia_espanol__c</members>
+            <members>Knowledge__kav.Tramite_url_detalle_tramite_espanol__c</members>
+            <members>Knowledge__kav.Tramite_codigo_galego__c</members>
+            <members>Knowledge__kav.Tramite_titulo_galego__c</members>
+            <members>Knowledge__kav.Tramite_descripcion_galego__c</members>
+            <members>Knowledge__kav.Tramite_finalidad_galego__c</members>
+            <members>Knowledge__kav.Tramite_requisitos_galego__c</members>
+            <members>Knowledge__kav.Tramite_plazo_presentacion_galego__c</members>
+            <members>Knowledge__kav.Tramite_presentacion_galego__c</members>
+            <members>Knowledge__kav.Tramite_presentar_por_galego__c</members>
+            <members>Knowledge__kav.Tramite_organo_gestor_galego__c</members>
+            <members>Knowledge__kav.Tramite_plazo_resolucion_galego__c</members>
+            <members>Knowledge__kav.Tramite_efecto_silencio_admin_galego__c</members>
+            <members>Knowledge__kav.Tramite_recursos_galego__c</members>
+            <members>Knowledge__kav.Tramite_normativa_basica_galego__c</members>
+            <members>Knowledge__kav.Tramite_coleccion_normativas_galego__c</members>
+            <members>Knowledge__kav.Tramite_informacion_adicional_galego__c</members>
+            <members>Knowledge__kav.Tramite_nivel_identificacion_sol_gal__c</members>
+            <members>Knowledge__kav.Tramite_url_inicio_tramitacion_galego__c</members>
+            <members>Knowledge__kav.Tramite_url_descarga_instancia_galego__c</members>
+            <members>Knowledge__kav.Tramite_url_detalle_tramite_galego__c</members>
+        <name>CustomField</name>
+    </types>
+<!-- Record Types del objeto Knowledge -->
+    <types>
+            <members>Knowledge__kav.Tramite</members>
+        <name>RecordType</name>
+    </types>
+<!-- Flexipages -->
+    <types>
+        <members>Knowledge_Convocatoria_Record_Page</members>
+        <members>Knowledge_Tramite_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+<!-- Layouts--> 
+    <types>
+            <members>Knowledge__kav-Convocatoria - Reader</members>
+            <members>Knowledge__kav-Tramite - Reader</members>
+            <members>Knowledge__kav-Tramite- Author</members>
+        <name>Layout</name>
     </types>
     <version>61.0</version>
 </Package>

@@ -6,7 +6,7 @@ public class APIGetTramitesSchedulerTest {
         Test.setMock(HttpCalloutMock.class, new APIGetTramiteMock());
         // Simular la ejecución del trabajo programado
         Test.startTest();
-        String cronExp = '0 30 3 * * ?';
+        String cronExp = '0 0 3 * * ?';
         System.schedule('Test tramite Job', cronExp, new APIGetTramitesScheduler());
         Test.stopTest();
         // Verificar que el trabajo programado se haya encolado

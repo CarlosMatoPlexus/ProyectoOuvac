@@ -6,7 +6,7 @@ global class APIGetConvocatoriasScheduler implements Schedulable {
     // Método para programar la clase para ejecutarse todos los días a las 3 AM
     public static void scheduleDailyJob() {
         // Cron expression para todos los días a las 3 AM
-        String cronExp = '0 35 8 * * ?';
+        String cronExp = '0 0 3 * * ?';
         // Programar la ejecución
         System.schedule('Daily APIGetConvocatorias Job', cronExp, new APIGetConvocatoriasScheduler());
     }

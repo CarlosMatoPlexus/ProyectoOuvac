@@ -77,61 +77,31 @@ public class NoticiaServiceToUpdate {
             publishKnowledgeArticles(knowledgeToPublish);
         }
     }
-    // Método auxiliar para retractar artículos si están publicados
-    private static void retractIfPublished(Knowledge__kav knowledge) {
-        if (knowledge.PublishStatus == 'Online') {
-            KbManagement.PublishingService.editOnlineArticle(knowledge.KnowledgeArticleId, false);
-            // Asegurarse de que el estado se ha cambiado a Draft
-            System.debug('Retractando artículo con Id: ' + knowledge.Id);
-        }
-    }
-    // Método auxiliar para actualizar los campos de cada artículo de Knowledge
-    // private static void updateKnowledgeFields(Knowledge__kav knowledge, Noticia noticia) {
-        //     // Campos que no deben ser actualizados
-        //     Set<String> camposNoActualizables = new Set<String>{'Noticia_Id__c', 'RecordTypeId', 'Entidades__c', 'Ambitos__c', 'UrlName', 'Language', 'Fecha_de_creacion__c'};
-        //     // Solo actualizar si los campos no están en la lista de no actualizables
-        //     if (!camposNoActualizables.contains('Descripcion__c')) {
-            //         knowledge.Descripcion__c = noticia.descripcion;
-        //     }
-        //     if (!camposNoActualizables.contains('Title')) {
-            //         knowledge.Title = noticia.titulo;
-        //     }
-        //     if (!camposNoActualizables.contains('fondo_ue__c')) {
-            //         knowledge.fondo_ue__c = noticia.fondo_ue;
-        //     }
-        //     if (!camposNoActualizables.contains('Activo__c')) {
-            //         knowledge.Activo__c = noticia.activo;
-        //     }
-        //     if(knowledge.Language == 'es'){
-            //         if(data_es_json != null){
-                
-            //         }else {
-                //             System.debug('data_es_json es nulo');
-            //         }
-            
-        //     }else if(knowledge.Language == 'es_MX'){
-            //         if(data_gl_json != null){
-                
-            //         }else {
-                //             System.debug('data_gl_json es nulo');
-            //         }
-        //     }
-        //     // Actualizar información
-        
-        //     // if (convocatoria.data_json != null) {
-            
-        //     // }
-        //     // Actualizar la fecha de modificación
-        //     String fecha_modificacion = convocatoria.fecha_modificacion;
-        //     String fechaSinOffset = fecha_modificacion.substring(0, 19);
-        //     String offSet = fecha_modificacion.substring(19, 22);
-        //     Integer horasOffset = Integer.valueOf(offSet);
-        //     fechaSinOffset = fechaSinOffset.replace('T', ' ');
-        //     DateTime fechaModificacion = DateTime.valueOf(fechaSinOffset);
-        //     fechaModificacion = fechaModificacion.addHours(horasOffset);
-        //     knowledge.fecha_modificacion__c = fechaModificacion;
+    // // Método auxiliar para retractar artículos si están publicados
+    // private static void retractIfPublished(Knowledge__kav knowledge) {
+    //     if (knowledge.PublishStatus == 'Online') {
+    //         KbManagement.PublishingService.editOnlineArticle(knowledge.KnowledgeArticleId, false);
+    //         // Asegurarse de que el estado se ha cambiado a Draft
+    //         System.debug('Retractando artículo con Id: ' + knowledge.Id);
+    //     }
     // }
-    
+
+    private static void retractIfPublished(Knowledge__kav knowledge) {
+        try {
+            if (knowledge.PublishStatus == 'Online') {
+                KbManagement.PublishingService.editOnlineArticle(knowledge.KnowledgeArticleId, false);
+                System.debug('Retractando artículo con Id: ' + knowledge.Id);
+                // Consulta nuevamente el artículo para verificar el cambio
+                knowledge = [SELECT Id, PublishStatus FROM Knowledge__kav WHERE Id = :knowledge.Id];
+                System.debug('Estado actual del artículo después de retractarlo: ' + knowledge.PublishStatus);
+                if (knowledge.PublishStatus != 'Draft') {
+                    System.debug('Advertencia: El artículo no se pudo mover a estado "Draft".');
+                }
+            }
+        } catch (Exception e) {
+            System.debug('Error al intentar retractar el artículo: ' + e.getMessage());
+        }
+     }
     
     private static void updateKnowledgeFields(Knowledge__kav knowledge, Noticia noticia) {
         // Campos que no deben ser actualizados

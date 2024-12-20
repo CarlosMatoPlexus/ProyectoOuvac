@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Noticias_Publicado</fullName>
+    <columns>Noticia_Id__c</columns>
+    <columns>ARTICLE_NUMBER</columns>
+    <columns>TITLE</columns>
+    <columns>PUBLISH_STATUS</columns>
+    <columns>Descripcion__c</columns>
+    <columns>fecha_modificacion__c</columns>
+    <columns>Titulo_noticia_Espanol__c</columns>
+    <columns>Titulo_noticia_Galego__c</columns>
+    <columns>IdiomaFormula__c</columns>
+    <columns>Imagenes_noticias_Espanol__c</columns>
+    <columns>Imagenes_noticias_Galego__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PUBLISH_STATUS</field>
+        <operation>equals</operation>
+        <value>2</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Knowledge__kav.Noticias</value>
+    </filters>
+    <label>Noticias Publicado</label>
+</ListView>

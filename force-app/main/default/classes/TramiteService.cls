@@ -46,7 +46,7 @@ public class TramiteService {
                     
                     entidad = tramite.institucion.name;
                     if(entidad.contains(',')){
-                        entidad.replace(',', ' ');
+                        entidad = entidad.replace(',', '');
                     }
                     knowCastellano.Entidades__c = entidad;
                     knowOtraLengua.Entidades__c = entidad;

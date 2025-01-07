@@ -11,23 +11,23 @@ public class Bopedicto {
 	public Ambito ambito;
 	public Data_es_json data_es_json;
 	public Data_gl_json data_gl_json;
-	class Bop {
+	public class Bop {
 		public Integer id;	
 		public Integer id_bop_externo;	
 	}
-	class Institucion {
+	public class Institucion {
 		public String code;	
 		public String name;	
 	}
-	class Tema {
+	public class Tema {
 		public String code;	
 		public String name;	
 	}
-	class Ambito {
+	public class Ambito {
 		public String code;	
 		public String name;	
 	}
-	class Data_es_json {
+	public class Data_es_json {
 		public Integer id_bop_edicto_externo;	
 		public String fecha_entrada;	
 		public Integer numero_pagina;	
@@ -41,7 +41,7 @@ public class Bopedicto {
 		public String url_html;	
 		public String url_epub;	
 	}
-	class Data_gl_json {
+	public class Data_gl_json {
 		public Integer id_bop_edicto_externo;	
 		public String fecha_entrada;	
 		public Integer numero_pagina;	
@@ -53,6 +53,7 @@ public class Bopedicto {
 		public String url_texto;
 		public String url_pdf;	
 		public String url_html;	
+		public String url_epub;
 	}
 
     // Método para deserializar el JSON

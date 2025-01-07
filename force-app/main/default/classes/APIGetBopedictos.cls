@@ -56,7 +56,7 @@ public class APIGetBopedictos {
                         List<List<String>> bloquesInsert = dividirLista(idBopedictoListDivInsert, bloqueSize);
                         for (List<String> bloqueidBopedictoInsert : bloquesInsert) {
                             System.debug('Procesando nuevos registros...');
-                            //Database.executeBatch(new NoticiaBatchable(bloqueidBopedictoInsert, token), 1);
+                            Database.executeBatch(new BopedictoBatchable(bloqueidBopedictoInsert, token), 1);
                         }
                     }
                     // Actualizar registros existentes usando KnowledgeUpdater
@@ -65,7 +65,7 @@ public class APIGetBopedictos {
                         List<List<String>> bloquesUpdate = dividirLista(idBopedictoListDivUpdate, bloqueSize);
                         for (List<String> bloqueidBopedictoUpdate : bloquesUpdate) {
                             System.debug('Actualizando registros existentes...');
-                            //Database.executeBatch(new NoticiaUpdateBatchable(bloqueidBopedictoUpdate, token), 1);
+                            Database.executeBatch(new BopedictoUpdateBatchable(bloqueidBopedictoUpdate, token), 1);
                         }
                     }
                     success = true; // Marcar como éxito
@@ -133,7 +133,7 @@ public class APIGetBopedictos {
         List<Knowledge__kav> existingKnowledges = [
             SELECT Id, fecha_modificacion__c, Bopedicto_Id__c
             FROM Knowledge__kav
-            WHERE Bopedicto_Id__c IN :idBopedictos
+            WHERE Bopedicto_Id__c IN :idBopedictos ORDER BY fecha_modificacion__c DESC
         ];
         for (Knowledge__kav knowledge : existingKnowledges) {
             existingKnowledgeMap.put(knowledge.Bopedicto_Id__c, knowledge);

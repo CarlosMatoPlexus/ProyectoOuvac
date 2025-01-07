@@ -1,7 +1,7 @@
-public class BopedictoBatcheable implements Database.Batchable<String>, Database.AllowsCallouts {
+public class BopedictoBatchable implements Database.Batchable<String>, Database.AllowsCallouts {
     private List<String> idBopedictos;
     private String token;
-    public BopedictoBatcheable(List<String> idBopedictos, String token) {
+    public BopedictoBatchable(List<String> idBopedictos, String token) {
         this.idBopedictos = idBopedictos;
         this.token = token;
     }
@@ -16,7 +16,7 @@ public class BopedictoBatcheable implements Database.Batchable<String>, Database
         // Llamada a la API para obtener los detalles de los bopedictos
         List<String> detallesJson = APIGetBopedictos.obtenerDetallesBopedictos(scope, token);
         // Procesar las Bopedictos
-        //Bopedictoservice.procesarBopedicto(detallesJson);
+        Bopedictoservice.procesarBopedicto(detallesJson);
         System.debug('Batch ejecutado correctamente para los bopedictos: ' + scope);
     }
     public void finish(Database.BatchableContext bc) {

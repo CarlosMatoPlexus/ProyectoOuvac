@@ -25,7 +25,9 @@
     <label>Knowledge</label>
     <pluralLabel>Knowledge</pluralLabel>
     <searchLayouts>
-        <customTabListAdditionalFields>TITLE</customTabListAdditionalFields>
+        <excludedStandardButtons>MassRestoreKnowledgeArticleVersion</excludedStandardButtons>
+        <excludedStandardButtons>MassSubmitKnowledgeArticleVersionForTranslation</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwnerKnowledgeArticleVersion</excludedStandardButtons>
         <searchResultsAdditionalFields>TITLE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Ambitos__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Answer__c</searchResultsAdditionalFields>

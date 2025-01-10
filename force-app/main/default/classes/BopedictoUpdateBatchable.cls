@@ -10,7 +10,7 @@ public class BopedictoUpdateBatchable implements Database.Batchable<SObject>, Da
     }
     public void execute(Database.BatchableContext bc, List<SObject> scope) {
         List<String> detallesJson = APIGetBopedictos.obtenerDetallesBopedictos(idBopedictos, token);
-        //BopedictoServiceToUpdate.updateBopedicto(detallesJson);
+        BopedictoServiceToUpdate.updateBopedicto(detallesJson);
     }
     public void finish(Database.BatchableContext bc) {
         System.debug('Finalización del procesamiento de actualización de bopedictos');

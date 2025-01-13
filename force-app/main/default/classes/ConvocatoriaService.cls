@@ -62,7 +62,7 @@ public class ConvocatoriaService {
                         entidad = 'Deputación';
                     }
                     if(entidad.contains(',')){
-                        entidad.replace(',', ' ');
+                        entidad = entidad.replace(',', '');
                     }
                     
                     if (convocatoria.data_json != null) {

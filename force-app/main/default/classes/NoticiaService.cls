@@ -64,7 +64,7 @@ public class NoticiaService {
                         entidad = 'Deputación';
                     }
                     if(entidad.contains(',')){
-                        entidad.replace(',', ' ');
+                        entidad = entidad.replace(',', '');
                     }
                     
                     if(noticia.data_es_json != null){

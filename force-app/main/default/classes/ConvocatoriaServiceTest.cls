@@ -8,13 +8,13 @@ public class ConvocatoriaServiceTest {
         Test.startTest();
         List<String> detallesJson = new List<String>();
         List<String>  scope = new List<String>();
-        scope.add('321902');
+        scope.add('321937');
         String token = 'mockToken123';
         detallesJson = APIGetConvocatorias.obtenerDetallesConvocatorias(scope, token);
         ConvocatoriaService.procesarConvocatoria(detallesJson);
         Test.stopTest();
         // Verificar si se insertaron 2 registros de Knowledge__kav
-        List<Knowledge__kav> knowledgeList = [SELECT Id, code_bdns__c, Descripcion__c, RecordTypeId, Language FROM Knowledge__kav WHERE code_bdns__c = '321902'];
+        List<Knowledge__kav> knowledgeList = [SELECT Id, code_bdns__c, Descripcion__c, RecordTypeId, Language FROM Knowledge__kav WHERE code_bdns__c = '321937'];
         System.assertEquals(2, knowledgeList.size(), 'Se deben haber insertado 2 registros de Knowledge__kav');
         // Verificar si uno de los registros está en español y otro en español mexicano
         Knowledge__kav knowCastellano = null;
@@ -43,11 +43,11 @@ public class ConvocatoriaServiceTest {
                 res.setBody('{"token": "mockToken123", "refresh_token": "mockRefreshToken123", "refresh_token_expiration": 1729701726}');
             }
             // Simulación de la respuesta JSON de la API para convocatorias
-            else if (req.getEndpoint().contains('/convocatorias/321902')) {
+            else if (req.getEndpoint().contains('/convocatorias/321937')) {
                 // Usar DateTime.now() para simular la fecha actual y asegurar la actualización
                 String fechaActual = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'+\'02:00');
                 res.setBody('{'+
-                    '    "code_bdns": "321902",'+
+                    '    "code_bdns": "321937",'+
                     '    "fecha_recepcion": "2016-11-08T01:00:00+01:00",'+
                     '    "descripcion": "Acuerdo de Junta de Gobierno de 29/09/2016 por el que se convocan subvenciones a deportistas orensanos cualificados en modalidades deportivas individuales del año 2016",'+
                     '    "importe_total": 25000,'+
@@ -70,7 +70,7 @@ public class ConvocatoriaServiceTest {
                         '"fecha_modificacion": "' + fechaActual + '",' +
                     '    "data_json": {'+
                     '        "DatosGeneralesCov": {'+
-                    '            "IdConvocatoria": "321902",'+
+                    '            "IdConvocatoria": "321937",'+
                     '            "FechaRecepcion": "2016-11-08",'+
                     '            "Estado": "V",'+
                     '            "Propietario": {'+
@@ -190,7 +190,7 @@ public class ConvocatoriaServiceTest {
                     '                    "TextoExtractoCastellano": {'+
                     '                        "p": ['+
                     '                            "De conformidad con lo previsto en los artículos 17.3.b y 20.8.a de la Ley 38/2003, de 17 de noviembre, General de Subvenciones, se publica el extracto de la convocatoria del “procedimiento de concurrencia competitiva para concesión de subvenciones  a deportistas orensanos cualificados en modalidades deportivas individuales del año 2016”, cuyo texto completo puede consultarse en la Base de Datos Nacional de Subvenciones (http://www.pap.minhap.gob.es/bdnstrans/index):",'+
-                    '                            "BDNS: 321902",'+
+                    '                            "BDNS: 321937",'+
                     '                            "Primero. Beneficiarios:",'+
                     '                            "Podrán ser beneficiarios de esta subvención las personas físicas que sean deportistas federados, de categorías de base hasta absoluta, y exclusivamente de modalidades deportivas individuales (excluyéndose, por tanto, los practicantes de deportes de equipo) de nacionalidad española o residentes legales en España, que cumplan alguno de los requisitos establecidos en las bases.",'+
                     '                            "Segundo. Objeto:",'+
@@ -213,7 +213,7 @@ public class ConvocatoriaServiceTest {
                     '                    "TituloExtracto": "Extracto da convocatoria do procedemento de concorrencia competitiva para a concesión de subvencións a deportistas ourensáns cualificados en modalidades deportivas individuais do ano 2016",'+
                     '                    "TextoExtractoOtraLengua": {'+
                     '                        "p": ['+
-                    '                            "BDNS: 321902",'+
+                    '                            "BDNS: 321937",'+
                     '                            "De conformidade co previsto nos artigos 17.3.b e 20.8.a da Lei 38/2003, do 17 de novembro, xeral de subvencións, publícase o extracto da convocatoria do “procedemento de concorrencia competitiva para concesión de subvencións a deportistas ourensáns cualificados en modalidades deportivas individuais do ano 2016”, cuxo texto completo pode consultarse na Base de Datos Nacional de Subvencións (http://www.pap.minhap.gob.es/bdnstrans/index):",'+
                     '                            "Primeiro. Beneficiarios:",'+
                     '                            "Poderán ser beneficiarios desta subvención as persoas físicas que sexan deportistas federados, de categorías de base até absoluta, e exclusivamente de modalidades deportivas individuais (excluíndose, por tanto, os practicantes de deportes de equipo) de nacionalidade española ou residentes legais en España, que cumpran algún dos requisitos establecidos nas bases.",'+

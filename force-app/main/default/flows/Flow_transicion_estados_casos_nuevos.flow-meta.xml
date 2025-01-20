@@ -1,10 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Email_New_Case_Asistente_virtual</name>
+        <label>Send Email New Case Asistente virtual</label>
+        <locationX>50</locationX>
+        <locationY>439</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.SuppliedEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>Emailsubject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Case_Creation_Email_Response_2</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>relatedRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
         <name>asigno_mail_al_lastname</name>
         <label>asigno mail al lastname</label>
-        <locationX>1663</locationX>
+        <locationX>2082</locationX>
         <locationY>926</locationY>
         <assignmentItems>
             <assignToReference>contactLastname</assignToReference>
@@ -41,7 +82,7 @@
     <assignments>
         <name>asigno_mail_al_lastname_0</name>
         <label>asigno mail al lastname</label>
-        <locationX>757</locationX>
+        <locationX>1176</locationX>
         <locationY>947</locationY>
         <assignmentItems>
             <assignToReference>contactLastname</assignToReference>
@@ -78,7 +119,7 @@
     <assignments>
         <name>asigno_name_a_lastname</name>
         <label>asigno name a lastname</label>
-        <locationX>1651</locationX>
+        <locationX>2070</locationX>
         <locationY>684</locationY>
         <assignmentItems>
             <assignToReference>contactLastname</assignToReference>
@@ -115,7 +156,7 @@
     <assignments>
         <name>asigno_name_a_lastname_0</name>
         <label>asigno name a lastname</label>
-        <locationX>934</locationX>
+        <locationX>1353</locationX>
         <locationY>943</locationY>
         <assignmentItems>
             <assignToReference>contactLastname</assignToReference>
@@ -152,7 +193,7 @@
     <assignments>
         <name>asigno_name_a_lastname_0_0</name>
         <label>asigno name a lastname</label>
-        <locationX>322</locationX>
+        <locationX>741</locationX>
         <locationY>773</locationY>
         <assignmentItems>
             <assignToReference>contactLastname</assignToReference>
@@ -168,14 +209,67 @@
                 <elementReference>$Record.SuppliedEmail</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>telefono</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.SuppliedPhone</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>create_new_contact_0</targetReference>
         </connector>
     </assignments>
     <assignments>
+        <name>asigno_name_a_lastname_y_Email_a_Email</name>
+        <label>asigno name a lastname y Email a Email</label>
+        <locationX>576</locationX>
+        <locationY>391</locationY>
+        <assignmentItems>
+            <assignToReference>contactLastname</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.SuppliedName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>email</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.SuppliedEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>create_new_contact_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>asigno_name_a_lastname_y_Phone_a_Phone</name>
+        <label>asigno name a lastname y Phone a Phone</label>
+        <locationX>711</locationX>
+        <locationY>620</locationY>
+        <assignmentItems>
+            <assignToReference>contactLastname</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.SuppliedName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>telefono</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.SuppliedPhone</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>create_new_contact_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>asignophoneallastname</name>
         <label>asigno phone al lastname</label>
-        <locationX>620</locationX>
+        <locationX>1039</locationX>
         <locationY>939</locationY>
         <assignmentItems>
             <assignToReference>contactLastname</assignToReference>
@@ -205,7 +299,7 @@
     <decisions>
         <name>Disparador_de_caso</name>
         <label>Disparador de caso</label>
-        <locationX>1073</locationX>
+        <locationX>1491</locationX>
         <locationY>322</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -227,7 +321,7 @@
     <decisions>
         <name>existe_ciudadano</name>
         <label>existe ciudadano?</label>
-        <locationX>1378</locationX>
+        <locationX>1797</locationX>
         <locationY>567</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -262,40 +356,9 @@
         </rules>
     </decisions>
     <decisions>
-        <name>existe_ciudadano_0</name>
-        <label>existe ciudadano?</label>
-        <locationX>231</locationX>
-        <locationY>544</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>siexisteciudadano_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>contactId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>si existe ciudadano</label>
-        </rules>
-        <rules>
-            <name>no_existe_ciudadano_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>contactId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>no existe ciudadano</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Ha_rellenado_el_name</name>
         <label>Ha rellenado el name?</label>
-        <locationX>1382</locationX>
+        <locationX>1801</locationX>
         <locationY>790</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -332,8 +395,8 @@
     <decisions>
         <name>Origen_del_caso</name>
         <label>Origen del caso</label>
-        <locationX>855</locationX>
-        <locationY>319</locationY>
+        <locationX>1272</locationX>
+        <locationY>318</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Mail2Case</name>
@@ -396,22 +459,7 @@
             <label>Agente presencial</label>
         </rules>
         <rules>
-            <name>Bot_chat</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Origin</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Chat</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Actualizar_caso_estado_En_progreso</targetReference>
-            </connector>
-            <label>Bot chat</label>
-        </rules>
-        <rules>
-            <name>Bot_Asistente_virtual</name>
+            <name>Asistente_virtual</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Origin</leftValueReference>
@@ -421,15 +469,15 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Actualizar_caso_estado_Abierto</targetReference>
+                <targetReference>que_info_tengo_0_0</targetReference>
             </connector>
-            <label>Bot Asistente virtual</label>
+            <label>Asistente virtual</label>
         </rules>
     </decisions>
     <decisions>
         <name>que_info_tengo</name>
         <label>qué info tengo</label>
-        <locationX>842</locationX>
+        <locationX>1261</locationX>
         <locationY>558</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -538,12 +586,12 @@
     <decisions>
         <name>que_info_tengo_0</name>
         <label>qué info tengo</label>
-        <locationX>704</locationX>
-        <locationY>562</locationY>
+        <locationX>1058</locationX>
+        <locationY>615</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>tiene_mail_y_name</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.SuppliedEmail</leftValueReference>
                 <operator>IsNull</operator>
@@ -562,6 +610,57 @@
                 <targetReference>asigno_name_a_lastname_0_0</targetReference>
             </connector>
             <label>tiene mail y name</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>que_info_tengo_0_0</name>
+        <label>qué info tengo</label>
+        <locationX>836</locationX>
+        <locationY>482</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>tiene_mail_y_name_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>asigno_name_a_lastname_y_Email_a_Email</targetReference>
+            </connector>
+            <label>tiene mail y name</label>
+        </rules>
+        <rules>
+            <name>tiene_phone_y_name</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedPhone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>asigno_name_a_lastname_y_Phone_a_Phone</targetReference>
+            </connector>
+            <label>tiene phone y name</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -594,7 +693,7 @@
     <recordCreates>
         <name>create_new_contact</name>
         <label>create new contact</label>
-        <locationX>1832</locationX>
+        <locationX>2251</locationX>
         <locationY>1183</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
@@ -623,8 +722,8 @@
     <recordCreates>
         <name>create_new_contact_0</name>
         <label>create new contact</label>
-        <locationX>149</locationX>
-        <locationY>773</locationY>
+        <locationX>568</locationX>
+        <locationY>772</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
             <targetReference>Actualizar_caso_estado_Pendiente</targetReference>
@@ -641,12 +740,70 @@
                 <elementReference>contactLastname</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>telefono</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordCreates>
+    <recordCreates>
+        <name>create_new_contact_0_0</name>
+        <label>create new contact</label>
+        <locationX>410</locationX>
+        <locationY>439</locationY>
+        <assignRecordIdToReference>contactId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Actualizar_caso_estado_Pendiente_Asistente_Virtual</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>contactLastname</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>telefono</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordCreates>
+    <recordCreates>
+        <name>create_new_contact_0_0_0</name>
+        <label>create new contact</label>
+        <locationX>477</locationX>
+        <locationY>597</locationY>
+        <assignRecordIdToReference>contactId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Actualizar_caso_estado_Pendiente_Asistente_Virtual_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>contactLastname</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>telefono</elementReference>
+            </value>
+        </inputAssignments>
         <object>Contact</object>
     </recordCreates>
     <recordLookups>
         <name>busco_ciudadano</name>
         <label>busco ciudadano</label>
-        <locationX>1192</locationX>
+        <locationX>1611</locationX>
         <locationY>565</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -680,55 +837,11 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
-    <recordLookups>
-        <name>busco_ciudadano_0</name>
-        <label>busco ciudadano</label>
-        <locationX>349</locationX>
-        <locationY>537</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>existe_ciudadano_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Email</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.SuppliedEmail</elementReference>
-            </value>
-        </filters>
-        <object>Contact</object>
-        <outputAssignments>
-            <assignToReference>contactId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordUpdates>
-        <name>Actualizar_caso_estado_Abierto</name>
-        <label>Actualizar caso estado Abierto</label>
-        <locationX>463</locationX>
-        <locationY>244</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Abierto</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Abierto</stringValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <recordUpdates>
         <name>Actualizar_caso_estado_En_progreso</name>
         <label>Actualizar caso estado En progreso</label>
-        <locationX>381</locationX>
-        <locationY>383</locationY>
+        <locationX>753</locationX>
+        <locationY>223</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status</field>
@@ -748,8 +861,77 @@
     <recordUpdates>
         <name>Actualizar_caso_estado_Pendiente</name>
         <label>Actualizar caso estado Pendiente</label>
-        <locationX>51</locationX>
-        <locationY>564</locationY>
+        <locationX>419</locationX>
+        <locationY>765</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Pendiente</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Ambitos__c</field>
+            <value>
+                <elementReference>ambito</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>contactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Pendiente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Actualizar_caso_estado_Pendiente_Asistente_Virtual</name>
+        <label>Actualizar caso estado Pendiente</label>
+        <locationX>251</locationX>
+        <locationY>438</locationY>
+        <connector>
+            <targetReference>Send_Email_New_Case_Asistente_virtual</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Pendiente</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Ambitos__c</field>
+            <value>
+                <elementReference>ambito</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>contactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Pendiente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Actualizar_caso_estado_Pendiente_Asistente_Virtual_0_0</name>
+        <label>Actualizar caso estado Pendiente</label>
+        <locationX>234</locationX>
+        <locationY>616</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status</field>
@@ -781,7 +963,7 @@
     <recordUpdates>
         <name>Actualizar_caso_estado_Pendiente_y_asignar_contacto</name>
         <label>Actualizar caso estado Pendiente y asignar contacto</label>
-        <locationX>1846</locationX>
+        <locationX>2265</locationX>
         <locationY>555</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -806,7 +988,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>923</locationX>
+        <locationX>1342</locationX>
         <locationY>55</locationY>
         <connector>
             <targetReference>Disparador_de_caso</targetReference>
@@ -816,6 +998,129 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <description>Case creation email response 2</description>
+        <name>Case_Creation_Email_Response_2</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;es&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;style&gt;
+  p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body style=&quot;background-color:#CCCCCC; font-family: Arial, Helvetica, sans-serif; font-size: 15px;&quot;&gt;
+&lt;center&gt;
+  &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;500&quot; style=&quot;background-color:#FFFFFF; width: 100%;&quot;&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;background-color:#FFFFFF; color:#000000; font-size:12pt; font-family:arial;&quot;&gt;
+        &lt;table cellpadding=&quot;5&quot; cellspacing=&quot;5&quot; width=&quot;100%&quot;&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;background-color:#FFFFFF; color:#000000; font-size:12pt; font-family:arial;&quot;&gt;
+              &lt;span style=&quot;color:rgb(0, 0, 0); font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                Estimado/a ciudadano/a:
+              &lt;/span&gt;
+              &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                &lt;span style=&quot;font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                  &lt;br&gt;
+                &lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                &lt;span style=&quot;font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                  Gracias por contactar con nosotros. Su número de caso es {!$Record.CaseNumber}.
+                &lt;/span&gt;
+                &lt;span style=&quot;font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                  Estamos trabajando para resolver su solicitud lo antes posible. Si tiene alguna duda o problema con esta solicitud, vuelva a contactar con nosotros indicando este número de caso que le hemos facilitado o su dato de contacto.
+                &lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                &lt;span style=&quot;font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                  &lt;br&gt;
+                &lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                &lt;span style=&quot;font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                  Reciba un cordial saludo,
+                &lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                  &lt;span style=&quot;font-family:Arial, Helvetica, sans-serif; font-size:11.36px;&quot;&gt;
+                    &lt;br&gt;
+                  &lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; line-height:normal; background-color:white !important;&quot;&gt;
+                    &lt;br&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;&quot;&gt;
+                    &lt;span style=&quot;color:rgb(12, 100, 192); font-size:11pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                      &lt;b&gt;Oficina Única Virtual de Atención al ciudadano (OUVAC)&lt;/b&gt;
+                    &lt;/span&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;&quot;&gt;
+                    &lt;span style=&quot;color:black; font-size:10pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                      Deputación de Ourense
+                    &lt;/span&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;&quot;&gt;
+                    &lt;span style=&quot;color:black; font-size:10pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                      Progreso, 32 - Ourense 32003
+                    &lt;/span&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;&quot;&gt;
+                    &lt;span style=&quot;color:rgb(64, 64, 64); font-size:10pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                      Tel: &lt;a href=&quot;tel:+34988317700&quot; style=&quot;color:rgb(64, 64, 64); text-decoration:none;&quot;&gt;988 317 700&lt;/a&gt;
+                    &lt;/span&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;&quot;&gt;
+                    &lt;br&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;color:rgb(36, 36, 36); font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin-right:0px; margin-left:0px; background-color:white !important;&quot;&gt;
+                    &lt;br&gt;
+                  &lt;/p&gt;
+                  &lt;div style=&quot;color:rgb(0, 0, 0);&quot;&gt;
+                    &lt;span style=&quot;font-family:Helvetica, sans-serif; font-size:13.3333px;&quot;&gt;
+                        Sus datos personales serán tratados por la Diputación de Ourense con la finalidad de gestionar su solicitud. Le comunicamos que puede ejercer los derechos de acceso, rectificación, supresión, oposición, limitación al tratamiento y portabilidad de sus datos, mediante comunicación al Responsable, en su domicilio profesional en Rúa Progreso, Nº32, 32003, Ourense o ante nuestro DPD a través de la dirección &lt;a href=&quot;mailto:dpd@depourense.gal&quot; style=&quot;color:rgb(12, 100, 192); font-size:11pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                            dpd@depourense.gal
+                          &lt;/a&gt;o bien, a través de &lt;a href=&quot;https://www.aepd.es/&quot; style=&quot;color:rgb(12, 100, 192); font-size:11pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                            www.aepd.es.
+                          &lt;/a&gt;Más información en nuestra política de privacidad: &lt;a href=&quot;https://www.depourense.gal/index.php/politica-de-privacidade&quot; style=&quot;color:rgb(12, 100, 192); font-size:11pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                            https://www.depourense.gal/gl/politica-de-privacidade.
+                          &lt;/a&gt;
+                    &lt;/span&gt;
+                  &lt;/div&gt;
+                  &lt;p style=&quot;font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin: 15px 0; background-color:white !important;&quot;&gt;
+                    &lt;a href=&quot;https://www.depourense.gal/index.php/aviso-confidencialidad-correo&quot; style=&quot;color:rgb(12, 100, 192); font-size:8pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                      ADVERTENCIA LEGAL
+                    &lt;/a&gt;
+                  &lt;/p&gt;
+                  &lt;p style=&quot;font-family:&apos;Segoe UI&apos;, &apos;Segoe UI Web (West European)&apos;, &apos;Segoe UI&apos;, -apple-system, BlinkMacSystemFont, Roboto, &apos;Helvetica Neue&apos;, sans-serif; font-size:15px; margin: 15px 0; background-color:white !important;&quot;&gt;
+                    Aviso Legal: &lt;a href=&quot;https://www.depourense.gal/gl/aviso-legal&quot; style=&quot;color:rgb(12, 100, 192); font-size:11pt; font-family:Helvetica, sans-serif;&quot;&gt;
+                        https://www.depourense.gal/gl/aviso-legal
+                      &lt;/a&gt;                  &lt;/p&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/table&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Emailsubject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hemos recibido tu solicitud de Información - Caso {!$Record.CaseNumber}</text>
+    </textTemplates>
     <variables>
         <name>ambito</name>
         <dataType>String</dataType>
@@ -871,6 +1176,13 @@
     </variables>
     <variables>
         <name>phone</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>telefono</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

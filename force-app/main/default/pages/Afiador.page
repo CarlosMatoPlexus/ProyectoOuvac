@@ -1,0 +1,28 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page
+  <!-- End Default Content REMOVE THIS -->
+  <script type='text/javascript'>
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'es'; // For example, enter 'en' or 'en-US'
+
+            embeddedservice_bootstrap.init(
+                '00D7Z000000AGdW',
+                'Afiador',
+                'https://ouvacdepourense--ouvacqa.sandbox.my.site.com/ESWAfiador1731933057514',
+                {
+                    scrt2URL: 'https://ouvacdepourense--ouvacqa.sandbox.my.salesforce-scrt.com'
+                }
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+</script>
+<script type='text/javascript' src='https://ouvacdepourense--ouvacqa.sandbox.my.site.com/ESWAfiador1731933057514/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+
+
+</apex:page>

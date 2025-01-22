@@ -50,9 +50,12 @@ private class SendEmailToSendSmsTest {
             ContactId = testContact.Id
             );
         insert testCase;
+        Case c = [SELECT CaseNumber FROM Case WHERE Id = :testCase.Id];
         // Ejecutar el método
         Test.startTest();
-        SendEmailToSendSms.sendSmsEmail(new List<String>{ testCase.CaseNumber });
+        List<String> caseNumbers = new List<String>();
+        caseNumbers.add(c.CaseNumber);
+        SendEmailToSendSms.sendSmsEmail(caseNumbers);
         Test.stopTest();
         // Validar que no se lanzó excepción (teléfono inválido se ignora)
         System.assert(true, 'El método ignoró el teléfono inválido correctamente.');
@@ -69,9 +72,12 @@ private class SendEmailToSendSmsTest {
             ContactId = testContact.Id
             );
         insert testCase;
+        Case c = [SELECT CaseNumber FROM Case WHERE Id = :testCase.Id];
         // Ejecutar el método
         Test.startTest();
-        SendEmailToSendSms.sendSmsEmail(new List<String>{ testCase.CaseNumber });
+        List<String> caseNumbers = new List<String>();
+        caseNumbers.add(c.CaseNumber);
+        SendEmailToSendSms.sendSmsEmail(caseNumbers);
         Test.stopTest();
         // Validar que no se lanzó excepción (sin teléfono se ignora)
         System.assert(true, 'El método ignoró el caso sin número de teléfono correctamente.');

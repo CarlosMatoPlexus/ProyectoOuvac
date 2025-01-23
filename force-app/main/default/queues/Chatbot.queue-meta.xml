@@ -6,7 +6,7 @@
         <users>
             <user>admin@depourense.ouvac</user>
             <user>melani@depourense.ouvac</user>
-            <user>sonia.castropazos@ouvacprod.com</user>
+            <user>sonia.castro@depourense.es</user>
         </users>
     </queueMembers>
     <queueRoutingConfig>Chatbot</queueRoutingConfig>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <botMlDomain>
+        <label>Afiador</label>
+        <mlIntents>
+            <developerName>Crear_un_caso_phone</developerName>
+            <label>Crear un caso phone</label>
+        </mlIntents>
+        <mlIntents>
+            <developerName>Welcome</developerName>
+            <label>Welcome</label>
+        </mlIntents>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
+            <developerName>Description</developerName>
+            <extractionRegex>^(?=.[a-zA-Z]).{15,}$|^([a-zA-Z].){7,}</extractionRegex>
+            <extractionType>Pattern</extractionType>
+            <label>Description</label>
+        </mlSlotClasses>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
+            <developerName>Email</developerName>
+            <extractionType>Value</extractionType>
+            <label>Email</label>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>htmil</terms>
+                </synonymGroups>
+                <value>@hotmail.com</value>
+            </mlSlotClassValues>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>@</terms>
+                </synonymGroups>
+                <value>@gmail.com</value>
+            </mlSlotClassValues>
+        </mlSlotClasses>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
+            <developerName>Email2</developerName>
+            <extractionRegex>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</extractionRegex>
+            <extractionType>Pattern</extractionType>
+            <label>Email2</label>
+        </mlSlotClasses>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
+            <developerName>emailPhone</developerName>
+            <extractionType>Value</extractionType>
+            <label>emailPhone</label>
+        </mlSlotClasses>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
+            <description>Para numeros españoles pueden incluir o no el prefijo (puede ser +34, 34 ó 0034), deben tener 9 digitos exactamente sin incluir el prefijo y deben comenzar con 6,7,8 u 9.
+Para números no españoles deben incluir obligatoriamente un prefijo “+”, seguido del prefijo (entre 1 y 4 caracteres)  y un maximo de 9 caracteres.</description>
+            <developerName>Telefono</developerName>
+            <extractionRegex>^(?:\+34|34|0034)?[6789]\d{8}$|^\+\d{1,4}\d{4,9}$</extractionRegex>
+            <extractionType>Pattern</extractionType>
+            <label>Telefono</label>
+        </mlSlotClasses>
+        <name>Afiador</name>
+    </botMlDomain>
+    <botUser>melani@depourense.ouvac.ouvacinter</botUser>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>MessagingEndUser</SObjectType>
+            <fieldName>MessagingEndUser.ContactId</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <developerName>ContactId</developerName>
+        <label>Contact Id</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>MessagingSession</SObjectType>
+            <fieldName>MessagingSession.MessagingEndUserId</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <developerName>EndUserId</developerName>
+        <label>End User Id</label>
+    </contextVariables>
+    <contextVariables>
+        <dataType>Boolean</dataType>
+        <developerName>isFlowRunning</developerName>
+        <label>isFlowRunning</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>MessagingSession</SObjectType>
+            <fieldName>MessagingSession.Id</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <developerName>RoutableId</developerName>
+        <label>Routable Id</label>
+    </contextVariables>
+    <defaultOutboundFlow>Route_to_Afiador</defaultOutboundFlow>
+    <description>A bot from scratch.</description>
+    <label>Afiador</label>
+    <logPrivateConversationData>true</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>480</sessionTimeout>
+    <type>Bot</type>
+</Bot>

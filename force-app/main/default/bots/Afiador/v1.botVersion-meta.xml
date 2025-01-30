@@ -3153,4 +3153,5 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
     </nlpProviders>
     <responseDelayMilliseconds>200</responseDelayMilliseconds>
     <smallTalkEnabled>false</smallTalkEnabled>
+    <toneType>Casual</toneType>
 </BotVersion>

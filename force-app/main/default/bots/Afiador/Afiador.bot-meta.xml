@@ -61,7 +61,7 @@ Para números no españoles deben incluir obligatoriamente un prefijo “+”, s
         </mlSlotClasses>
         <name>Afiador</name>
     </botMlDomain>
-    <botUser>melani@depourense.ouvac.ouvacinter</botUser>
+    <botUser>supervisor_ouvac@depourense.gal</botUser>
     <contextVariables>
         <contextVariableMappings>
             <SObjectType>MessagingEndUser</SObjectType>

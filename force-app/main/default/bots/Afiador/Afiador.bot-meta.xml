@@ -49,6 +49,20 @@
             <developerName>emailPhone</developerName>
             <extractionType>Value</extractionType>
             <label>emailPhone</label>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>telefono</terms>
+                </synonymGroups>
+                <value>Teléfono</value>
+            </mlSlotClassValues>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>email</terms>
+                </synonymGroups>
+                <value>Email</value>
+            </mlSlotClassValues>
         </mlSlotClasses>
         <mlSlotClasses>
             <dataType>Text</dataType>
@@ -61,7 +75,7 @@ Para números no españoles deben incluir obligatoriamente un prefijo “+”, s
         </mlSlotClasses>
         <name>Afiador</name>
     </botMlDomain>
-    <botUser>supervisor_ouvac@depourense.gal</botUser>
+    <botUser>melani@depourense.ouvac.ouvacqa</botUser>
     <contextVariables>
         <contextVariableMappings>
             <SObjectType>MessagingEndUser</SObjectType>

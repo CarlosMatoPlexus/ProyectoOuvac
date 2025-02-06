@@ -348,9 +348,9 @@
                 <identifier>RecordEs_el_propietatio_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Es_el_propietatio__c}</leftValue>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>System Administrator</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

@@ -1192,7 +1192,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <description>Case creation email response 2</description>
         <name>Case_Creation_Email_Response_2</name>

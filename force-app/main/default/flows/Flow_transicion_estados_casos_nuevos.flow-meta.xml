@@ -531,7 +531,7 @@
     <decisions>
         <name>Que_info_tengo</name>
         <label>Que info tengo?</label>
-        <locationX>1384</locationX>
+        <locationX>1385</locationX>
         <locationY>566</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -562,6 +562,35 @@
                 <targetReference>busco_ciudadano</targetReference>
             </connector>
             <label>Tiene Email y Phone</label>
+        </rules>
+        <rules>
+            <name>Tiene_Email_Phone_y_Name</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedPhone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedName</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>busco_ciudadano</targetReference>
+            </connector>
+            <label>Tiene Email Phone y Name</label>
         </rules>
         <rules>
             <name>Solo_Email</name>
@@ -929,13 +958,13 @@
     <recordLookups>
         <name>busco_ciudadano</name>
         <label>busco ciudadano</label>
-        <locationX>1672</locationX>
+        <locationX>1673</locationX>
         <locationY>565</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>existe_ciudadano</targetReference>
         </connector>
-        <filterLogic>(1 AND 2) OR (1 AND 3)</filterLogic>
+        <filterLogic>(1 AND 2) OR (1 AND 3) OR (1 AND 2 AND 4) OR (1 AND 3 AND 4)</filterLogic>
         <filters>
             <field>Email</field>
             <operator>EqualTo</operator>
@@ -955,6 +984,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.SuppliedPhone</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>LastName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.SuppliedName</elementReference>
             </value>
         </filters>
         <object>Contact</object>

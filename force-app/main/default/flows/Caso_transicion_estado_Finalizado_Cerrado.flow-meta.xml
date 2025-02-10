@@ -2,26 +2,49 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
     <assignments>
+        <name>Asignar_Case_Record_To_List_To_Update</name>
+        <label>Asignar Case Record To List To Update</label>
+        <locationX>996</locationX>
+        <locationY>516</locationY>
+        <assignmentItems>
+            <assignToReference>varCaseRecordsToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varCaseRecord</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>For_Obtener_Casos_Finalizados</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Asignar_Estado_Cerrado</name>
         <label>Asignar Estado Cerrado</label>
         <locationX>985</locationX>
         <locationY>365</locationY>
         <assignmentItems>
-            <assignToReference>For_Obtener_Casos_Finalizados.Status</assignToReference>
+            <assignToReference>varCaseRecord.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Cerrado</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>For_Obtener_Casos_Finalizados.Fecha_hora_cambio_de_estado__c</assignToReference>
+            <assignToReference>varCaseRecord.Fecha_hora_cambio_de_estado__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varCaseRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>For_Obtener_Casos_Finalizados.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>For_Obtener_Casos_Finalizados</targetReference>
+            <targetReference>Asignar_Case_Record_To_List_To_Update</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -103,7 +126,7 @@
         <name>Obtener_Casos_Finalizados</name>
         <label>Obtener Casos Finalizados</label>
         <locationX>584</locationX>
-        <locationY>300</locationY>
+        <locationY>299</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Hay_casos_para_Cerrar</targetReference>
@@ -118,7 +141,7 @@
         </filters>
         <filters>
             <field>Fecha_hora_cambio_de_estado__c</field>
-            <operator>EqualTo</operator>
+            <operator>LessThanOrEqualTo</operator>
             <value>
                 <elementReference>FechaHace7Dias</elementReference>
             </value>
@@ -130,23 +153,62 @@
     <recordUpdates>
         <name>Actualizar_estado_Finalizado_Cerrado</name>
         <label>Actualizar estado Finalizado_Cerrado</label>
-        <locationX>797</locationX>
-        <locationY>543</locationY>
-        <inputReference>Obtener_Casos_Finalizados</inputReference>
+        <locationX>804</locationX>
+        <locationY>571</locationY>
+        <inputReference>varCaseRecordsToUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>459</locationX>
+        <locationY>47</locationY>
         <connector>
             <targetReference>Obtener_Casos_Finalizados</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Finalizado</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Pasaron_7_dias__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>Case</object>
         <schedule>
             <frequency>Daily</frequency>
-            <startDate>2024-06-07</startDate>
-            <startTime>01:00:00.000Z</startTime>
+            <startDate>2024-09-03</startDate>
+            <startTime>04:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>CasesToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>varCaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>varCaseRecordsToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
 </Flow>

@@ -19,6 +19,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cooperación</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cultura y Deportes</fullName>
             <default>false</default>
         </values>
@@ -681,6 +685,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Provincia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Punxín</fullName>
             <default>false</default>
         </values>
@@ -829,10 +837,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Origin</picklist>
-        <values>
-            <fullName>Asistente virtual</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Chat</fullName>
             <default>false</default>

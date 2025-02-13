@@ -65,6 +65,23 @@
         <default>false</default>
         <label>Otras</label>
     </customValue>
+    <customValue>
+        <fullName>Cooperación</fullName>
+        <default>false</default>
+        <label>Cooperación</label>
+    </customValue>
+    <customValue>
+        <fullName>Asuntos Sociales (Benestar)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Asuntos Sociales (Benestar)</label>
+    </customValue>
+    <customValue>
+        <fullName>Intervención y Recaudación</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Intervención y Recaudación</label>
+    </customValue>
     <masterLabel>Ámbitos</masterLabel>
     <sorted>false</sorted>
-</GlobalValueSet> 
+</GlobalValueSet>

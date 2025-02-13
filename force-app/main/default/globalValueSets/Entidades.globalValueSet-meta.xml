@@ -6,6 +6,11 @@
         <label>Deputación Provincial de Ourense</label>
     </customValue>
     <customValue>
+        <fullName>Provincia</fullName>
+        <default>false</default>
+        <label>Provincia</label>
+    </customValue>
+    <customValue>
         <fullName>Allariz</fullName>
         <default>false</default>
         <label>Allariz</label>
@@ -465,6 +470,12 @@
         <default>false</default>
         <label>Xunqueira de Espadanedo</label>
     </customValue>
+    <customValue>
+        <fullName>Ayuntamientos</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ayuntamientos</label>
+    </customValue>
     <masterLabel>Entidades</masterLabel>
     <sorted>false</sorted>
-</GlobalValueSet> 
+</GlobalValueSet>

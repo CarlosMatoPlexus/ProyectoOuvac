@@ -67,6 +67,9 @@ public with sharing class RouteCasesBasedOnSkills {
                 } else if (cs.ambitos__c == 'Otras' && skillMap.containsKey('Otras')) {
                     skillNeededList.add(skillMap.get('Otras'));
                 }
+                else if (cs.ambitos__c == 'Cooperación' && skillMap.containsKey('Cooperación')) {
+                    skillNeededList.add(skillMap.get('Cooperación'));
+                }
             }
             
             List<SkillRequirement> lstSkillReq = new List<SkillRequirement>();
@@ -98,6 +101,7 @@ public with sharing class RouteCasesBasedOnSkills {
         Id tramitacionElectronicaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Tramitacion_Electronica' LIMIT 1].Id;
         Id transparenciaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Transparencia' LIMIT 1].Id;
         Id turismoQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Turismo' LIMIT 1].Id;
+        Id cooperacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Cooperacion' LIMIT 1].Id;
         
         Map<String, Id> ambitoToSkillMap = new Map<String, Id>();
         ambitoToSkillMap.put('Benestar', getSkillId('Benestar'));
@@ -113,6 +117,7 @@ public with sharing class RouteCasesBasedOnSkills {
         ambitoToSkillMap.put('Transparencia', getSkillId('Transparencia'));
         ambitoToSkillMap.put('Turismo', getSkillId('Turismo'));
         ambitoToSkillMap.put('Otras', getSkillId('Otras'));
+        ambitoToSkillMap.put('Cooperación', getSkillId('Cooperación'));
         
         Set<Id> ownerIds = new Set<Id>();
         for (Case c : oldMap.values()) {
@@ -174,6 +179,9 @@ public with sharing class RouteCasesBasedOnSkills {
                         } else if (newCase.ambitos__c == 'Turismo') {
                             ownerIdToAssign = turismoQueueId;
                         }
+                        else if (newCase.ambitos__c == 'Cooperación') {
+                            ownerIdToAssign = cooperacionQueueId;
+                        }
                     }
                     
                     if (canAssign && newCase.Status != 'Finalizado') {
@@ -210,6 +218,7 @@ public with sharing class RouteCasesBasedOnSkills {
         Id tramitacionElectronicaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Tramitacion_Electronica' LIMIT 1].Id;
         Id transparenciaQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Transparencia' LIMIT 1].Id;
         Id turismoQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Turismo' LIMIT 1].Id;
+        Id cooperacionQueueId = [SELECT Id FROM Group WHERE DeveloperName = 'Cooperacion' LIMIT 1].Id;
         
         Map<String, Id> ambitoToSkillMap = new Map<String, Id>();
         ambitoToSkillMap.put('Benestar', getSkillId('Benestar'));
@@ -225,6 +234,7 @@ public with sharing class RouteCasesBasedOnSkills {
         ambitoToSkillMap.put('Transparencia', getSkillId('Transparencia'));
         ambitoToSkillMap.put('Turismo', getSkillId('Turismo'));
         ambitoToSkillMap.put('Otras', getSkillId('Otras'));
+        ambitoToSkillMap.put('Cooperación', getSkillId('Cooperación'));
         
         List<Case> casesToUpdate = new List<Case>();
         
@@ -270,6 +280,9 @@ public with sharing class RouteCasesBasedOnSkills {
                         ownerIdToAssign = transparenciaQueueId;
                     } else if (caseRecord.ambitos__c == 'Turismo') {
                         ownerIdToAssign = turismoQueueId;
+                    }
+                    else if (caseRecord.ambitos__c == 'Cooperación') {
+                        ownerIdToAssign = cooperacionQueueId;
                     }
                     
                     caseRecord.OwnerId = ownerIdToAssign;

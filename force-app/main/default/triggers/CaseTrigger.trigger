@@ -16,6 +16,10 @@ trigger CaseTrigger on Case (before insert, before update, after insert, after u
             CaseTriggerHandler.handleEmailToCaseToDelete(Trigger.new);
             RouteCasesBasedOnSkills.handleAmbitosChange(Trigger.oldMap, Trigger.newMap);
             RouteCasesBasedOnSkills.handleCaseStatusChange(Trigger.oldMap, Trigger.newMap);
-        } 
+            //RouteCasesBasedOnSkills.handleCaseStatusChangeOwnerSupervisor(Trigger.oldMap, Trigger.newMap);
+            //RouteCasesBasedOnSkills.handleCaseUpdate(Trigger.oldMap, Trigger.newMap);
+            //RouteCasesBasedOnSkills.handleCaseUpdate(Trigger.oldMap, Trigger.newMap);
+            
+        }
     }
 }

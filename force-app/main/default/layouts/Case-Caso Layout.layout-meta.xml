@@ -10,6 +10,7 @@
     <excludeButtons>CreateGroupAction</excludeButtons>
     <excludeButtons>MassAccept</excludeButtons>
     <excludeButtons>MergeCase</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>RecordShareHierarchy</excludeButtons>
     <excludeButtons>SendSurveyInvitation</excludeButtons>
@@ -33,6 +34,9 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Entidades__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -240,7 +244,20 @@
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
     </platformActionList>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>Case.Resuelto</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>Case._LightningUpdateCase</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>
@@ -266,6 +283,9 @@
         <relatedList>MessagingSession</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEmailMessageList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TITLE</fields>
         <fields>ARTICLE.ARTICLE_ID</fields>
         <fields>URL_NAME</fields>
@@ -289,7 +309,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5t000003In2h</masterLabel>
+        <masterLabel>00h7Z000002snZ5</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

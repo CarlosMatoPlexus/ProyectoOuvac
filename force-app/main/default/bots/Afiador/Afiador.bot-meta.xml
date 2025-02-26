@@ -12,6 +12,46 @@
         </mlIntents>
         <mlSlotClasses>
             <dataType>Text</dataType>
+            <developerName>ayudar_en_algo_mas</developerName>
+            <extractionType>Value</extractionType>
+            <label>ayudar en algo mas</label>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>NO</terms>
+                </synonymGroups>
+                <value>No</value>
+            </mlSlotClassValues>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>SI</terms>
+                </synonymGroups>
+                <value>Si</value>
+            </mlSlotClassValues>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>n</terms>
+                </synonymGroups>
+                <value>N</value>
+            </mlSlotClassValues>
+            <mlSlotClassValues>
+                <synonymGroups>
+                    <languages>es</languages>
+                    <terms>s</terms>
+                </synonymGroups>
+                <value>S</value>
+            </mlSlotClassValues>
+        </mlSlotClasses>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
+            <developerName>caseNumber</developerName>
+            <extractionType>Value</extractionType>
+            <label>caseNumber</label>
+        </mlSlotClasses>
+        <mlSlotClasses>
+            <dataType>Text</dataType>
             <developerName>Description</developerName>
             <extractionRegex>^(?=.[a-zA-Z]).{15,}$|^([a-zA-Z].){7,}</extractionRegex>
             <extractionType>Pattern</extractionType>
@@ -75,7 +115,7 @@ Para números no españoles deben incluir obligatoriamente un prefijo “+”, s
         </mlSlotClasses>
         <name>Afiador</name>
     </botMlDomain>
-    <botUser>melani@depourense.ouvac.ouvacqa</botUser>
+    <botUser>supervisor_ouvac@depourense.gal</botUser>
     <contextVariables>
         <contextVariableMappings>
             <SObjectType>MessagingEndUser</SObjectType>

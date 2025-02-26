@@ -72,8 +72,8 @@
                 </botMessages>
                 <botVariableOperands>
                     <disableAutoFill>true</disableAutoFill>
-                    <sourceName>_Text</sourceName>
-                    <sourceType>StandardMlSlotClass</sourceType>
+                    <sourceName>caseNumber</sourceName>
+                    <sourceType>MlSlotClass</sourceType>
                     <targetName>caseNumerInfo</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
@@ -170,7 +170,7 @@
                     </invocationMappings>
                 </botInvocation>
                 <type>Set</type>
-                <variableOperationIdentifier>f7b5852b-6536-4a2b-856b-3f3436a98886</variableOperationIdentifier>
+                <variableOperationIdentifier>9a76d770-038a-436c-8bb8-6a99d47fafa4</variableOperationIdentifier>
             </botVariableOperation>
             <stepIdentifier>4c116055-0c51-4d38-932e-5a04cfef1311</stepIdentifier>
             <type>VariableOperation</type>
@@ -246,7 +246,7 @@ Su estado es &quot; {!caseStatus} &quot; por parte del &quot;{!caseEnEspera}&quo
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>ff8b6a89-e436-40b5-a7d8-7dd5dcf7fc1c</stepIdentifier>
+                <stepIdentifier>cb1a76ae-d912-4f0e-abd7-b16ca7f1c9ea</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -342,10 +342,46 @@ Este caso está satisfactoriamente
                     <botNavigationLinks>
                         <targetBotDialog>Informacion_satsifactoria_caso_Finalizado</targetBotDialog>
                     </botNavigationLinks>
-                    <type>Call</type>
+                    <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>e58ae1ee-5dc1-4654-8ace-2b4113ec15a1</stepIdentifier>
+                <stepIdentifier>7b90820e-ff0e-4b2f-a425-6f520e8dfcf5</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseStatus</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>2a8de752-76b2-43b7-8ac2-cce1d350f7e0</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>0ad3a548-56be-4457-9bab-a2142ae4a237</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseFinalizado</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>3010181b-c2f8-441a-b1e7-2e841c71c6e1</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>de81d876-6c81-4c00-acec-58175f6fa81b</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseMotivoResolucion</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>c405f25f-ebd1-402f-bbc7-f3509f9014cb</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>180468b0-2863-4863-8bf1-e464a0cd35cd</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>e117bce9-3473-412e-b754-cbf671cf0c4d</stepIdentifier>
@@ -384,10 +420,46 @@ Su estado es {!caseStatus} por este motivo &quot;{!caseMotivoNoResolucion}&quot;
                     <botNavigationLinks>
                         <targetBotDialog>Informacion_satsifactoria_caso_Finalizado</targetBotDialog>
                     </botNavigationLinks>
-                    <type>Call</type>
+                    <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>3833d49e-8155-444a-84f5-47cb829b596e</stepIdentifier>
+                <stepIdentifier>9f995ae3-a3f4-4b5e-b577-c2fac946ddb6</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseMotivoNoResolucion</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>1449bfb1-0429-4c98-a894-e6f599f64f20</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>6550c1dd-8d63-4a91-9857-f00db66e8cf1</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseStatus</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>f176fd18-5417-45d7-b21f-2a3737e7aaff</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>de846cb4-af78-46d5-b8bb-8bb49b8ece6e</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseFinalizado</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>3643e6ec-aaf9-4395-a2fa-dc959d57c685</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>26119c7b-f13a-491b-9ca8-fcf089e7c217</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>e0f5321d-6dd0-4ebf-b4fd-3148350c4138</stepIdentifier>
@@ -466,7 +538,7 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                     </botNavigationLinks>
                     <type>Call</type>
                 </botNavigation>
-                <stepIdentifier>155ad1a9-cde9-4c17-9b78-743390c4ce8f</stepIdentifier>
+                <stepIdentifier>91e64b70-c5be-43d2-b3dc-f83843ad79f1</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <botSteps>
@@ -476,9 +548,9 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                         <targetType>ConversationVariable</targetType>
                     </botVariableOperands>
                     <type>Unset</type>
-                    <variableOperationIdentifier>83c5354f-1b19-4365-98ad-b191d9fb718b</variableOperationIdentifier>
+                    <variableOperationIdentifier>9bb0bec5-9ebf-48c4-9839-9f75e2d32135</variableOperationIdentifier>
                 </botVariableOperation>
-                <stepIdentifier>46f259d7-aab2-4789-b424-5a236a4ca42a</stepIdentifier>
+                <stepIdentifier>fcac09c2-76a9-47e3-9084-9654a0b8ec9e</stepIdentifier>
                 <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -502,8 +574,8 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                 </botQuickReplyOptions>
                 <botVariableOperands>
                     <disableAutoFill>true</disableAutoFill>
-                    <sourceName>_Text</sourceName>
-                    <sourceType>StandardMlSlotClass</sourceType>
+                    <sourceName>ayudar_en_algo_mas</sourceName>
+                    <sourceType>MlSlotClass</sourceType>
                     <targetName>respuestaSioNo</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
@@ -539,9 +611,9 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                         <targetType>ConversationVariable</targetType>
                     </botVariableOperands>
                     <type>Unset</type>
-                    <variableOperationIdentifier>22a28537-49c5-4967-b29c-cfe116026b75</variableOperationIdentifier>
+                    <variableOperationIdentifier>03fb08e1-25eb-49df-b7e3-34fc7a1f6959</variableOperationIdentifier>
                 </botVariableOperation>
-                <stepIdentifier>e7ed5a08-9ccc-4179-acc6-dfb0fe1551d4</stepIdentifier>
+                <stepIdentifier>58e6643e-e79d-474d-8802-dd105eaf473d</stepIdentifier>
                 <type>VariableOperation</type>
             </botSteps>
             <botSteps>
@@ -551,8 +623,20 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>e7297425-dc9c-4e21-ac63-c9b64190ba0d</stepIdentifier>
+                <stepIdentifier>928b56e7-1bdf-45b1-b69e-a10171f9416b</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>Ayudar_en_algo_mas_si_no</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>615f3528-4e62-4de5-8332-87c2fc9e6310</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>dd641eef-6a52-40ca-afb1-6507b5fb6dcb</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>2d26f2a9-816b-40d7-b127-4094f343ac49</stepIdentifier>
@@ -572,7 +656,7 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>54c588ed-af81-4094-98a6-1e81b3c45467</stepIdentifier>
+                <stepIdentifier>c1ea4a24-1e58-417e-8bd3-60b64ee1d82d</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <botSteps>
@@ -582,9 +666,33 @@ Este caso está {!caseStatus} y este es el motivo &quot;{!caseMotivoNoResolucion
                         <targetType>ConversationVariable</targetType>
                     </botVariableOperands>
                     <type>Unset</type>
-                    <variableOperationIdentifier>c539f69a-993f-418b-9314-511836ee4a17</variableOperationIdentifier>
+                    <variableOperationIdentifier>c0a9a403-70aa-4ce6-8ccd-5597aed602a5</variableOperationIdentifier>
                 </botVariableOperation>
-                <stepIdentifier>7d7f467a-abca-4f47-9eca-672be7b34e94</stepIdentifier>
+                <stepIdentifier>6517087d-29b7-4386-b66c-5d13beac3634</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>Ayudar_en_algo_mas_si_no</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>bfa99844-7f6a-46ab-ac70-71dad4dce894</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>7dba5401-f5de-4c7e-89d4-e4acdb6c80b5</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseNumerInfo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>7af508f4-e66f-4cd5-b31f-a711f259d661</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>408a5083-9e0b-45d5-816b-7e5f20dec9f4</stepIdentifier>
                 <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -1357,7 +1465,7 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
     <botDialogs>
         <botSteps>
             <botVariableOperation>
-                <askCollectIfSet>false</askCollectIfSet>
+                <askCollectIfSet>true</askCollectIfSet>
                 <botMessages>
                     <message>¿La información facilitada fue satisfactoria?</message>
                     <messageIdentifier>13a61e2c-6a10-4ed8-8968-4075d9abea21</messageIdentifier>
@@ -1372,12 +1480,12 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
                 </botQuickReplyOptions>
                 <botVariableOperands>
                     <disableAutoFill>true</disableAutoFill>
-                    <sourceName>_Text</sourceName>
-                    <sourceType>StandardMlSlotClass</sourceType>
-                    <targetName>respuestaSioNo</targetName>
+                    <sourceName>ayudar_en_algo_mas</sourceName>
+                    <sourceType>MlSlotClass</sourceType>
+                    <targetName>informacionSatisfactoriaSiNo</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
-                <ignoreIntentRecognition>false</ignoreIntentRecognition>
+                <ignoreIntentRecognition>true</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -1389,7 +1497,7 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
         </botSteps>
         <botSteps>
             <botStepConditions>
-                <leftOperandName>respuestaSioNo</leftOperandName>
+                <leftOperandName>informacionSatisfactoriaSiNo</leftOperandName>
                 <leftOperandType>ConversationVariable</leftOperandType>
                 <operatorType>Equals</operatorType>
                 <rightOperandValue>Si</rightOperandValue>
@@ -1401,8 +1509,56 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>59712059-c4ed-4bff-9b04-e468fb98edb8</stepIdentifier>
+                <stepIdentifier>dfb9eb8e-51d0-4266-a81c-18c24984d7b2</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>respuestaSioNo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>d1952cdb-e43d-4511-91f4-d0db8ace8492</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>b6356223-e6dd-4c51-a3d4-4b48629642bc</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>Ayudar_en_algo_mas_si_no</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>f647aa4e-3f52-43ca-949c-0d09ff55fd7f</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>5b17d9b4-3690-4769-be0c-56b0df7b2785</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>informacionSatisfactoriaSiNo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>75ae20ea-eeaf-43c3-8ee0-15afca6cbc2f</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>99550175-0b8e-4bee-bb8b-6db274352be7</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseNumerInfo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>25c0905a-36b2-4666-9f0d-861440aca393</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>8fc6e25e-a59b-4110-9022-906ec6d285c1</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>7c429461-035b-4b06-8c48-a74161c30444</stepIdentifier>
@@ -1410,7 +1566,7 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
         </botSteps>
         <botSteps>
             <botStepConditions>
-                <leftOperandName>respuestaSioNo</leftOperandName>
+                <leftOperandName>informacionSatisfactoriaSiNo</leftOperandName>
                 <leftOperandType>ConversationVariable</leftOperandType>
                 <operatorType>Equals</operatorType>
                 <rightOperandValue>No</rightOperandValue>
@@ -1422,8 +1578,56 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>20c4e377-a870-4989-b421-3c8c6402027b</stepIdentifier>
+                <stepIdentifier>461824be-a617-4e0c-b975-9f2d1433eff5</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>respuestaSioNo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>cb0747ed-a3f3-421b-98fd-53c58db63dfe</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>635a95e4-0781-4d5e-9028-7e2930e17977</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>Ayudar_en_algo_mas_si_no</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>d653b516-db90-422d-8d3b-877993c89687</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>6377985a-7459-4292-a3dd-c9401c7ceacb</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>informacionSatisfactoriaSiNo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>8ee5d0bd-ea9a-4988-b3b2-c143fe6ebb6e</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>39a84452-8d03-49ff-97a3-9d9bf420086a</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseNumerInfo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>9576fa00-c522-4597-ab48-a2ffdcea79ce</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>e9d4e16a-9bab-43ba-a898-21aaf24e8697</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>7e6b84a3-ecd7-47b3-a9db-d732733d18f7</stepIdentifier>
@@ -1490,7 +1694,7 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>8f18e7e3-dabb-448f-816d-746bb2c3b1cf</stepIdentifier>
+                <stepIdentifier>700efd35-eec1-46a0-be2d-36b8a3eea227</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -1516,7 +1720,7 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>8d8ec54d-26ce-484c-958a-4edf86b1eac3</stepIdentifier>
+                <stepIdentifier>9e6ec340-621e-4df4-9a2e-db4bcf7d7a0b</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -1537,8 +1741,20 @@ Este caso está en este estado de momento:{!caseStatus}. Nos podremos en contact
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>fe1b7893-44fc-45e3-957d-2f047b61341c</stepIdentifier>
+                <stepIdentifier>0345b739-d47f-438f-9012-dde506f11b1e</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>Reabrir_caso_si_no</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>08c4a3ea-125c-475a-9006-6d88c3c2a5da</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>0f61f155-5556-4c74-bb47-61b4d0d1143f</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>b84bacb3-912f-4bf2-ba1f-a3f01a91eed9</stepIdentifier>
@@ -2032,7 +2248,7 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
     <botDialogs>
         <botSteps>
             <botVariableOperation>
-                <askCollectIfSet>false</askCollectIfSet>
+                <askCollectIfSet>true</askCollectIfSet>
                 <botMessages>
                     <message>¿Puedo ayudar en algo más?</message>
                     <messageIdentifier>9eb105c8-9319-4bbd-93be-f8bfbb85ca97</messageIdentifier>
@@ -2047,12 +2263,12 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
                 </botQuickReplyOptions>
                 <botVariableOperands>
                     <disableAutoFill>true</disableAutoFill>
-                    <sourceName>Description</sourceName>
+                    <sourceName>ayudar_en_algo_mas</sourceName>
                     <sourceType>MlSlotClass</sourceType>
                     <targetName>Ayudar_en_algo_mas_si_no</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
-                <ignoreIntentRecognition>false</ignoreIntentRecognition>
+                <ignoreIntentRecognition>true</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -2076,7 +2292,7 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>ba48285b-97ae-40db-8cf3-bd153d573a9c</stepIdentifier>
+                <stepIdentifier>891d5341-9d13-4dc4-9a16-a137c237b1d7</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <botSteps>
@@ -2086,9 +2302,9 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
                         <targetType>ConversationVariable</targetType>
                     </botVariableOperands>
                     <type>Unset</type>
-                    <variableOperationIdentifier>2492015c-0dab-4498-acb2-74874fb304c6</variableOperationIdentifier>
+                    <variableOperationIdentifier>c3de8a5f-b81f-4ff5-bac4-0bca43e1ae1e</variableOperationIdentifier>
                 </botVariableOperation>
-                <stepIdentifier>f6e578a2-20a5-45d7-8b18-4090d9d39c5b</stepIdentifier>
+                <stepIdentifier>e17b910c-67c0-4efe-b0f2-b4a36522e91b</stepIdentifier>
                 <type>VariableOperation</type>
             </botSteps>
             <botSteps>
@@ -2098,9 +2314,33 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
                         <targetType>ConversationVariable</targetType>
                     </botVariableOperands>
                     <type>Unset</type>
-                    <variableOperationIdentifier>8cab35b3-01e1-4209-9064-51e0e916318f</variableOperationIdentifier>
+                    <variableOperationIdentifier>31051422-e810-44b8-b967-44b0d5e77af2</variableOperationIdentifier>
                 </botVariableOperation>
-                <stepIdentifier>77848d5d-9099-4844-a5db-57b0aac3fd40</stepIdentifier>
+                <stepIdentifier>e956f4c6-c3dd-4e36-9d53-6b0fe60e820c</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>respuestaSioNo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>b5cc32e1-4c2c-40c9-a7b4-160c2c25d457</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>fcfa3203-d73f-4213-adc4-b45b99d3f7ce</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>informacionSatisfactoriaSiNo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>f5409b18-b1d0-4577-8717-f1296c2fb81b</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>5b0e6938-d4df-4773-8f46-185ff293e8a9</stepIdentifier>
                 <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -2121,8 +2361,32 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>5b332738-0fc5-4a87-bcfe-dd36e8502887</stepIdentifier>
+                <stepIdentifier>d01d9225-04c9-4c08-8100-4635b06f19e0</stepIdentifier>
                 <type>Navigation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>Ayudar_en_algo_mas_si_no</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>fb0df9c2-d221-4c43-bd22-59bffebab97b</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>a9dab415-47f3-4896-b2bb-114845cd623e</stepIdentifier>
+                <type>VariableOperation</type>
+            </botSteps>
+            <botSteps>
+                <botVariableOperation>
+                    <botVariableOperands>
+                        <targetName>caseNumerInfo</targetName>
+                        <targetType>ConversationVariable</targetType>
+                    </botVariableOperands>
+                    <type>Unset</type>
+                    <variableOperationIdentifier>871cb353-64fa-4da0-904f-b3f76a111e55</variableOperationIdentifier>
+                </botVariableOperation>
+                <stepIdentifier>c35e771a-ebc5-4f5b-85f8-d0a502353d72</stepIdentifier>
+                <type>VariableOperation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>e60eee21-cb42-41ef-89f7-afb3d45b6270</stepIdentifier>
@@ -3141,6 +3405,16 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
         <developerName>userPhone</developerName>
         <label>userPhone</label>
     </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>ayudarSioNo</developerName>
+        <label>ayudarSioNo</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>informacionSatisfactoriaSiNo</developerName>
+        <label>informacionSatisfactoriaSiNo</label>
+    </conversationVariables>
     <entryDialog>Welcome</entryDialog>
     <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
     <intentV3Enabled>true</intentV3Enabled>
@@ -3153,4 +3427,5 @@ Si es teléfono español no se requiere introducir el prefijo internacional.</me
     </nlpProviders>
     <responseDelayMilliseconds>200</responseDelayMilliseconds>
     <smallTalkEnabled>false</smallTalkEnabled>
+    <toneType>Casual</toneType>
 </BotVersion>

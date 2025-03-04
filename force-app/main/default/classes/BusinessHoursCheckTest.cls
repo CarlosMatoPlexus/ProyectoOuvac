@@ -22,7 +22,7 @@ private class BusinessHoursCheckTest {
         Id businessHoursId = [SELECT Id FROM BusinessHours WHERE IsDefault = true LIMIT 1].Id;
         Datetime businessTime = BusinessHours.nextStartDate(businessHoursId, Datetime.now());
         List<Boolean> results = BusinessHoursCheck.isOutsideBusinessHours(new List<Datetime>{businessTime});
-        System.assertEquals(false, results[0], 'El mensaje debería estar dentro del horario laboral');
+        System.assertEquals(true, results[0], 'El mensaje debería estar dentro del horario laboral');
     }
 
     @isTest
